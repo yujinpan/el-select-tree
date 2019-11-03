@@ -1,0 +1,7 @@
+@import 'common-variables';
+
+// component 组件名前缀
+[class*=' component-'],
+[class^='component-'] {
+  box-sizing: border-box;
+}

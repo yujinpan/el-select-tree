@@ -1,0 +1,66 @@
+// 导入 element-ui 的默认样式变量
+@import 'node_modules/element-ui/packages/theme-chalk/src/common/var.scss';
+
+// 基准颜色
+$color-blue: rgba(157, 184, 233, 1);
+$color-primary: $--color-primary;
+$color-white: $--color-white;
+$color-black: $--color-black;
+$color-success: $--color-success;
+$color-warning: $--color-warning;
+$color-danger: $--color-danger;
+$color-info: $--color-info;
+
+// 文本颜色
+$color-text-primary: $--color-text-primary;
+$color-text-regular: $--color-text-regular;
+$color-text-secondary: $--color-text-secondary;
+$color-text-placeholder: $--color-text-placeholder;
+
+// 边框颜色
+$border-color-base: $--border-color-base;
+$border-color-light: $--border-color-light;
+$border-color-lighter: $--border-color-lighter;
+$border-color-extra-light: $--border-color-extra-light;
+
+// 背景颜色
+$background-color-base: $--background-color-base;
+
+// 图标颜色
+$icon-color: $--icon-color;
+$icon-color-base: $color-info;
+
+// 边框样式
+$border-width-base: $--border-width-base;
+$border-style-base: $--border-style-base;
+$border-color-hover: $--color-text-placeholder;
+$border-base: $--border-width-base $--border-style-base $--border-color-base;
+$border-radius-base: $--border-radius-base;
+$border-radius-small: $--border-radius-small;
+$border-radius-circle: $--border-radius-circle;
+$border-radius-zero: $--border-radius-zero;
+
+// 投影样式
+$box-shadow-default: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+$box-shadow-base: $--box-shadow-base;
+$box-shadow-dark: $--box-shadow-dark;
+$box-shadow-light: $--box-shadow-light;
+
+// 字体大小
+$font-size-extra-small: $--font-size-extra-small; // 12px
+$font-size-small: $--font-size-small; // 13px
+$font-size-base: $--font-size-base; // 14px
+$font-size-medium: $--font-size-medium; // 16px
+$font-size-large: $--font-size-large; // 18px
+$font-size-extra-large: $--font-size-extra-large; // 20px
+
+// 字体颜色
+$font-color: #444;
+
+// 间距大小
+$spacing-base: 10px;
+$spacing-medium: 20px;
+$spacing-large: 30px;
+
+// 过渡效果
+$transition-base: all 0.3s;

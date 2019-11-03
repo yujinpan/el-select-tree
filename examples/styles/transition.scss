@@ -1,0 +1,37 @@
+// 全局的过渡效果
+// example: `<transition name="fade"></transition>`
+@import './public';
+
+// fade - 渐隐效果
+.fade-enter-active,
+.fade-leave-active {
+  @extend .transition-default;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+// fade-slide-top 向上渐隐效果
+// fade-slide-right 向右渐隐效果
+// fade-slide-bottom 向下渐隐效果
+// fade-slide-left 向左渐隐效果
+@each $direction in top, right, bottom, left {
+  .fade-slide-#{$direction}-enter-active,
+  .fade-slide-#{$direction}-leave-active {
+    @extend .transition-default;
+  }
+  .fade-slide-#{$direction}-enter,
+  .fade-slide-#{$direction}-leave-to {
+    opacity: 0;
+    @if $direction == top {
+      transform: translate(0, -100%);
+    } @else if $direction == right {
+      transform: translate(100%, 0);
+    } @else if $direction == bottom {
+      transform: translate(0, 100%);
+    } @else if $direction == left {
+      transform: translate(-100%, 0);
+    }
+  }
+}

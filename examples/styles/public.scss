@@ -1,0 +1,194 @@
+@import 'common-variables';
+
+// 全局的共用样式类
+
+// 拉伸铺满背景样式
+.background-full {
+  background: 0 0/100% 100% no-repeat;
+}
+
+// 常用布局排版
+.full {
+  width: 100%;
+  height: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+// 常用文字排版
+.text-left {
+  text-align: left !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// 副级文本
+.text-secondary {
+  color: $color-info;
+}
+
+// 常用列表排版
+ul.list-unstyled {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+// 滚动条默认样式定制
+.scrollbar-default {
+  &::-webkit-scrollbar-track-piece {
+    background: #d3dce6;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #99a9bf;
+  }
+}
+
+// flex 布局
+.flex {
+  display: flex;
+}
+
+// 上下居下，左右居右
+.flex-end {
+  @extend .flex-end-align;
+  @extend .flex-end-justify;
+}
+
+// 上下居下，左右居中
+.flex-end-justify {
+  @extend .flex, .flex-center-justify;
+  align-items: flex-end;
+  align-content: flex-end;
+}
+
+// 左右居右，上下居中
+.flex-end-align {
+  @extend .flex, .flex-center-align;
+  justify-content: flex-end;
+  justify-items: flex-end;
+}
+
+// 上下左右居中
+.flex-center {
+  @extend .flex-center-align;
+  @extend .flex-center-justify;
+}
+
+// 左右居中
+.flex-center-align {
+  @extend .flex;
+  align-items: center;
+  align-content: center;
+}
+
+// 上下居中
+.flex-center-justify {
+  @extend .flex;
+  justify-content: center;
+  justify-items: center;
+}
+
+// 左右拉开，上下居中
+.flex-space-between {
+  @extend .flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+}
+
+// 换行
+.flex-wrap {
+  @extend .flex;
+  flex-wrap: wrap;
+}
+
+// 垂直布局
+.flex-column {
+  @extend .flex;
+  flex-direction: column;
+}
+
+// 自动撑开
+.flex-1,
+.flex-spacer {
+  flex-grow: 1;
+}
+
+// 不参与弹性布局
+.flex-none {
+  flex: none;
+}
+
+// 常用阴影效果
+// 浅色投影
+.box-shadow-default {
+  box-shadow: $box-shadow-default;
+}
+
+// 基础投影
+.box-shadow-base {
+  box-shadow: $box-shadow-base;
+}
+
+// 过渡效果
+.transition-default {
+  transition: $transition-base;
+}
+
+// 常用 margin 距离
+// 基准单位 => base: 10px | medium: 20px | large: 30px
+// class => .margin-base = { margin: 10px } （medium | large 同理）
+// class => .padding-base = { padding: 10px } （medium | large 同理）
+// class => .margin-left-base = { margin-left: 10px } （medium | large 同理）
+// class => .padding-left-base = { padding-left: 10px } （medium | large 同理）
+@each $type in margin, padding {
+  .#{$type}-none {
+    #{$type}: 0;
+  }
+  .#{$type}-base {
+    #{$type}: $spacing-base;
+  }
+  .#{$type}-medium {
+    #{$type}: $spacing-medium;
+  }
+  .#{$type}-large {
+    #{$type}: $spacing-large;
+  }
+  @each $direction in top, right, bottom, left {
+    .#{$type}-#{$direction}-none {
+      #{$type}-#{$direction}: 0;
+    }
+    .#{$type}-#{$direction}-base {
+      #{$type}-#{$direction}: $spacing-base;
+    }
+    .#{$type}-#{$direction}-medium {
+      #{$type}-#{$direction}: $spacing-medium;
+    }
+    .#{$type}-#{$direction}-large {
+      #{$type}-#{$direction}: $spacing-large;
+    }
+  }
+}
