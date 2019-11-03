@@ -44,12 +44,12 @@ export default {
 
 ### Complete example
 
-````vue
+```vue
 <template>
   <el-select-tree
     :data="treeData"
     :disabled-values="disabledValues"
-    v-model="value1"
+    v-model="value"
   ></el-select-tree>
 </template>
 
@@ -76,9 +76,9 @@ export default {
       disabledValues: [3]
     };
   }
-};</script
->```
-````
+};
+</script>
+```
 
 ## Component API
 

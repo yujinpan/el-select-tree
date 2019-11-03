@@ -4,7 +4,7 @@ export const example1 = `
     multiple
     :data="treeData"
     :disabled-values="disabledValues"
-    v-model="value1"
+    v-model="value"
   ></el-select-tree>
 </template>
 

@@ -3,7 +3,7 @@ export const example1 = `
   <el-select-tree
     :data="treeData"
     :disabled-values="disabledValues"
-    v-model="value1"
+    v-model="value"
   ></el-select-tree>
 </template>
 
