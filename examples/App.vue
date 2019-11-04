@@ -12,6 +12,8 @@
         <div class="flex-center-align">
           <label>选择内容：</label>
           <el-select-tree
+            width="120px"
+            placeholder="请选择内容"
             :data="treeData"
             :disabled-values="disabledValues"
             v-model="value1"
@@ -54,8 +56,8 @@
 </template>
 
 <script>
-import ElSelectTree from '../lib';
-import '../lib/element-ui';
+import ElSelectTree from '../src';
+import '../src/element-ui';
 
 import { highlight } from './plugins/highlight';
 
@@ -72,7 +74,7 @@ export default {
     return {
       code1: highlight('html', require('./template/example1').example1),
       code2: highlight('html', require('./template/example1').example1),
-      value1: 2,
+      value1: '',
       value2: [2],
       treeData: [
         {

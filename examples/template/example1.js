@@ -1,6 +1,8 @@
 export const example1 = `
 <template>
   <el-select-tree
+    width="120px"
+    placeholder="请选择内容"
     :data="treeData"
     :disabled-values="disabledValues"
     v-model="value"
