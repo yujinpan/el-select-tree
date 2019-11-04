@@ -1,7 +1,7 @@
 <template>
   <div class="el-select-tree" :style="{ width }">
     <el-popover
-      :width="240"
+      :width="popoverWidth"
       :disabled="disabled"
       v-model="visible"
       transition="el-zoom-in-top"
@@ -123,7 +123,8 @@ export default {
   data() {
     return {
       visible: false,
-      selectedLabel: ''
+      selectedLabel: '',
+      popoverWidth: 'auto'
     };
   },
   methods: {
@@ -220,6 +221,12 @@ export default {
   },
   mounted() {
     this.setSelected();
+    this.$nextTick(() => {
+      const clientWidth = this.$el.clientWidth;
+      if (clientWidth) {
+        this.popoverWidth = clientWidth;
+      }
+    });
   }
 };
 </script>
