@@ -1,4 +1,4 @@
-# 简介
+# el-select-tree
 
 ElementUI's el-select combined with el-tree.
 
