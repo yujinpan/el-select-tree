@@ -1,7 +1,7 @@
 <template>
-  <div class="el-select-tree" :style="{ width }">
+  <div class="el-select-tree" :style="{ width: width + 'px' }">
     <el-popover
-      :width="popoverWidth"
+      :width="width"
       :disabled="disabled"
       v-model="visible"
       transition="el-zoom-in-top"
@@ -85,8 +85,8 @@ export default {
       }
     },
     width: {
-      type: String,
-      default: '240px'
+      type: Number,
+      default: 240
     },
     disabled: {
       type: Boolean,
@@ -127,8 +127,7 @@ export default {
   data() {
     return {
       visible: false,
-      selectedLabel: '',
-      popoverWidth: 'auto'
+      selectedLabel: ''
     };
   },
   methods: {
@@ -225,12 +224,6 @@ export default {
   },
   mounted() {
     this.setSelected();
-    this.$nextTick(() => {
-      const clientWidth = this.$el.clientWidth;
-      if (clientWidth) {
-        this.popoverWidth = clientWidth;
-      }
-    });
   }
 };
 </script>
@@ -258,7 +251,6 @@ export default {
     cursor: pointer;
   }
   &__popover {
-    min-width: 0 !important;
     padding: 0 !important;
 
     // extends el-select-dropdown - start

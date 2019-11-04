@@ -12,7 +12,7 @@
         <div class="flex-center-align">
           <label>选择内容：</label>
           <el-select-tree
-            width="120px"
+            :width="120"
             placeholder="请选择内容"
             :data="treeData"
             :disabled-values="disabledValues"
