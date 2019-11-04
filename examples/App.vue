@@ -12,7 +12,7 @@
         <div class="flex-center-align">
           <label>选择内容：</label>
           <el-select-tree
-            :width="120"
+            width="120px"
             placeholder="请选择内容"
             :data="treeData"
             :disabled-values="disabledValues"
@@ -80,7 +80,10 @@ export default {
         {
           value: 1,
           label: 'text1',
-          children: [{ value: 5, label: 'text5' }, { value: 6, label: 'text6' }]
+          children: [
+            { value: 5, label: 'textext1text1text1text1text1t5' },
+            { value: 6, label: 'ttext1text1text1text1text1ext6' }
+          ]
         },
         { value: 2, label: 'text2' },
         { value: 3, label: 'text3' },

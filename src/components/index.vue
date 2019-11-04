@@ -1,13 +1,13 @@
 <template>
-  <div class="el-select-tree" :style="{ width: width + 'px' }">
+  <div class="el-select-tree" :style="{ width }">
     <el-popover
-      :width="width"
-      :disabled="disabled"
+      ref="elPopover"
       v-model="visible"
       transition="el-zoom-in-top"
       popper-class="el-select-tree__popover"
-      placement="bottom"
       trigger="click"
+      :disabled="disabled"
+      :placement="placement"
       @after-enter="handleScroll()"
     >
       <!-- scrollbar wrap -->
@@ -84,9 +84,17 @@ export default {
         };
       }
     },
+    placement: {
+      type: String,
+      default: 'bottom-start'
+    },
+    size: {
+      type: String,
+      default: 'small'
+    },
     width: {
-      type: Number,
-      default: 240
+      type: String,
+      default: '240px'
     },
     disabled: {
       type: Boolean,
@@ -224,6 +232,11 @@ export default {
   },
   mounted() {
     this.setSelected();
+    // set the `popper` default `min-width`
+    this.$nextTick(() => {
+      const popper = this.$refs.elPopover.$refs.popper;
+      popper.style.minWidth = this.width;
+    });
   }
 };
 </script>
@@ -283,6 +296,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    padding-right: $spacing-base;
     &.selected {
       padding-right: 35px;
       color: $--select-option-selected-font-color;

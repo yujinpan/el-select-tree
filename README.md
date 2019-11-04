@@ -92,7 +92,9 @@ export default {
 | `data`           | `object[]` | select options, is a tree data                                                       |
 | `props`          | `object`   | tree data props, default: `{ value: 'value', label: 'label', children: 'children' }` |
 | `multiple`       | `boolean`  | multiple selection, default: `false`                                                 |
-| `width`          | `number`   | default: `240`                                                                       |
+| `placement`      | `string`   | extends ElementUI placement, default: `botttom-start`                                |
+| `size`           | `string`   | extends ElementUI size, default: `samll`                                             |
+| `width`          | `string`   | default: `240px`                                                                     |
 | `disabled`       | `boolean`  | selection disabled, default: `false`                                                 |
 | `disabledValues` | `*[]`      | options disabled                                                                     |
 | `placeholder`    | `string`   | placeholder text, default: '请选择'                                                  |
