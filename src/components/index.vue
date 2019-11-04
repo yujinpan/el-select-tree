@@ -52,7 +52,7 @@
         ref="reference"
         slot="reference"
         readonly
-        placeholder="请选择"
+        :placeholder="placeholder"
         suffix-icon="el-icon-arrow-down"
       ></el-input>
     </el-popover>
@@ -70,6 +70,10 @@ export default {
     event: 'change'
   },
   props: {
+    placeholder: {
+      type: String,
+      default: '请选择'
+    },
     props: {
       type: Object,
       default() {
@@ -254,6 +258,7 @@ export default {
     cursor: pointer;
   }
   &__popover {
+    min-width: 0 !important;
     padding: 0 !important;
 
     // extends el-select-dropdown - start
