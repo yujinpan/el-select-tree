@@ -2,7 +2,7 @@
 
 ElementUI's el-select combined with el-tree.
 
-- Online examples [https://yujinpan.github.io/el-select-tree/](https://yujinpan.github.io/el-select-tree/);
+- Online examples [https://yujinpan.github.io/el-select-tree/](https://yujinpan.github.io/el-select-tree/)
 
 ## Usage
 
