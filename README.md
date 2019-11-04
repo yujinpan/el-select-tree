@@ -47,6 +47,8 @@ export default {
 ```vue
 <template>
   <el-select-tree
+    width="120px"
+    placeholder="请选择内容"
     :data="treeData"
     :disabled-values="disabledValues"
     v-model="value"
@@ -93,6 +95,7 @@ export default {
 | `width`          | `string`   | default: `240px`                                                                     |
 | `disabled`       | `boolean`  | selection disabled, default: `false`                                                 |
 | `disabledValues` | `*[]`      | options disabled                                                                     |
+| `placeholder`    | `string`   | placeholder text, default: '请选择'                                                  |
 
 ### Events
 
