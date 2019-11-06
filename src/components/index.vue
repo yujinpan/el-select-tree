@@ -149,12 +149,12 @@ export default {
 
       if (children && children.length) {
         component.handleExpandIconClick();
-      } else if (!this.disabledValues.includes(value)) {
-        if (!this.multiple) {
+      } else if (!this.disabledValues.includes(value) && !this.multiple) {
+        if (value !== this.value) {
           this.$emit('change', value);
           this.selectedLabel = data[this.propsLabel];
-          this.visible = false;
         }
+        this.visible = false;
       }
     },
     checkChange() {
