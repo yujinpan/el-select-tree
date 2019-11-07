@@ -1,5 +1,5 @@
 <template>
-  <div class="el-select-tree" :style="{ width }">
+  <div class="el-select-tree">
     <el-popover
       ref="elPopover"
       v-model="visible"
@@ -93,9 +93,9 @@ export default {
       type: String,
       default: 'small'
     },
-    width: {
-      type: String,
-      default: '240px'
+    popoverMinWidth: {
+      type: Number,
+      default: 0
     },
     disabled: {
       type: Boolean,
@@ -236,7 +236,20 @@ export default {
     // set the `popper` default `min-width`
     this.$nextTick(() => {
       const popper = this.$refs.elPopover.$refs.popper;
-      popper.style.minWidth = this.width;
+      let width;
+      if (!this.popoverMinWidth) {
+        const clientWidth = this.$el.clientWidth;
+        if (!clientWidth) {
+          console.log(
+            '[el-select-warn]:',
+            'can not get `width`, please set the `popoverMinWidth`'
+          );
+        }
+        width = clientWidth;
+      } else {
+        width = this.popoverMinWidth;
+      }
+      width && (popper.style.minWidth = width + 'px');
     });
   }
 };

@@ -12,8 +12,8 @@
         <div class="flex-center-align">
           <label>选择内容：</label>
           <el-select-tree
-            width="120px"
             placeholder="请选择内容"
+            :popover-min-width="100"
             :data="treeData"
             :disabled-values="disabledValues"
             v-model="value1"
