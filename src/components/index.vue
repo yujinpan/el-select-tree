@@ -47,13 +47,14 @@
       <!-- trigger input -->
       <el-input
         v-model="selectedLabel"
-        :class="{ 'is-focus': visible }"
-        :disabled="disabled"
         ref="reference"
         slot="reference"
         readonly
-        :placeholder="placeholder"
         suffix-icon="el-icon-arrow-down"
+        :size="size"
+        :class="{ 'is-focus': visible }"
+        :disabled="disabled"
+        :placeholder="placeholder"
       ></el-input>
     </el-popover>
   </div>
