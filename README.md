@@ -86,18 +86,18 @@ export default {
 
 ### Attributes
 
-| name             | type       | description                                                                          |
-| ---------------- | ---------- | ------------------------------------------------------------------------------------ |
-| `value/v-model`  | `*/*[]`    | bound value, the type must be array if attribute's `multiple` is true                |
-| `data`           | `object[]` | select options, is a tree data                                                       |
-| `props`          | `object`   | tree data props, default: `{ value: 'value', label: 'label', children: 'children' }` |
-| `multiple`       | `boolean`  | multiple selection, default: `false`                                                 |
-| `placement`      | `string`   | extends ElementUI placement, default: `botttom-start`                                |
-| `size`           | `string`   | extends ElementUI size, default: `samll`                                             |
-| `width`          | `string`   | default: `240px`                                                                     |
-| `disabled`       | `boolean`  | selection disabled, default: `false`                                                 |
-| `disabledValues` | `*[]`      | options disabled                                                                     |
-| `placeholder`    | `string`   | placeholder text, default: '请选择'                                                  |
+| name                | type       | description                                                                          |
+| ------------------- | ---------- | ------------------------------------------------------------------------------------ |
+| `value/v-model`     | `*/*[]`    | bound value, the type must be array if attribute's `multiple` is true                |
+| `data`              | `object[]` | select options, is a tree data                                                       |
+| `props`             | `object`   | tree data props, default: `{ value: 'value', label: 'label', children: 'children' }` |
+| `multiple`          | `boolean`  | multiple selection, default: `false`                                                 |
+| `placement`         | `string`   | extends ElementUI placement, default: `botttom-start`                                |
+| `size`              | `string`   | extends ElementUI size, default: `samll`                                             |
+| `popover-min-width` | `number`   | default: 0, default will set parent's width                                          |
+| `disabled`          | `boolean`  | selection disabled, default: `false`                                                 |
+| `disabledValues`    | `*[]`      | options disabled                                                                     |
+| `placeholder`       | `string`   | placeholder text, default: '请选择'                                                  |
 
 ### Events
 
