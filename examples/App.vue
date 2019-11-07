@@ -1,7 +1,7 @@
 <template>
   <div class="app padding-medium text-center">
     <h2>el-select-tree</h2>
-    <p class="text-secondary">author: yujinpan - version: v1.0.0</p>
+    <p class="text-secondary">author: yujinpan - version: v{{ version }}</p>
     <el-divider></el-divider>
     <el-row type="flex">
       <el-col :span="12">
@@ -61,6 +61,8 @@ import '../src/element-ui';
 
 import { highlight } from './plugins/highlight';
 
+const version = require('../package').version;
+
 export default {
   components: {
     ElSelectTree
@@ -72,6 +74,7 @@ export default {
   },
   data() {
     return {
+      version,
       code1: highlight('html', require('./template/example1').example1),
       code2: highlight('html', require('./template/example1').example1),
       value1: '',
