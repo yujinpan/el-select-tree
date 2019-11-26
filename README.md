@@ -98,6 +98,7 @@ export default {
 | `disabled`          | `boolean`  | selection disabled, default: `false`                                                 |
 | `disabledValues`    | `*[]`      | options disabled                                                                     |
 | `placeholder`       | `string`   | placeholder text, default: '请选择'                                                  |
+| `checkStrictly`     | `boolean`  | select any level, default: `false`                                                   |
 
 ### Events
 

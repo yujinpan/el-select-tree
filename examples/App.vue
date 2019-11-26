@@ -5,51 +5,48 @@
     <el-divider></el-divider>
     <el-row type="flex">
       <el-col :span="12">
-        <h3>1. 单选</h3>
         <pre><code v-html="code1"></code></pre>
       </el-col>
       <el-col class="text-left" :span="12">
         <div class="flex-center-align">
-          <label>选择内容：</label>
+          <label>choose：</label>
           <el-select-tree
-            placeholder="请选择内容"
+            :multiple="multiple"
+            :placeholder="placeholder"
+            :disabled="disabled"
             :popover-min-width="100"
             :data="treeData"
             :disabled-values="disabledValues"
+            :check-strictly="checkStrictly"
             v-model="value1"
           ></el-select-tree>
-          <div class="margin-left-medium">当前值：{{ value1 }}</div>
+          <div class="margin-left-medium">current value：{{ value1 }}</div>
         </div>
         <el-divider></el-divider>
         <div class="flex-center-align">
-          <label>选择内容（禁用）：</label>
-          <el-select-tree
-            disabled
-            :data="treeData"
-            :disabled-values="disabledValues"
-            v-model="value1"
-          ></el-select-tree>
-          <div class="margin-left-medium">当前值：{{ value1 }}</div>
+          <label>choose any level：</label>
+          <el-switch v-model="checkStrictly"></el-switch>
+          <b class="margin-left-medium" v-if="checkStrictly"
+            >try to choose parent</b
+          >
         </div>
-      </el-col>
-    </el-row>
-    <el-divider></el-divider>
-    <el-row type="flex">
-      <el-col :span="12">
-        <h3>2. 多选</h3>
-        <pre><code v-html="code2"></code></pre>
-      </el-col>
-      <el-col class="text-left" :span="12">
+        <el-divider></el-divider>
         <div class="flex-center-align">
-          <label>选择内容：</label>
-          <el-select-tree
-            multiple
-            :data="treeData"
-            :disabled-values="disabledValues"
-            v-model="value2"
-          ></el-select-tree>
-          <div class="margin-left-medium">当前值：{{ value2.join(',') }}</div>
+          <label>disabled：</label>
+          <el-switch v-model="disabled"></el-switch>
         </div>
+        <el-divider></el-divider>
+        <div class="flex-center-align">
+          <label>multiple choose：</label>
+          <el-switch v-model="multiple"></el-switch>
+        </div>
+        <el-divider></el-divider>
+        <el-link
+          type="primary"
+          href="https://github.com/yujinpan/el-select-tree#attributes"
+          >more attributes
+          look：https://github.com/yujinpan/el-select-tree#attributes</el-link
+        >
       </el-col>
     </el-row>
   </div>
@@ -74,11 +71,13 @@ export default {
   },
   data() {
     return {
+      multiple: false,
+      placeholder: 'please choose',
+      disabled: false,
+      checkStrictly: false,
       version,
       code1: highlight('html', require('./template/example1').example1),
-      code2: highlight('html', require('./template/example1').example1),
       value1: '',
-      value2: [2],
       treeData: [
         {
           value: 1,

@@ -1,7 +1,7 @@
 export const example1 = `
 <template>
   <el-select-tree
-    placeholder="请选择内容"
+    placeholder="please choose"
     :popover-min-width="100"
     :data="treeData"
     :disabled-values="disabledValues"

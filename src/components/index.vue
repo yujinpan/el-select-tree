@@ -71,6 +71,10 @@ export default {
     event: 'change'
   },
   props: {
+    checkStrictly: {
+      type: Boolean,
+      default: false
+    },
     placeholder: {
       type: String,
       default: '请选择'
@@ -148,7 +152,7 @@ export default {
       const children = data.children;
       const value = data[this.propsValue];
 
-      if (children && children.length) {
+      if (children && children.length && !this.checkStrictly) {
         component.handleExpandIconClick();
       } else if (!this.disabledValues.includes(value) && !this.multiple) {
         if (value !== this.value) {
