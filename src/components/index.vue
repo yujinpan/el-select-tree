@@ -26,6 +26,7 @@
           :show-checkbox="multiple"
           :expand-on-click-node="multiple"
           :data="data"
+          :default-expanded-keys="defaultExpandedKeys"
           @node-click="nodeClick"
           @check-change="checkChange"
         >
@@ -135,6 +136,9 @@ export default {
     },
     propsLabel() {
       return this.props.label;
+    },
+    defaultExpandedKeys() {
+      return Array.isArray(this.value) ? this.value : [this.value];
     }
   },
   data() {
@@ -314,9 +318,8 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding-right: $spacing-base;
+    padding-right: $spacing-medium;
     &.selected {
-      padding-right: 35px;
       color: $--select-option-selected-font-color;
       font-weight: bolder;
     }

@@ -77,7 +77,7 @@ export default {
       checkStrictly: false,
       version,
       code1: highlight('html', require('./template/example1').example1),
-      value1: '',
+      value1: 5,
       treeData: [
         {
           value: 1,
