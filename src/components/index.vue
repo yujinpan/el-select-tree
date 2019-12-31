@@ -155,7 +155,7 @@ export default {
       this.$refs.scrollbar && this.$refs.scrollbar.handleScroll();
     },
     nodeClick(data, node, component) {
-      const children = data.children;
+      const children = data[this.props.children];
       const value = data[this.propsValue];
 
       if (children && children.length && !this.checkStrictly) {
