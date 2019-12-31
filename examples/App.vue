@@ -16,6 +16,7 @@
             :disabled="disabled"
             :popover-min-width="100"
             :data="treeData"
+            :props="treeProps"
             :disabled-values="disabledValues"
             :check-strictly="checkStrictly"
             v-model="value1"
@@ -80,17 +81,22 @@ export default {
       value1: 5,
       treeData: [
         {
-          value: 1,
-          label: 'text1',
+          id: 1,
+          label1: 'text1',
           children: [
-            { value: 5, label: 'textext1text1text1text1text1t5' },
-            { value: 6, label: 'ttext1text1text1text1text1ext6' }
+            { id: 5, label1: 'textext1text1text1text1text1t5' },
+            { id: 6, label1: 'ttext1text1text1text1text1ext6' }
           ]
         },
-        { value: 2, label: 'text2' },
-        { value: 3, label: 'text3' },
-        { value: 4, label: 'text5' }
+        { id: 2, label1: 'text2' },
+        { id: 3, label1: 'text3' },
+        { id: 4, label1: 'text5' }
       ],
+      treeProps: {
+        value: 'id',
+        children: 'children',
+        label: 'label1'
+      },
       disabledValues: [3]
     };
   }

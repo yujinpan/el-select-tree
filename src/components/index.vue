@@ -62,6 +62,8 @@
 </template>
 
 <script>
+import Vue from 'vue';
+
 import treeFind from 'operation-tree-node/dist/treeFind.esm';
 import treeEach from 'operation-tree-node/dist/treeEach.esm';
 
@@ -96,7 +98,7 @@ export default {
     },
     size: {
       type: String,
-      default: 'small'
+      default: Vue.prototype.$ELEMENT ? Vue.prototype.$ELEMENT.size : ''
     },
     popoverMinWidth: {
       type: Number,
@@ -201,15 +203,16 @@ export default {
     },
     setTreeDataState() {
       const disabledValues = this.disabledValues;
-      const propsValue = this.props.value;
       treeEach(this.data, (node) => {
-        node.disabled = disabledValues.includes(node[propsValue]);
+        node.disabled = disabledValues.includes(node[this.propsValue]);
       });
     },
     setSelectedLabel() {
       const elTree = this.$refs.elTree;
       const selectedNodes = elTree.getCheckedNodes(true);
-      this.selectedLabel = selectedNodes.map((item) => item.label).join(',');
+      this.selectedLabel = selectedNodes
+        .map((item) => item[this.propsLabel])
+        .join(',');
     },
     treeItemClass(data) {
       const value = data[this.propsValue];
