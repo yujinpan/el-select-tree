@@ -192,8 +192,10 @@ export default {
             this.setSelectedLabel();
           });
         } else {
-          const selectedNode = treeFind(this.data, (node) =>
-            this.checkSelected(node[propsValue])
+          const selectedNode = treeFind(
+            this.data,
+            (node) => this.checkSelected(node[propsValue]),
+            this.props
           );
           if (selectedNode) {
             this.selectedLabel = selectedNode[this.propsLabel];
