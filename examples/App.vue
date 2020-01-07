@@ -11,6 +11,8 @@
         <div class="flex-center-align">
           <label>choose：</label>
           <el-select-tree
+            v-if="show"
+            :default-expand-all="defaultExpandAll"
             :multiple="multiple"
             :placeholder="placeholder"
             :disabled="disabled"
@@ -40,6 +42,14 @@
         <div class="flex-center-align">
           <label>multiple choose：</label>
           <el-switch v-model="multiple"></el-switch>
+        </div>
+        <el-divider></el-divider>
+        <div class="flex-center-align">
+          <label>expand all tree node：</label>
+          <el-switch v-model="defaultExpandAll" @change="refresh()"></el-switch>
+          <b class="margin-left-medium" v-if="defaultExpandAll"
+            >You know, this property must be defined when initializing!</b
+          >
         </div>
         <el-divider></el-divider>
         <el-link
@@ -72,6 +82,7 @@ export default {
   },
   data() {
     return {
+      defaultExpandAll: false,
       multiple: false,
       placeholder: 'please choose',
       disabled: false,
@@ -113,8 +124,15 @@ export default {
         children: 'childrens',
         label: 'label'
       },
-      disabledValues: [3]
+      disabledValues: [3],
+      show: true
     };
+  },
+  methods: {
+    refresh() {
+      this.show = false;
+      setTimeout(() => (this.show = true), 200);
+    }
   }
 };
 </script>
