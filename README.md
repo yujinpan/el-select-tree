@@ -99,6 +99,7 @@ export default {
 | `disabledValues`    | `*[]`      | options disabled                                                                     |
 | `placeholder`       | `string`   | placeholder text, default: '请选择'                                                  |
 | `checkStrictly`     | `boolean`  | select any level, default: `false`                                                   |
+| `defaultExpandAll`  | `boolean`  | expand all tree node, default: `false`                                               |
 
 ### Events
 
