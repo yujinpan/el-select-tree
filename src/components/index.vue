@@ -21,6 +21,7 @@
         <el-tree
           ref="elTree"
           class="el-select-tree__list"
+          :default-expand-all="defaultExpandAll"
           :props="props"
           :node-key="propsValue"
           :show-checkbox="multiple"
@@ -74,10 +75,8 @@ export default {
     event: 'change'
   },
   props: {
-    checkStrictly: {
-      type: Boolean,
-      default: false
-    },
+    defaultExpandAll: Boolean,
+    checkStrictly: Boolean,
     placeholder: {
       type: String,
       default: '请选择'
@@ -104,14 +103,8 @@ export default {
       type: Number,
       default: 0
     },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    multiple: {
-      type: Boolean,
-      default: false
-    },
+    disabled: Boolean,
+    multiple: Boolean,
     value: {
       type: [Number, String, Array],
       default: ''
