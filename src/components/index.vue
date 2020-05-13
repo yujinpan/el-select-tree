@@ -54,7 +54,7 @@
         readonly
         suffix-icon="el-icon-arrow-down"
         :size="size"
-        :class="{ 'is-focus': visible }"
+        :class="{ 'is-active': visible }"
         :disabled="disabled"
         :placeholder="placeholder"
       ></el-input>
@@ -270,10 +270,18 @@ export default {
     .el-input__inner {
       border-color: $--input-border-color-hover;
     }
+    .el-input__icon {
+      transition: transform 0.3s;
+    }
   }
   .el-input.is-focus {
     .el-input__inner {
       border-color: $--button-primary-border-color;
+    }
+  }
+  .el-input.is-active {
+    .el-input__icon {
+      transform: rotate(-180deg);
     }
   }
   .el-input__inner {
