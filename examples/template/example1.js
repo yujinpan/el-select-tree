@@ -1,11 +1,18 @@
 export const example1 = `
 <template>
   <el-select-tree
-    placeholder="please choose"
+    v-if="show"
+    :default-expand-all="defaultExpandAll"
+    :multiple="multiple"
+    :placeholder="placeholder"
+    :disabled="disabled"
     :popover-min-width="100"
     :data="treeData"
+    :props="treeProps"
     :disabled-values="disabledValues"
-    v-model="value"
+    :check-strictly="checkStrictly"
+    :clearable="clearable"
+    v-model="value1"
   ></el-select-tree>
 </template>
 
@@ -18,18 +25,48 @@ export default {
   },
   data() {
     return {
-      value: 2,
+    clearable: true,
+      defaultExpandAll: false,
+      multiple: false,
+      placeholder: 'please choose',
+      disabled: false,
+      checkStrictly: false,
       treeData: [
         {
-          value: 1,
-          label: 'text1',
-          children: [{ value: 5, label: 'text5' }, { value: 6, label: 'text6' }]
-        },
-        { value: 2, label: 'text2' },
-        { value: 3, label: 'text3' },
-        { value: 4, label: 'text5' }
+          label: '新疆维吾尔自治区',
+          id: '1',
+          childrens: [
+            {
+              label: '乌鲁木齐市',
+              id: '2',
+              childrens: [
+                { label: '达坂城区', id: '7', childrens: [] },
+                { label: '头屯河区', id: '8', childrens: [] },
+                { label: '乌鲁木齐县', id: '9', childrens: [] }
+              ]
+            },
+            {
+              label: '克拉玛依市',
+              id: '3',
+              childrens: [
+                { label: '克拉玛依区', id: '10', childrens: [] },
+                { label: '白碱滩区', id: '11', childrens: [] },
+                { label: '独山子区', id: '12', childrens: [] }
+              ]
+            },
+            { label: '吐鲁番地区', id: '4', childrens: [] },
+            { label: '哈密地区', id: '5', childrens: [] },
+            { label: '昌吉回族自治州', id: '6', childrens: [] }
+          ]
+        }
       ],
-      disabledValues: [3]
+      treeProps: {
+        value: 'id',
+        children: 'childrens',
+        label: 'label'
+      },
+      value: '2',
+      disabledValues: ['3'],
     };
   }
 };

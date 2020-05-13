@@ -52,12 +52,23 @@
         ref="reference"
         slot="reference"
         readonly
-        suffix-icon="el-icon-arrow-down"
         :size="size"
-        :class="{ 'is-active': visible }"
+        :class="{
+          'is-active': visible,
+          'is-selected': selectedLabel,
+          'is-clearable': clearable
+        }"
         :disabled="disabled"
         :placeholder="placeholder"
-      ></el-input>
+      >
+        <i
+          v-if="clearable"
+          @click.stop="clear()"
+          slot="suffix"
+          class="el-input__icon el-icon-circle-close"
+        ></i>
+        <i slot="suffix" class="el-input__icon el-icon-arrow-down"></i>
+      </el-input>
     </el-popover>
   </div>
 </template>
@@ -75,6 +86,7 @@ export default {
     event: 'change'
   },
   props: {
+    clearable: Boolean,
     defaultExpandAll: Boolean,
     checkStrictly: Boolean,
     placeholder: {
@@ -143,6 +155,17 @@ export default {
     };
   },
   methods: {
+    clear() {
+      this.visible = false;
+      if (this.multiple) {
+        this.$emit('change', []);
+        this.$nextTick(() => {
+          this.$refs.elTree.setCheckedKeys([]);
+        });
+      } else {
+        this.$emit('change', '');
+      }
+    },
     // 触发滚动条的重置
     handleScroll() {
       this.$refs.scrollbar && this.$refs.scrollbar.handleScroll();
@@ -266,30 +289,41 @@ export default {
 
 .el-select-tree {
   display: inline-block;
-  .el-input:hover {
-    .el-input__inner {
-      border-color: $--input-border-color-hover;
-    }
-    .el-input__icon {
-      transition: transform 0.3s;
-    }
-  }
-  .el-input.is-focus {
-    .el-input__inner {
-      border-color: $--button-primary-border-color;
-    }
-  }
-  .el-input.is-active {
-    .el-input__icon {
-      transform: rotate(-180deg);
+  .el-input__icon {
+    cursor: pointer;
+    transition: transform 0.3s;
+    &.el-icon-circle-close {
+      display: none;
     }
   }
   .el-input__inner {
     cursor: pointer;
     padding-right: 30px;
   }
-  .el-input__icon {
-    cursor: pointer;
+  .el-input {
+    &:hover {
+      .el-input__inner {
+        border-color: $--input-border-color-hover;
+      }
+      &.is-selected.is-clearable {
+        .el-input__icon {
+          &.el-icon-circle-close {
+            display: inline-block;
+          }
+          &.el-icon-arrow-down {
+            display: none;
+          }
+        }
+      }
+    }
+    &.is-active {
+      .el-icon-arrow-down {
+        transform: rotate(-180deg);
+      }
+      .el-input__inner {
+        border-color: $--button-primary-border-color;
+      }
+    }
   }
   &__popover {
     padding: 0 !important;

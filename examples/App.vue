@@ -21,13 +21,14 @@
             :props="treeProps"
             :disabled-values="disabledValues"
             :check-strictly="checkStrictly"
+            :clearable="clearable"
             v-model="value1"
           ></el-select-tree>
           <div class="margin-left-medium">current value：{{ value1 }}</div>
         </div>
         <el-divider></el-divider>
         <div class="flex-center-align">
-          <label>choose any level：</label>
+          <label>choose any level(check-strictly)：</label>
           <el-switch v-model="checkStrictly"></el-switch>
           <b class="margin-left-medium" v-if="checkStrictly"
             >try to choose parent</b
@@ -35,21 +36,26 @@
         </div>
         <el-divider></el-divider>
         <div class="flex-center-align">
-          <label>disabled：</label>
+          <label>disabled(disabled)：</label>
           <el-switch v-model="disabled"></el-switch>
         </div>
         <el-divider></el-divider>
         <div class="flex-center-align">
-          <label>multiple choose：</label>
+          <label>multiple choose(multiple)：</label>
           <el-switch v-model="multiple"></el-switch>
         </div>
         <el-divider></el-divider>
         <div class="flex-center-align">
-          <label>expand all tree node：</label>
+          <label>expand all tree node(default-expand-all)：</label>
           <el-switch v-model="defaultExpandAll" @change="refresh()"></el-switch>
           <b class="margin-left-medium" v-if="defaultExpandAll"
             >You know, this property must be defined when initializing!</b
           >
+        </div>
+        <el-divider></el-divider>
+        <div class="flex-center-align">
+          <label>clearable(clearable)：</label>
+          <el-switch v-model="clearable"></el-switch>
         </div>
         <el-divider></el-divider>
         <el-link
@@ -82,6 +88,7 @@ export default {
   },
   data() {
     return {
+      clearable: true,
       defaultExpandAll: false,
       multiple: false,
       placeholder: 'please choose',
@@ -124,7 +131,7 @@ export default {
         children: 'childrens',
         label: 'label'
       },
-      disabledValues: [3],
+      disabledValues: ['3'],
       show: true
     };
   },
