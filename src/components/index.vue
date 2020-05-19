@@ -79,12 +79,14 @@
 
 <script>
 import Vue from 'vue';
+import Emitter from 'element-ui/src/mixins/emitter';
 
 import treeFind from 'operation-tree-node/dist/treeFind.esm';
 import treeEach from 'operation-tree-node/dist/treeEach.esm';
 
 export default {
   name: 'ElSelectTree',
+  mixins: [Emitter],
   model: {
     prop: 'value',
     event: 'change'
@@ -163,17 +165,17 @@ export default {
       this.$emit('change', value);
       // trigger el-form event
       // like validator
-      this.$emit('el.form.change', value);
+      this.dispatch('ElFormItem', 'el.form.change', value);
     },
     clear() {
       this.visible = false;
       if (this.multiple) {
-        this.$emit('change', []);
+        this.valueChange([]);
         this.$nextTick(() => {
           this.$refs.elTree.setCheckedKeys([]);
         });
       } else {
-        this.$emit('change', '');
+        this.valueChange('');
       }
     },
     // 触发滚动条的重置
