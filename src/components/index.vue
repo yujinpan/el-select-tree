@@ -52,6 +52,7 @@
         ref="reference"
         slot="reference"
         readonly
+        :validate-event="false"
         :size="size"
         :class="{
           'is-active': visible,
@@ -65,9 +66,12 @@
           v-if="clearable"
           @click.stop="clear()"
           slot="suffix"
-          class="el-input__icon el-icon-circle-close"
+          class="el-input__icon el-input__icon-close el-icon-circle-close"
         ></i>
-        <i slot="suffix" class="el-input__icon el-icon-arrow-down"></i>
+        <i
+          slot="suffix"
+          class="el-input__icon el-input__icon-arrow-down el-icon-arrow-down"
+        ></i>
       </el-input>
     </el-popover>
   </div>
@@ -155,6 +159,12 @@ export default {
     };
   },
   methods: {
+    valueChange(value) {
+      this.$emit('change', value);
+      // trigger el-form event
+      // like validator
+      this.$emit('el.form.change', value);
+    },
     clear() {
       this.visible = false;
       if (this.multiple) {
@@ -178,14 +188,14 @@ export default {
         component.handleExpandIconClick();
       } else if (!this.disabledValues.includes(value) && !this.multiple) {
         if (value !== this.value) {
-          this.$emit('change', value);
+          this.valueChange(value);
           this.selectedLabel = data[this.propsLabel];
         }
         this.visible = false;
       }
     },
     checkChange() {
-      this.$emit('change', this.$refs.elTree.getCheckedKeys(true));
+      this.valueChange(this.$refs.elTree.getCheckedKeys(true));
       this.setSelectedLabel();
     },
     checkSelected(value) {
@@ -292,7 +302,7 @@ export default {
   .el-input__icon {
     cursor: pointer;
     transition: transform 0.3s;
-    &.el-icon-circle-close {
+    &-close {
       display: none;
     }
   }
@@ -307,17 +317,17 @@ export default {
       }
       &.is-selected.is-clearable {
         .el-input__icon {
-          &.el-icon-circle-close {
+          &-close {
             display: inline-block;
           }
-          &.el-icon-arrow-down {
+          &-arrow-down {
             display: none;
           }
         }
       }
     }
     &.is-active {
-      .el-icon-arrow-down {
+      .el-input__icon-arrow-down {
         transform: rotate(-180deg);
       }
       .el-input__inner {

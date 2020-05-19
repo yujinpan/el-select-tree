@@ -1,13 +1,18 @@
 <template>
   <div class="app padding-medium text-center">
+    <!-- author -->
     <h2>el-select-tree</h2>
     <p class="text-secondary">author: yujinpan - version: v{{ version }}</p>
+
     <el-divider></el-divider>
+
     <el-row type="flex">
+      <!-- example -->
       <el-col :span="12">
         <pre><code v-html="code1"></code></pre>
       </el-col>
       <el-col class="text-left" :span="12">
+        <!-- selector -->
         <div class="flex-center-align">
           <label>choose：</label>
           <el-select-tree
@@ -27,6 +32,8 @@
           <div class="margin-left-medium">current value：{{ value1 }}</div>
         </div>
         <el-divider></el-divider>
+
+        <!-- options -->
         <div class="flex-center-align">
           <label>choose any level(check-strictly)：</label>
           <el-switch v-model="checkStrictly"></el-switch>
@@ -57,6 +64,44 @@
           <label>clearable(clearable)：</label>
           <el-switch v-model="clearable"></el-switch>
         </div>
+        <el-divider></el-divider>
+
+        <!-- form test -->
+        <el-form
+          ref="form"
+          :model="form"
+          :rules="formRule"
+          class="flex-center-align"
+          inline
+        >
+          <el-form-item label="with form：" prop="area">
+            <el-select-tree
+              v-if="show"
+              :default-expand-all="defaultExpandAll"
+              :multiple="multiple"
+              :placeholder="placeholder"
+              :disabled="disabled"
+              :popover-min-width="100"
+              :data="treeData"
+              :props="treeProps"
+              :disabled-values="disabledValues"
+              :check-strictly="checkStrictly"
+              :clearable="clearable"
+              v-model="form.area"
+            ></el-select-tree>
+            <el-button
+              @click="$refs.form.validate()"
+              style="margin-left: 40px"
+              type="primary"
+              >Validate</el-button
+            >
+            <el-button
+              @click="$refs.form.resetFields()"
+              style="margin-left: 20px"
+              >Reset</el-button
+            >
+          </el-form-item>
+        </el-form>
         <el-divider></el-divider>
         <el-link
           type="primary"
@@ -132,7 +177,11 @@ export default {
         label: 'label'
       },
       disabledValues: ['3'],
-      show: true
+      show: true,
+      form: { area: '' },
+      formRule: {
+        area: { required: true, message: 'area is required.' }
+      }
     };
   },
   methods: {
