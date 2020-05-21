@@ -79,7 +79,7 @@
 
 <script>
 import Vue from 'vue';
-import Emitter from 'element-ui/src/mixins/emitter';
+import Emitter from 'element-ui/lib/mixins/emitter';
 
 import treeFind from 'operation-tree-node/dist/treeFind.esm';
 import treeEach from 'operation-tree-node/dist/treeEach.esm';
