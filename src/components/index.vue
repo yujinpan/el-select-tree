@@ -28,6 +28,7 @@
           :expand-on-click-node="multiple"
           :data="data"
           :default-expanded-keys="defaultExpandedKeys"
+          :check-strictly="checkStrictly"
           @node-click="nodeClick"
           @check-change="checkChange"
         >
@@ -197,7 +198,7 @@ export default {
       }
     },
     checkChange() {
-      this.valueChange(this.$refs.elTree.getCheckedKeys(true));
+      this.valueChange(this.$refs.elTree.getCheckedKeys(!this.checkStrictly));
       this.setSelectedLabel();
     },
     checkSelected(value) {
@@ -239,7 +240,7 @@ export default {
     },
     setSelectedLabel() {
       const elTree = this.$refs.elTree;
-      const selectedNodes = elTree.getCheckedNodes(true);
+      const selectedNodes = elTree.getCheckedNodes(!this.checkStrictly);
       this.selectedLabel = selectedNodes
         .map((item) => item[this.propsLabel])
         .join(',');
