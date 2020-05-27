@@ -102,13 +102,18 @@
             >
           </el-form-item>
         </el-form>
-        <el-divider></el-divider>
+        <el-divider class="margin-top-none"></el-divider>
         <el-link
           type="primary"
           href="https://github.com/yujinpan/el-select-tree#attributes"
           >more attributes
           look：https://github.com/yujinpan/el-select-tree#attributes</el-link
         >
+        <el-divider></el-divider>
+        <h4>
+          Tips: you can get `el-tree` instance from
+          `$refs.elSelectTree.$refs.elTree`. :D
+        </h4>
       </el-col>
     </el-row>
   </div>
