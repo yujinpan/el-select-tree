@@ -1,3 +1,10 @@
+# 1.0.19 2020-05-27
+
+## Fix
+
+- import compiled version with ElementUI's `Emitter` mixin
+- `check-strictly` does not valid in multiple check
+
 # 1.0.17 2020-05-19
 
 ## Fix
