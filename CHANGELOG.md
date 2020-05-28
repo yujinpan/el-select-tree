@@ -1,3 +1,9 @@
+# 1.0.20 2020-05-28
+
+## Fix
+
+- cannot clear in disabled state
+
 # 1.0.19 2020-05-27
 
 ## Fix
