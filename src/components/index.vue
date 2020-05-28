@@ -314,7 +314,7 @@ export default {
     padding-right: 30px;
   }
   .el-input {
-    &:hover {
+    &:hover:not(.is-disabled) {
       .el-input__inner {
         border-color: $--input-border-color-hover;
       }
