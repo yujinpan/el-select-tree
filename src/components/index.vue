@@ -349,6 +349,10 @@ export default {
     .popper__arrow {
       left: 35px !important;
     }
+
+    .el-tree-node__expand-icon.is-leaf {
+      cursor: pointer;
+    }
   }
   &__list {
     overflow-y: auto;
@@ -366,10 +370,7 @@ export default {
     // scroll style - end
   }
   &__item {
-    flex: 1;
     position: relative;
-    overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
     padding-right: $spacing-medium;
     &.selected {
