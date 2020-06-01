@@ -1,3 +1,9 @@
+# 1.0.21 2020-06-01
+
+## Fix
+
+- add pinter style in expand icon and remove the text flex attribute(unused and width is not auto in ie)
+
 # 1.0.20 2020-05-28
 
 ## Fix
