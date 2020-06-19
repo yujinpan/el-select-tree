@@ -209,26 +209,22 @@ export default {
       }
     },
     setSelected() {
+      if (!this.data || !this.data.length) return;
+
       this.selectedLabel = '';
-
-      const propsValue = this.propsValue;
-      const value = this.value;
-
-      if (String(value).length) {
-        if (this.multiple) {
-          this.$nextTick(() => {
-            this.$refs.elTree.setCheckedKeys(this.value);
-            this.setSelectedLabel();
-          });
-        } else {
-          const selectedNode = treeFind(
-            this.data,
-            (node) => this.checkSelected(node[propsValue]),
-            this.props
-          );
-          if (selectedNode) {
-            this.selectedLabel = selectedNode[this.propsLabel];
-          }
+      if (this.multiple) {
+        this.$nextTick(() => {
+          this.$refs.elTree.setCheckedKeys(this.value);
+          this.setSelectedLabel();
+        });
+      } else {
+        const selectedNode = treeFind(
+          this.data,
+          (node) => this.checkSelected(node[this.propsValue]),
+          this.props
+        );
+        if (selectedNode) {
+          this.selectedLabel = selectedNode[this.propsLabel];
         }
       }
     },
@@ -258,6 +254,7 @@ export default {
       this.setSelected();
     },
     data() {
+      this.setSelected();
       this.setTreeDataState();
     },
     disabledValues() {
