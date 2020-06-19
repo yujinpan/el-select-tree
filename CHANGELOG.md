@@ -1,3 +1,9 @@
+# 1.0.22 2020-06-01
+
+## Fix
+
+- set selected when options init async and repeat prevent it
+
 # 1.0.21 2020-06-01
 
 ## Fix
