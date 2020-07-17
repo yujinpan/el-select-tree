@@ -44,7 +44,11 @@
       </el-scrollbar>
 
       <!-- empty text -->
-      <p class="el-select-tree__empty" v-else>
+      <p
+        v-else
+        class="el-select-tree__empty"
+        :style="{ width: minWidth + 'px' }"
+      >
         无数据
       </p>
 
@@ -255,7 +259,7 @@ export default {
       };
     },
     handleResize() {
-      // set the `popper` default `min-width`
+      // set the `tree` default `min-width`
       this.minWidth = this.popoverMinWidth || this.$el.clientWidth;
     }
   },
