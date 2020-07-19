@@ -101,6 +101,8 @@ export default {
 | `checkStrictly`     | `boolean`  | select any level, default: `false`                                                   |
 | `defaultExpandAll`  | `boolean`  | expand all tree node, default: `false`                                               |
 | `clearable`         | `boolean`  | cleanup options, default: `false`                                                    |
+| `filterable`        | `boolean`  | filterable options, default: `false`                                                 |
+| `filterNodeMethod`  | `function` | filter Method                                                                        |
 
 ### Events
 

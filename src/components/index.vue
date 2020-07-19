@@ -10,6 +10,16 @@
       :placement="placement"
       @after-enter="handleScroll()"
     >
+      <el-input
+        v-if="filterable"
+        ref="filterInput"
+        size="mini"
+        class="el-select-tree__filter"
+        v-model="filterText"
+      >
+        <el-button slot="append" size="mini" icon="el-icon-search"></el-button>
+      </el-input>
+
       <!-- scrollbar wrap -->
       <el-scrollbar
         v-if="dataLength"
@@ -29,6 +39,7 @@
           :data="data"
           :default-expanded-keys="defaultExpandedKeys"
           :check-strictly="checkStrictly"
+          :filter-node-method="filterNodeMethod"
           @node-click="nodeClick"
           @check-change="checkChange"
         >
@@ -124,6 +135,16 @@ export default {
     },
     disabled: Boolean,
     multiple: Boolean,
+    filterable: Boolean,
+    filterNodeMethod: {
+      type: Function,
+      default: (value, data) => {
+        if (!value) {
+          return true;
+        }
+        return data.label.indexOf(value) !== -1;
+      }
+    },
     value: {
       type: [Number, String, Array],
       default: ''
@@ -158,7 +179,8 @@ export default {
   data() {
     return {
       visible: false,
-      selectedLabel: ''
+      selectedLabel: '',
+      filterText: ''
     };
   },
   methods: {
@@ -259,6 +281,9 @@ export default {
     },
     disabledValues() {
       this.setTreeDataState();
+    },
+    filterText(val) {
+      this.$refs.elTree.filter(val);
     }
   },
   created() {
@@ -385,6 +410,9 @@ export default {
     text-align: center;
     color: $--select-dropdown-empty-color;
     font-size: $--select-font-size;
+  }
+  &__filter {
+    padding: 8px;
   }
 }
 </style>
