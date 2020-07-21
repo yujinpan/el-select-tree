@@ -230,9 +230,13 @@ export default {
     },
     setTreeDataState() {
       const disabledValues = this.disabledValues;
-      treeEach(this.data, (node) => {
-        node.disabled = disabledValues.includes(node[this.propsValue]);
-      });
+      treeEach(
+        this.data,
+        (node) => {
+          node.disabled = disabledValues.includes(node[this.propsValue]);
+        },
+        { children: this.props.children || 'children' }
+      );
     },
     setSelectedLabel() {
       const elTree = this.$refs.elTree;
