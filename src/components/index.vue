@@ -281,9 +281,8 @@ export default {
   },
   created() {
     if (this.multiple && !Array.isArray(this.value)) {
-      console.error(
-        '[el-select-tree]:',
-        'props `value` must be Array if use multiple!'
+      throw new Error(
+        '[el-select-tree] props `value` must be Array if use multiple!'
       );
     }
     this.setTreeDataState();
