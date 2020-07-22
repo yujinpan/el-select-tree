@@ -151,10 +151,13 @@ export default {
       return this.data.length;
     },
     propsValue() {
-      return this.props.value;
+      return this.props.value || 'value';
     },
     propsLabel() {
-      return this.props.label;
+      return this.props.label || 'label';
+    },
+    propsChildren() {
+      return this.props.children || 'children';
     },
     defaultExpandedKeys() {
       return Array.isArray(this.value) ? this.value : [this.value];
@@ -241,7 +244,7 @@ export default {
         (node) => {
           node.disabled = disabledValues.includes(node[this.propsValue]);
         },
-        { children: this.props.children || 'children' }
+        { children: this.propsChildren }
       );
     },
     setSelectedLabel() {
