@@ -127,10 +127,6 @@ export default {
       type: String,
       default: Vue.prototype.$ELEMENT ? Vue.prototype.$ELEMENT.size : ''
     },
-    popoverMinWidth: {
-      type: Number,
-      default: 0
-    },
     disabled: Boolean,
     multiple: Boolean,
     value: {
@@ -264,7 +260,7 @@ export default {
     },
     handleResize() {
       // set the `tree` default `min-width`
-      this.minWidth = this.popoverMinWidth || this.$el.clientWidth;
+      this.minWidth = this.$el.clientWidth;
     }
   },
   watch: {

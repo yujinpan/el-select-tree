@@ -6,7 +6,6 @@ export const example1 = `
     :multiple="multiple"
     :placeholder="placeholder"
     :disabled="disabled"
-    :popover-min-width="100"
     :data="treeData"
     :props="treeProps"
     :disabled-values="disabledValues"
