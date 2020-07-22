@@ -29,6 +29,7 @@
           :data="data"
           :default-expanded-keys="defaultExpandedKeys"
           :check-strictly="checkStrictly"
+          :style="{ 'min-width': minWidth + 'px' }"
           @node-click="nodeClick"
           @check-change="checkChange"
         >
@@ -43,7 +44,11 @@
       </el-scrollbar>
 
       <!-- empty text -->
-      <p class="el-select-tree__empty" v-else>
+      <p
+        v-else
+        class="el-select-tree__empty"
+        :style="{ width: minWidth + 'px' }"
+      >
         无数据
       </p>
 
@@ -81,6 +86,10 @@
 <script>
 import Vue from 'vue';
 import Emitter from 'element-ui/lib/mixins/emitter';
+import {
+  addResizeListener,
+  removeResizeListener
+} from 'element-ui/src/utils/resize-event';
 
 import treeFind from 'operation-tree-node/dist/treeFind.esm';
 import treeEach from 'operation-tree-node/dist/treeEach.esm';
@@ -158,7 +167,8 @@ export default {
   data() {
     return {
       visible: false,
-      selectedLabel: ''
+      selectedLabel: '',
+      minWidth: 0
     };
   },
   methods: {
@@ -251,6 +261,10 @@ export default {
         selected: this.multiple ? false : this.checkSelected(value),
         'is-disabled': this.disabledValues.includes(value)
       };
+    },
+    handleResize() {
+      // set the `tree` default `min-width`
+      this.minWidth = this.popoverMinWidth || this.$el.clientWidth;
     }
   },
   watch: {
@@ -276,24 +290,12 @@ export default {
   },
   mounted() {
     this.setSelected();
-    // set the `popper` default `min-width`
-    this.$nextTick(() => {
-      const popper = this.$refs.elPopover.$refs.popper;
-      let width;
-      if (!this.popoverMinWidth) {
-        const clientWidth = this.$el.clientWidth;
-        if (!clientWidth) {
-          console.log(
-            '[el-select-warn]:',
-            'can not get `width`, please set the `popoverMinWidth`'
-          );
-        }
-        width = clientWidth;
-      } else {
-        width = this.popoverMinWidth;
-      }
-      width && (popper.style.minWidth = width + 'px');
-    });
+    addResizeListener(this.$el, this.handleResize);
+  },
+  beforeDestroy() {
+    if (this.$el && this.handleResize) {
+      removeResizeListener(this.$el, this.handleResize);
+    }
   }
 };
 </script>
