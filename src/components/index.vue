@@ -15,6 +15,7 @@
         ref="filterInput"
         size="mini"
         class="el-select-tree__filter"
+        :style="{ width: minWidth + 'px' }"
         v-model="filterText"
       >
         <el-button slot="append" size="mini" icon="el-icon-search"></el-button>
@@ -417,7 +418,7 @@ export default {
     font-size: $--select-font-size;
   }
   &__filter {
-    padding: 8px;
+    padding: 8px 8px 0px 8px;
   }
 }
 </style>
