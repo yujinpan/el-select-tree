@@ -40,6 +40,7 @@
           :default-expanded-keys="defaultExpandedKeys"
           :check-strictly="checkStrictly"
           :filter-node-method="filterNodeMethod"
+          :style="{ 'min-width': minWidth + 'px' }"
           @node-click="nodeClick"
           @check-change="checkChange"
         >
@@ -54,7 +55,11 @@
       </el-scrollbar>
 
       <!-- empty text -->
-      <p class="el-select-tree__empty" v-else>
+      <p
+        v-else
+        class="el-select-tree__empty"
+        :style="{ width: minWidth + 'px' }"
+      >
         无数据
       </p>
 
@@ -92,6 +97,10 @@
 <script>
 import Vue from 'vue';
 import Emitter from 'element-ui/lib/mixins/emitter';
+import {
+  addResizeListener,
+  removeResizeListener
+} from 'element-ui/lib/utils/resize-event';
 
 import treeFind from 'operation-tree-node/dist/treeFind.esm';
 import treeEach from 'operation-tree-node/dist/treeEach.esm';
@@ -129,10 +138,6 @@ export default {
       type: String,
       default: Vue.prototype.$ELEMENT ? Vue.prototype.$ELEMENT.size : ''
     },
-    popoverMinWidth: {
-      type: Number,
-      default: 0
-    },
     disabled: Boolean,
     multiple: Boolean,
     filterable: Boolean,
@@ -167,10 +172,13 @@ export default {
       return this.data.length;
     },
     propsValue() {
-      return this.props.value;
+      return this.props.value || 'value';
     },
     propsLabel() {
-      return this.props.label;
+      return this.props.label || 'label';
+    },
+    propsChildren() {
+      return this.props.children || 'children';
     },
     defaultExpandedKeys() {
       return Array.isArray(this.value) ? this.value : [this.value];
@@ -180,7 +188,8 @@ export default {
     return {
       visible: false,
       selectedLabel: '',
-      filterText: ''
+      filterText: '',
+      minWidth: 0
     };
   },
   methods: {
@@ -252,9 +261,13 @@ export default {
     },
     setTreeDataState() {
       const disabledValues = this.disabledValues;
-      treeEach(this.data, (node) => {
-        node.disabled = disabledValues.includes(node[this.propsValue]);
-      });
+      treeEach(
+        this.data,
+        (node) => {
+          node.disabled = disabledValues.includes(node[this.propsValue]);
+        },
+        { children: this.propsChildren }
+      );
     },
     setSelectedLabel() {
       const elTree = this.$refs.elTree;
@@ -269,6 +282,11 @@ export default {
         selected: this.multiple ? false : this.checkSelected(value),
         'is-disabled': this.disabledValues.includes(value)
       };
+    },
+    handleResize() {
+      // set the `tree` default `min-width`
+      // border's width is 2px
+      this.minWidth = this.$el.clientWidth - 2;
     }
   },
   watch: {
@@ -288,33 +306,20 @@ export default {
   },
   created() {
     if (this.multiple && !Array.isArray(this.value)) {
-      console.error(
-        '[el-select-tree]:',
-        'props `value` must be Array if use multiple!'
+      throw new Error(
+        '[el-select-tree] props `value` must be Array if use multiple!'
       );
     }
     this.setTreeDataState();
   },
   mounted() {
     this.setSelected();
-    // set the `popper` default `min-width`
-    this.$nextTick(() => {
-      const popper = this.$refs.elPopover.$refs.popper;
-      let width;
-      if (!this.popoverMinWidth) {
-        const clientWidth = this.$el.clientWidth;
-        if (!clientWidth) {
-          console.log(
-            '[el-select-warn]:',
-            'can not get `width`, please set the `popoverMinWidth`'
-          );
-        }
-        width = clientWidth;
-      } else {
-        width = this.popoverMinWidth;
-      }
-      width && (popper.style.minWidth = width + 'px');
-    });
+    addResizeListener(this.$el, this.handleResize);
+  },
+  beforeDestroy() {
+    if (this.$el && this.handleResize) {
+      removeResizeListener(this.$el, this.handleResize);
+    }
   }
 };
 </script>

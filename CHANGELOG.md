@@ -1,3 +1,14 @@
+# 1.0.23 2020-07-22
+
+## Refactor
+
+- remove props `popover-min-width` and auto compute min-width
+
+## Fix
+
+- min-width needs to subtract the border
+- `props.children` is not work with multiple disabled
+
 # 1.0.22 2020-06-01
 
 ## Fix
