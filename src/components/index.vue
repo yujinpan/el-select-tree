@@ -89,7 +89,7 @@ import Emitter from 'element-ui/lib/mixins/emitter';
 import {
   addResizeListener,
   removeResizeListener
-} from 'element-ui/src/utils/resize-event';
+} from 'element-ui/lib/utils/resize-event';
 
 import treeFind from 'operation-tree-node/dist/treeFind.esm';
 import treeEach from 'operation-tree-node/dist/treeEach.esm';
