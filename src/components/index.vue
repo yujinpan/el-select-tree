@@ -260,7 +260,8 @@ export default {
     },
     handleResize() {
       // set the `tree` default `min-width`
-      this.minWidth = this.$el.clientWidth;
+      // border's width is 2px
+      this.minWidth = this.$el.clientWidth - 2;
     }
   },
   watch: {
