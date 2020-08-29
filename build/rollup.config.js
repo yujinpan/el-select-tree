@@ -45,7 +45,9 @@ module.exports = {
         compilerOptions: {
           preserveWhitespace: false // 丢弃模版空格
         }
-      }
+      },
+      // https://github.com/vuejs/rollup-plugin-vue/issues/262
+      normalizer: '~vue-runtime-helpers/dist/normalize-component.js'
     }),
     // 再 babel 转义
     babel({
