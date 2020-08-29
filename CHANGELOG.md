@@ -1,3 +1,9 @@
+# 1.0.24 2020-08-29
+
+## Fix
+
+- rollup-plugin-vue normalizer not parse https://github.com/vuejs/rollup-plugin-vue/issues/262
+
 # 1.0.23 2020-07-22
 
 ## Refactor
