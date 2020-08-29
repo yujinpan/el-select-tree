@@ -9,7 +9,6 @@
     "select-tree"
   ],
   "files": [
-    "src",
     "lib"
   ],
   "scripts": {
