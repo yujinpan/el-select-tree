@@ -1,3 +1,9 @@
+# 1.0.25 2020-09-15
+
+## Fix
+
+- label not change when data to empty
+
 # 1.0.24 2020-08-29
 
 ## Fix
