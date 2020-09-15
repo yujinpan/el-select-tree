@@ -25,6 +25,7 @@
             :props="treeProps"
             :disabled-values="disabledValues"
             :check-strictly="checkStrictly"
+            :filterable="filterable"
             :clearable="clearable"
             v-model="value1"
           ></el-select-tree>
@@ -49,6 +50,11 @@
         <div class="flex-center-align">
           <label>multiple choose(multiple)：</label>
           <el-switch v-model="multiple"></el-switch>
+        </div>
+        <el-divider></el-divider>
+        <div class="flex-center-align">
+          <label>filterable(filterable)：</label>
+          <el-switch v-model="filterable"></el-switch>
         </div>
         <el-divider></el-divider>
         <div class="flex-center-align">
@@ -85,6 +91,7 @@
               :disabled-values="disabledValues"
               :check-strictly="checkStrictly"
               :clearable="clearable"
+              :filterable="filterable"
               v-model="form.area"
             ></el-select-tree>
             <el-button
@@ -142,6 +149,7 @@ export default {
       placeholder: 'please choose',
       disabled: false,
       checkStrictly: false,
+      filterable: false,
       version,
       code1: highlight('html', require('./template/example1').example1),
       value1: '2',

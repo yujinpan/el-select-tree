@@ -11,6 +11,7 @@ export const example1 = `
     :disabled-values="disabledValues"
     :check-strictly="checkStrictly"
     :clearable="clearable"
+    :filterable="filterable"
     v-model="value1"
   ></el-select-tree>
 </template>
@@ -29,6 +30,7 @@ export default {
       multiple: false,
       placeholder: 'please choose',
       disabled: false,
+      filterable: false,
       checkStrictly: false,
       treeData: [
         {
