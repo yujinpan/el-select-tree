@@ -218,9 +218,11 @@ export default {
       }
     },
     setSelected() {
-      if (!this.data || !this.data.length) return;
+      if (!this.data || !this.data.length) {
+        this.selectedLabel = '';
+        return;
+      }
 
-      this.selectedLabel = '';
       if (this.multiple) {
         this.$nextTick(() => {
           this.$refs.elTree.setCheckedKeys(this.value);
@@ -232,9 +234,7 @@ export default {
           (node) => this.checkSelected(node[this.propsValue]),
           this.props
         );
-        if (selectedNode) {
-          this.selectedLabel = selectedNode[this.propsLabel];
-        }
+        this.selectedLabel = selectedNode ? selectedNode[this.propsLabel] : '';
       }
     },
     setTreeDataState() {
