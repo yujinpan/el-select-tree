@@ -86,20 +86,37 @@ export default {
 
 ### Attributes
 
-| name                | type       | description                                                                          |
-| ------------------- | ---------- | ------------------------------------------------------------------------------------ |
-| `value/v-model`     | `*/*[]`    | bound value, the type must be array if attribute's `multiple` is true                |
-| `data`              | `object[]` | select options, is a tree data                                                       |
-| `props`             | `object`   | tree data props, default: `{ value: 'value', label: 'label', children: 'children' }` |
-| `multiple`          | `boolean`  | multiple selection, default: `false`                                                 |
-| `placement`         | `string`   | extends ElementUI placement, default: `botttom-start`                                |
-| `size`              | `string`   | extends ElementUI size, default: `samll`                                             |
-| `disabled`          | `boolean`  | selection disabled, default: `false`                                                 |
-| `disabledValues`    | `*[]`      | options disabled                                                                     |
-| `placeholder`       | `string`   | placeholder text, default: '请选择'                                                  |
-| `checkStrictly`     | `boolean`  | select any level, default: `false`                                                   |
-| `defaultExpandAll`  | `boolean`  | expand all tree node, default: `false`                                               |
-| `clearable`         | `boolean`  | cleanup options, default: `false`                                                    |
+| name             | type       | description                                                                          |
+| ---------------- | ---------- | ------------------------------------------------------------------------------------ |
+| `value/v-model`  | `*/*[]`    | bound value, the type must be array if attribute's `multiple` is true                |
+| `data`           | `object[]` | select options, is a tree data                                                       |
+| `props`          | `object`   | tree data props, default: `{ value: 'value', label: 'label', children: 'children' }` |
+| `multiple`       | `boolean`  | multiple selection, default: `false`                                                 |
+| `placement`      | `string`   | extends ElementUI placement, default: `botttom-start`                                |
+| `size`           | `string`   | extends ElementUI size, default: `samll`                                             |
+| `disabled`       | `boolean`  | selection disabled, default: `false`                                                 |
+| `disabledValues` | `*[]`      | options disabled                                                                     |
+| `placeholder`    | `string`   | placeholder text, default: '请选择'                                                  |
+| `clearable`      | `boolean`  | cleanup options, default: `false`                                                    |
+
+#### Extends ElTree
+
+- `data` default: `[]`
+- `props` default: `{ value: 'value', label: 'label', children: 'children', disabled: 'disabled', isLeaf: 'isLeaf' }
+- `node-key`
+- `default-expand-all`
+- `check-strictly`
+- `lazy`
+- `load`
+- `icon-class`
+- `indent`
+- `accordion`
+- `filter-node-method`
+- `auto-expand-parent`
+- `render-content`
+- `render-after-expand`
+
+See details: https://element.eleme.io/#/zh-CN/component/tree#attributes
 
 ### Events
 
