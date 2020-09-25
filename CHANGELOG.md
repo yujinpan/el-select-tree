@@ -1,3 +1,13 @@
+# 1.0.26 2020-09-25
+
+## Feature
+
+- add inherited properties from ElTree
+
+## Fix
+
+- disabled values invalid in children
+
 # 1.0.25 2020-09-15
 
 ## Fix
