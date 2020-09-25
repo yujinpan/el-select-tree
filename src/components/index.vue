@@ -222,7 +222,7 @@ export default {
 
       if (children && children.length && !this.checkStrictly) {
         component.handleExpandIconClick();
-      } else if (!this.disabledValues.includes(value) && !this.multiple) {
+      } else if (!this.multiple && !data.disabled) {
         if (value !== this.value) {
           this.valueChange(value);
           this.selectedLabel = data[this.propsLabel];
@@ -267,6 +267,14 @@ export default {
         this.data,
         (node) => {
           node.disabled = disabledValues.includes(node[this.propsValue]);
+          if (node.disabled) {
+            treeEach(
+              node[this.propsChildren],
+              (childNode) => (childNode.disabled = true)
+            );
+            // break children
+            return false;
+          }
         },
         { children: this.propsChildren }
       );
@@ -279,10 +287,11 @@ export default {
         .join(',');
     },
     treeItemClass(data) {
-      const value = data[this.propsValue];
       return {
-        selected: this.multiple ? false : this.checkSelected(value),
-        'is-disabled': this.disabledValues.includes(value)
+        'is-selected': this.multiple
+          ? false
+          : data[this.propsValue] === this.value,
+        'is-disabled': data.disabled
       };
     },
     handleResize() {
@@ -399,7 +408,7 @@ export default {
     position: relative;
     white-space: nowrap;
     padding-right: $spacing-medium;
-    &.selected {
+    &.is-selected {
       color: $--select-option-selected-font-color;
       font-weight: bolder;
     }
