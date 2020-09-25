@@ -12,7 +12,7 @@ const defaultOutput = {
   banner,
   dir: 'lib/',
   format: 'es',
-  sourcemap: true
+  sourcemap: false
 };
 
 // 多入口打包，每个文件对应一个包
