@@ -119,3 +119,4 @@ See details: https://element.eleme.io/#/zh-CN/component/tree#attributes
 ### Events
 
 - `change(value)` options change, return changed value
+- `clear()` clear selected

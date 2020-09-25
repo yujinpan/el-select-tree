@@ -211,6 +211,7 @@ export default {
       } else {
         this.valueChange('');
       }
+      this.$emit('clear');
     },
     // 触发滚动条的重置
     handleScroll() {
