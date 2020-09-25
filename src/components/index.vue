@@ -21,17 +21,26 @@
         <el-tree
           ref="elTree"
           class="el-select-tree__list"
-          :default-expand-all="defaultExpandAll"
-          :props="props"
-          :node-key="propsValue"
+          :default-expanded-keys="defaultExpandedKeys"
           :show-checkbox="multiple"
           :expand-on-click-node="multiple"
-          :data="data"
-          :default-expanded-keys="defaultExpandedKeys"
-          :check-strictly="checkStrictly"
           :style="{ 'min-width': minWidth + 'px' }"
           @node-click="nodeClick"
           @check-change="checkChange"
+          :data="data"
+          :props="props"
+          :node-key="propsValue"
+          :default-expand-all="defaultExpandAll"
+          :check-strictly="checkStrictly"
+          :lazy="lazy"
+          :load="load"
+          :icon-class="iconClass"
+          :indent="indent"
+          :accordion="accordion"
+          :filter-node-method="filterNodeMethod"
+          :auto-expand-parent="autoExpandParent"
+          :render-content="renderContent"
+          :render-after-expand="renderAfterExpand"
         >
           <div
             class="el-select-tree__item"
@@ -102,12 +111,12 @@ export default {
     event: 'change'
   },
   props: {
-    clearable: Boolean,
-    defaultExpandAll: Boolean,
-    checkStrictly: Boolean,
-    placeholder: {
-      type: String,
-      default: '请选择'
+    // [el-tree] forwarding parameters https://element.eleme.io/#/zh-CN/component/tree#attributes
+    data: {
+      type: Array,
+      default() {
+        return [];
+      }
     },
     props: {
       type: Object,
@@ -115,9 +124,30 @@ export default {
         return {
           value: 'value',
           label: 'label',
-          children: 'children'
+          children: 'children',
+          disabled: 'disabled',
+          isLeaf: 'isLeaf'
         };
       }
+    },
+    checkStrictly: Boolean,
+    nodeKey: String,
+    defaultExpandAll: Boolean,
+    lazy: Boolean,
+    load: Function,
+    iconClass: String,
+    indent: Number,
+    accordion: Boolean,
+    filterNodeMethod: Function,
+    autoExpandParent: Boolean,
+    renderContent: Function,
+    renderAfterExpand: Boolean,
+    // [el-tree] forwarding parameters end
+
+    clearable: Boolean,
+    placeholder: {
+      type: String,
+      default: '请选择'
     },
     placement: {
       type: String,
@@ -138,12 +168,6 @@ export default {
       default() {
         return [];
       }
-    },
-    data: {
-      type: Array,
-      default() {
-        return [];
-      }
     }
   },
   computed: {
@@ -151,7 +175,7 @@ export default {
       return this.data.length;
     },
     propsValue() {
-      return this.props.value || 'value';
+      return this.nodeKey || this.props.value || 'value';
     },
     propsLabel() {
       return this.props.label || 'label';
