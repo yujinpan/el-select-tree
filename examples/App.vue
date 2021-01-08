@@ -23,7 +23,6 @@
             :disabled="disabled"
             :data="treeData"
             :props="treeProps"
-            :disabled-values="disabledValues"
             :check-strictly="checkStrictly"
             :clearable="clearable"
             v-model="value1"
@@ -93,7 +92,6 @@
               :disabled="disabled"
               :data="treeData"
               :props="treeProps"
-              :disabled-values="disabledValues"
               :check-strictly="checkStrictly"
               :clearable="clearable"
               v-model="form.area"
@@ -168,10 +166,16 @@ export default {
             {
               label: '克拉玛依市',
               id: '3',
+              disabled: true,
               childrens: [
-                { label: '克拉玛依区', id: '10', childrens: [] },
-                { label: '白碱滩区', id: '11', childrens: [] },
-                { label: '独山子区', id: '12', childrens: [] }
+                {
+                  label: '克拉玛依区',
+                  id: '10',
+                  disabled: true,
+                  childrens: []
+                },
+                { label: '白碱滩区', id: '11', disabled: true, childrens: [] },
+                { label: '独山子区', id: '12', disabled: true, childrens: [] }
               ]
             },
             { label: '吐鲁番地区', id: '4', childrens: [] },
@@ -185,7 +189,6 @@ export default {
         children: 'childrens',
         label: 'label'
       },
-      disabledValues: ['3'],
       show: true,
       form: { area: '' },
       formRule: {

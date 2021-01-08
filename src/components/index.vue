@@ -89,8 +89,6 @@ import {
   removeResizeListener
 } from 'element-ui/lib/utils/resize-event';
 
-import treeEach from 'operation-tree-node/dist/treeEach.esm';
-
 export default {
   name: 'ElSelectTree',
   mixins: [Emitter],
@@ -150,12 +148,6 @@ export default {
     value: {
       type: [Number, String, Array],
       default: ''
-    },
-    disabledValues: {
-      type: Array,
-      default() {
-        return [];
-      }
     }
   },
   computed: {
@@ -167,9 +159,6 @@ export default {
     },
     propsLabel() {
       return this.props.label || 'label';
-    },
-    propsChildren() {
-      return this.props.children || 'children';
     },
     propsIsLeaf() {
       return this.props.isLeaf || 'isLeaf';
@@ -243,24 +232,6 @@ export default {
         }
       });
     },
-    setTreeDataState() {
-      const disabledValues = this.disabledValues;
-      treeEach(
-        this.data,
-        (node) => {
-          node.disabled = disabledValues.includes(node[this.propsValue]);
-          if (node.disabled) {
-            treeEach(
-              node[this.propsChildren],
-              (childNode) => (childNode.disabled = true)
-            );
-            // break children
-            return false;
-          }
-        },
-        { children: this.propsChildren }
-      );
-    },
     setMultipleSelectedLabel() {
       const elTree = this.$refs.elTree;
       const selectedNodes = elTree.getCheckedNodes(!this.checkStrictly);
@@ -288,10 +259,6 @@ export default {
     },
     data() {
       this.setSelected();
-      this.setTreeDataState();
-    },
-    disabledValues() {
-      this.setTreeDataState();
     }
   },
   created() {
@@ -300,7 +267,6 @@ export default {
         '[el-select-tree] props `value` must be Array if use multiple!'
       );
     }
-    this.setTreeDataState();
   },
   mounted() {
     this.setSelected();

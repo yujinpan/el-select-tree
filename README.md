@@ -50,7 +50,6 @@ export default {
     width="120px"
     placeholder="请选择内容"
     :data="treeData"
-    :disabled-values="disabledValues"
     v-model="value"
   ></el-select-tree>
 </template>
@@ -74,8 +73,7 @@ export default {
         { value: 2, label: 'text2' },
         { value: 3, label: 'text3' },
         { value: 4, label: 'text5' }
-      ],
-      disabledValues: [3]
+      ]
     };
   }
 };
@@ -93,7 +91,6 @@ export default {
 | `placement`      | `string`  | extends ElementUI placement, default: `bottom-start`                  |
 | `size`           | `string`  | extends ElementUI size, default: `small`                              |
 | `disabled`       | `boolean` | selection disabled, default: `false`                                  |
-| `disabledValues` | `*[]`     | options disabled                                                      |
 | `placeholder`    | `string`  | placeholder text, default: '请选择'                                   |
 | `clearable`      | `boolean` | cleanup options, default: `false`                                     |
 
