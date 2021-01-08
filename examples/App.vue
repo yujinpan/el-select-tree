@@ -64,6 +64,11 @@
           <el-switch v-model="clearable"></el-switch>
         </div>
         <el-divider></el-divider>
+        <div class="flex-center-align">
+          <label>lazy load：</label>
+          <el-select-tree lazy :load="load"></el-select-tree>
+        </div>
+        <el-divider></el-divider>
 
         <!-- form test -->
         <el-form
@@ -129,11 +134,6 @@ export default {
   components: {
     ElSelectTree
   },
-  computed: {
-    valueStr() {
-      return String(this.value);
-    }
-  },
   data() {
     return {
       clearable: true,
@@ -191,6 +191,17 @@ export default {
     refresh() {
       this.show = false;
       setTimeout(() => (this.show = true), 200);
+    },
+    load(node, resolve) {
+      setTimeout(() => {
+        resolve([
+          {
+            id: Date.now(),
+            label: '懒加载节点',
+            isLeaf: node.level === 3
+          }
+        ]);
+      }, 600);
     }
   }
 };

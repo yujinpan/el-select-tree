@@ -12,11 +12,9 @@
     >
       <!-- scrollbar wrap -->
       <el-scrollbar
-        v-if="dataLength"
         wrap-class="el-select-dropdown__wrap"
         view-class="el-select-dropdown__list"
         ref="scrollbar"
-        :class="{ 'is-empty': dataLength === 0 }"
       >
         <el-tree
           ref="elTree"
@@ -51,15 +49,6 @@
           </div>
         </el-tree>
       </el-scrollbar>
-
-      <!-- empty text -->
-      <p
-        v-else
-        class="el-select-tree__empty"
-        :style="{ width: minWidth + 'px' }"
-      >
-        无数据
-      </p>
 
       <!-- trigger input -->
       <el-input
@@ -183,6 +172,9 @@ export default {
     propsChildren() {
       return this.props.children || 'children';
     },
+    propsIsLeaf() {
+      return this.props.isLeaf || 'isLeaf';
+    },
     defaultExpandedKeys() {
       return Array.isArray(this.value) ? this.value : [this.value];
     }
@@ -220,8 +212,11 @@ export default {
     nodeClick(data, node, component) {
       const children = data[this.props.children];
       const value = data[this.propsValue];
-
-      if (children && children.length && !this.checkStrictly) {
+      if (
+        ((children && children.length) ||
+          (this.lazy && !data[this.propsIsLeaf])) &&
+        !this.checkStrictly
+      ) {
         component.handleExpandIconClick();
       } else if (!this.multiple && !data.disabled) {
         if (value !== this.value) {
@@ -417,13 +412,6 @@ export default {
       color: $--font-color-disabled-base;
       cursor: not-allowed;
     }
-  }
-  &__empty {
-    padding: $--select-dropdown-empty-padding;
-    margin: 0;
-    text-align: center;
-    color: $--select-dropdown-empty-color;
-    font-size: $--select-font-size;
   }
 }
 </style>
