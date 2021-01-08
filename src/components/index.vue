@@ -125,7 +125,10 @@ export default {
     indent: Number,
     accordion: Boolean,
     filterNodeMethod: Function,
-    autoExpandParent: Boolean,
+    autoExpandParent: {
+      type: Boolean,
+      default: true
+    },
     renderContent: Function,
     renderAfterExpand: Boolean,
     // [el-tree] forwarding parameters end
