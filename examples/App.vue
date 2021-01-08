@@ -202,7 +202,7 @@ export default {
       setTimeout(() => (this.show = true), 200);
     },
     load(node, resolve) {
-      if (node.data.isLeaf) return resolve();
+      if (node.data.isLeaf) return resolve([]);
       setTimeout(() => {
         resolve([
           {
