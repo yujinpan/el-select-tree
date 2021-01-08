@@ -1,6 +1,6 @@
 {
   "name": "el-select-tree",
-  "version": "1.0.27",
+  "version": "1.1.0",
   "author": "yujinpan",
   "main": "lib/index.js",
   "keywords": [
