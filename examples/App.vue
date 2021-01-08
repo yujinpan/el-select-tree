@@ -66,7 +66,13 @@
         <el-divider></el-divider>
         <div class="flex-center-align">
           <label>lazy load：</label>
-          <el-select-tree lazy :load="load"></el-select-tree>
+          <el-select-tree
+            v-model="value1"
+            lazy
+            :load="load"
+            node-key="id"
+            clearable
+          ></el-select-tree>
         </div>
         <el-divider></el-divider>
 
@@ -193,6 +199,7 @@ export default {
       setTimeout(() => (this.show = true), 200);
     },
     load(node, resolve) {
+      if (node.data.isLeaf) return resolve();
       setTimeout(() => {
         resolve([
           {

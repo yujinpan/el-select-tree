@@ -89,7 +89,6 @@ import {
   removeResizeListener
 } from 'element-ui/lib/utils/resize-event';
 
-import treeFind from 'operation-tree-node/dist/treeFind.esm';
 import treeEach from 'operation-tree-node/dist/treeEach.esm';
 
 export default {
@@ -228,34 +227,21 @@ export default {
     },
     checkChange() {
       this.valueChange(this.$refs.elTree.getCheckedKeys(!this.checkStrictly));
-      this.setSelectedLabel();
-    },
-    checkSelected(value) {
-      if (this.multiple) {
-        return this.value.includes(value);
-      } else {
-        return this.value === value;
-      }
+      this.setMultipleSelectedLabel();
     },
     setSelected() {
-      if (!this.data || !this.data.length) {
-        this.selectedLabel = '';
-        return;
-      }
-
-      if (this.multiple) {
-        this.$nextTick(() => {
-          this.$refs.elTree.setCheckedKeys(this.value);
-          this.setSelectedLabel();
-        });
-      } else {
-        const selectedNode = treeFind(
-          this.data,
-          (node) => this.checkSelected(node[this.propsValue]),
-          this.props
-        );
-        this.selectedLabel = selectedNode ? selectedNode[this.propsLabel] : '';
-      }
+      this.$nextTick(() => {
+        const elTree = this.$refs.elTree;
+        if (this.multiple) {
+          elTree.setCheckedKeys(this.value);
+          this.setMultipleSelectedLabel();
+        } else {
+          const selectedNode = elTree.getNode(this.value);
+          this.selectedLabel = selectedNode
+            ? selectedNode.data[this.propsLabel]
+            : '';
+        }
+      });
     },
     setTreeDataState() {
       const disabledValues = this.disabledValues;
@@ -275,7 +261,7 @@ export default {
         { children: this.propsChildren }
       );
     },
-    setSelectedLabel() {
+    setMultipleSelectedLabel() {
       const elTree = this.$refs.elTree;
       const selectedNodes = elTree.getCheckedNodes(!this.checkStrictly);
       this.selectedLabel = selectedNodes
