@@ -1,3 +1,16 @@
+# 1.1.0 2021-01-08
+
+## Remove
+
+- `disabledValues` props removed(use node's disabled props)
+
+## Fix
+
+- lazy load be ignored when data is empty
+- cannot selected option when lazy load
+- `defaultExpandedKeys` is invalid when value not set
+- `autoExpandParent` to default true
+
 # 1.0.26 2020-09-25
 
 ## Feature
