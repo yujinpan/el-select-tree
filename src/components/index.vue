@@ -164,7 +164,11 @@ export default {
       return this.props.isLeaf || 'isLeaf';
     },
     defaultExpandedKeys() {
-      return Array.isArray(this.value) ? this.value : [this.value];
+      return Array.isArray(this.value)
+        ? this.value
+        : this.value || this.value === 0
+        ? [this.value]
+        : [];
     }
   },
   data() {
