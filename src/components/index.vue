@@ -26,6 +26,7 @@
           :style="{ 'min-width': minWidth + 'px' }"
           @node-click="nodeClick"
           @check-change="checkChange"
+          @transitionend.native="$refs.elPopover.updatePopper()"
           :data="data"
           :props="props"
           :node-key="propsValue"
