@@ -56,7 +56,15 @@ module.exports = {
     }),
     json(),
     postcss({
-      minimize: true
+      minimize: true,
+      // custom inject，require [style-inject] package
+      // fix the postcss import path is absolute
+      inject(cssVariableName) {
+        return (
+          `import styleInject from 'style-inject/dist/style-inject.es.js';\n` +
+          `styleInject(${cssVariableName});`
+        );
+      }
     }),
     sizes(),
     visualizer({
