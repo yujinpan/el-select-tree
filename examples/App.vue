@@ -25,6 +25,7 @@
             :props="treeProps"
             :check-strictly="checkStrictly"
             :clearable="clearable"
+            :popover-width="popoverWidth"
             v-model="value1"
           ></el-select-tree>
           <div class="margin-left-medium">current value：{{ value1 }}</div>
@@ -61,6 +62,11 @@
         <div class="flex-center-align">
           <label>clearable(clearable)：</label>
           <el-switch v-model="clearable"></el-switch>
+        </div>
+        <el-divider></el-divider>
+        <div class="flex-center-align">
+          <label>popover-width：</label>
+          <el-input-number v-model="popoverWidth" :min="150"></el-input-number>
         </div>
         <el-divider></el-divider>
         <div class="flex-center-align">
@@ -189,6 +195,7 @@ export default {
         children: 'childrens',
         label: 'label'
       },
+      popoverWidth: undefined,
       show: true,
       form: { area: '' },
       formRule: {

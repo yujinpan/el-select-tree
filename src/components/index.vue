@@ -8,6 +8,7 @@
       trigger="click"
       :disabled="disabled"
       :placement="placement"
+      :width="popoverWidth"
       @after-enter="handleScroll()"
     >
       <!-- scrollbar wrap -->
@@ -151,7 +152,8 @@ export default {
     value: {
       type: [Number, String, Array],
       default: ''
-    }
+    },
+    popoverWidth: Number
   },
   computed: {
     dataLength() {

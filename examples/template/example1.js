@@ -10,6 +10,7 @@ export const example1 = `
     :props="treeProps"
     :check-strictly="checkStrictly"
     :clearable="clearable"
+    :popover-width="popoverWidth"
     v-model="value1"
   ></el-select-tree>
 </template>
@@ -69,6 +70,7 @@ export default {
         children: 'childrens',
         label: 'label'
       },
+      popoverWidth: 0,
       value: '2',
     };
   }

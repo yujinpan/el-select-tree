@@ -84,15 +84,16 @@ export default {
 
 ### Attributes
 
-| name             | type      | description                                                           |
-| ---------------- | --------- | --------------------------------------------------------------------- |
-| `value/v-model`  | `*/*[]`   | bound value, the type must be array if attribute's `multiple` is true |
-| `multiple`       | `boolean` | multiple selection, default: `false`                                  |
-| `placement`      | `string`  | extends ElementUI placement, default: `bottom-start`                  |
-| `size`           | `string`  | extends ElementUI size, default: `small`                              |
-| `disabled`       | `boolean` | selection disabled, default: `false`                                  |
-| `placeholder`    | `string`  | placeholder text, default: '请选择'                                   |
-| `clearable`      | `boolean` | cleanup options, default: `false`                                     |
+| name            | type      | description                                                           |
+| --------------- | --------- | --------------------------------------------------------------------- |
+| `value/v-model` | `*/*[]`   | bound value, the type must be array if attribute's `multiple` is true |
+| `multiple`      | `boolean` | multiple selection, default: `false`                                  |
+| `placement`     | `string`  | extends ElementUI placement, default: `bottom-start`                  |
+| `size`          | `string`  | extends ElementUI size, default: `small`                              |
+| `disabled`      | `boolean` | selection disabled, default: `false`                                  |
+| `placeholder`   | `string`  | placeholder text, default: '请选择'                                   |
+| `clearable`     | `boolean` | cleanup options, default: `false`                                     |
+| `popover-width` | `number`  | popover's width                                                       |
 
 #### Extends ElTree
 
