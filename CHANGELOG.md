@@ -1,3 +1,17 @@
+# 1.1.1 2021-01-13
+
+## Feature
+
+- add `popoverWidth` props
+
+## Fix
+
+- popover position update when tree node expanded
+
+## Refactor
+
+- external style-inject and vue-runtime-helpers package
+
 # 1.1.0 2021-01-08
 
 ## Remove
