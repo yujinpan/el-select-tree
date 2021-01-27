@@ -157,9 +157,6 @@ export default {
     popoverWidth: Number
   },
   computed: {
-    dataLength() {
-      return this.data.length;
-    },
     propsValue() {
       return this.nodeKey || this.props.value || 'value';
     },
