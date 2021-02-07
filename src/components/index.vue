@@ -184,9 +184,6 @@ export default {
   methods: {
     valueChange(value) {
       this.$emit('change', value);
-      // trigger el-form event
-      // like validator
-      this.dispatch('ElFormItem', 'el.form.change', value);
     },
     clear() {
       this.visible = false;
@@ -263,6 +260,8 @@ export default {
   watch: {
     value() {
       this.setSelected();
+      // trigger parent `el-form-item` validate event
+      this.dispatch('ElFormItem', 'el.form.change');
     },
     data() {
       this.setSelected();
