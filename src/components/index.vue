@@ -182,8 +182,8 @@ export default {
     };
   },
   methods: {
-    valueChange(value) {
-      this.$emit('change', value);
+    valueChange(value, node) {
+      this.$emit('change', value, node);
     },
     clear() {
       this.visible = false;
@@ -212,14 +212,18 @@ export default {
         component.handleExpandIconClick();
       } else if (!this.multiple && !data.disabled) {
         if (value !== this.value) {
-          this.valueChange(value);
+          this.valueChange(value, data);
           this.selectedLabel = data[this.propsLabel];
         }
         this.visible = false;
       }
     },
     checkChange() {
-      this.valueChange(this.$refs.elTree.getCheckedKeys(!this.checkStrictly));
+      const elTree = this.$refs.elTree;
+      const leafOnly = !this.checkStrictly;
+      const keys = elTree.getCheckedKeys(leafOnly);
+      const nodes = elTree.getCheckedNodes(leafOnly);
+      this.valueChange(keys, nodes);
       this.setMultipleSelectedLabel();
     },
     setSelected() {

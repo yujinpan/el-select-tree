@@ -26,6 +26,7 @@
             :check-strictly="checkStrictly"
             :clearable="clearable"
             :popover-width="popoverWidth"
+            @change="log"
             v-model="value1"
           ></el-select-tree>
           <div class="margin-left-medium">current value：{{ value1 }}</div>
@@ -204,6 +205,7 @@ export default {
     };
   },
   methods: {
+    log: console.log,
     refresh() {
       this.show = false;
       setTimeout(() => (this.show = true), 200);
