@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "cross-env NODE_ENV=production rollupx && eslint --fix --no-ignore dist/**/*.d.ts",
+    "build": "cross-env NODE_ENV=production rollupx && eslint --fix --no-ignore lib/**/*.d.ts",
     "build:example": "vue-cli-service build",
     "build:types": "gulp && eslint --fix dist/**/*.d.ts",
     "build:styles": "node ./build/styles.js",
