@@ -4,6 +4,8 @@ ElementUI's el-select combined with el-tree.
 
 - Online examples [https://yujinpan.github.io/el-select-tree/](https://yujinpan.github.io/el-select-tree/)
 
+> Now the new version 2.0 is released, which comprehensively improves the utilization of the original components.
+
 ## Usage
 
 ### Install
@@ -68,7 +70,10 @@ export default {
         {
           value: 1,
           label: 'text1',
-          children: [{ value: 5, label: 'text5' }, { value: 6, label: 'text6' }]
+          children: [
+            { value: 5, label: 'text5' },
+            { value: 6, label: 'text6' }
+          ]
         },
         { value: 2, label: 'text2' },
         { value: 3, label: 'text3' },
@@ -84,37 +89,14 @@ export default {
 
 ### Attributes
 
-| name            | type      | description                                                           |
-| --------------- | --------- | --------------------------------------------------------------------- |
-| `value/v-model` | `*/*[]`   | bound value, the type must be array if attribute's `multiple` is true |
-| `multiple`      | `boolean` | multiple selection, default: `false`                                  |
-| `placement`     | `string`  | extends ElementUI placement, default: `bottom-start`                  |
-| `size`          | `string`  | extends ElementUI size, default: `small`                              |
-| `disabled`      | `boolean` | selection disabled, default: `false`                                  |
-| `placeholder`   | `string`  | placeholder text, default: '请选择'                                   |
-| `clearable`     | `boolean` | cleanup options, default: `false`                                     |
-| `popover-width` | `number`  | popover's width                                                       |
+| name            | type     | description                                                           |
+| --------------- | -------- | --------------------------------------------------------------------- |
+| `value/v-model` | `*/*[]`  | bound value, the type must be array if attribute's `multiple` is true |
+| `props`         | `Object` | {value, label, children, isLeaf, disabled}                            |
 
-#### Extends ElTree
+#### Extends ElTree And ElSelect All Props
 
-- `data` default: `[]`
-- `props` default: `{ value: 'value', label: 'label', children: 'children', disabled: 'disabled', isLeaf: 'isLeaf' }
-- `node-key`
-- `default-expand-all`
-- `check-strictly`
-- `lazy`
-- `load`
-- `icon-class`
-- `indent`
-- `accordion`
-- `filter-node-method`
-- `auto-expand-parent`
-- `render-content`
-- `render-after-expand`
+See details:
 
-See details: https://element.eleme.io/#/zh-CN/component/tree#attributes
-
-### Events
-
-- `change(value)` options change, return changed value
-- `clear()` clear selected
+- el-tree https://element.eleme.io/#/zh-CN/component/tree
+- el-select https://element.eleme.io/#/zh-CN/component/select

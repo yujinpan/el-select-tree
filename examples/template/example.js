@@ -1,8 +1,9 @@
-export const example1 = `
+export default `
 <template>
   <el-select-tree
     v-if="show"
     :default-expand-all="defaultExpandAll"
+    :filterable="filterable"
     :multiple="multiple"
     :placeholder="placeholder"
     :disabled="disabled"
@@ -10,7 +11,6 @@ export const example1 = `
     :props="treeProps"
     :check-strictly="checkStrictly"
     :clearable="clearable"
-    :popover-width="popoverWidth"
     v-model="value1"
   ></el-select-tree>
 </template>
@@ -26,6 +26,7 @@ export default {
     return {
     clearable: true,
       defaultExpandAll: false,
+      filterable: false,
       multiple: false,
       placeholder: 'please choose',
       disabled: false,
@@ -70,7 +71,6 @@ export default {
         children: 'childrens',
         label: 'label'
       },
-      popoverWidth: 0,
       value: '2',
     };
   }
