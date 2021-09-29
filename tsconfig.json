@@ -1,0 +1,17 @@
+{
+  "extends": "rollupx/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
+  },
+  "include": [
+    "./global.d.ts",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./src/**/*.vue"
+  ]
+}

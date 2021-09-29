@@ -42,7 +42,7 @@
 
 // 副级文本
 .text-secondary {
-  color: $color-info;
+  color: $--color-info;
 }
 
 // 常用列表排版
@@ -145,17 +145,17 @@ ul.list-unstyled {
 // 常用阴影效果
 // 浅色投影
 .box-shadow-default {
-  box-shadow: $box-shadow-default;
+  box-shadow: $--box-shadow-base;
 }
 
 // 基础投影
 .box-shadow-base {
-  box-shadow: $box-shadow-base;
+  box-shadow: $--box-shadow-dark;
 }
 
 // 过渡效果
 .transition-default {
-  transition: $transition-base;
+  transition: $--all-transition;
 }
 
 // 常用 margin 距离
