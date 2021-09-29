@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Ref, Vue, Watch } from 'vue-property-decorator';
+import { Component, Ref, Vue } from 'vue-property-decorator';
 import { ElSelect } from 'element-ui/types/select';
 import { ElTree } from 'element-ui/types/tree';
 import { ElSelectMixin, ElTreeMixin, propsPick } from '@/components/utils';
@@ -58,13 +58,14 @@ import { Option } from 'element-ui';
 })
 export default class ElSelectTree extends Vue {
   @Ref('select') select: ElSelect;
-  @Ref('tree') tree: ElTree;
+  @Ref('tree') tree: ElTree<any, any>;
 
   constructor() {
     super();
   }
 
   get _value() {
+    // @ts-ignore
     return this.value;
   }
   set _value(val) {
@@ -83,12 +84,14 @@ export default class ElSelectTree extends Vue {
     this.tree.filter(val);
   }
   _filterNodeMethod(value, data) {
+    // @ts-ignore
     if (this.filterMethod) return this.filterMethod(value);
     if (!value) return true;
     return data.label.includes(value);
   }
   _nodeClick(data, node, component) {
     if (this.canSelect(node)) {
+      // @ts-ignore
       if (!data[this.props.disabled]) {
         // $children[0] === slot-scope
         // $children[0].$children[0] === el-option
@@ -98,10 +101,12 @@ export default class ElSelectTree extends Vue {
     } else {
       component.handleExpandIconClick();
     }
+    // @ts-ignore
     this.nodeClick && this.nodeClick(data, node, component);
   }
 
   canSelect(node) {
+    // @ts-ignore
     return this.checkStrictly || node.isLeaf;
   }
 }
