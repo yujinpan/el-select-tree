@@ -108,7 +108,6 @@ export default class ElSelectTree extends Vue {
 </script>
 
 <style lang="scss">
-// @import '~@/styles/common-variables.scss';
 .el-select-tree {
   .el-select-dropdown__item {
     flex: 1;
