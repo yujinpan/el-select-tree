@@ -9,7 +9,7 @@
     <el-row type="flex">
       <!-- example -->
       <el-col :span="12">
-        <pre><code v-html="code1"></code></pre>
+        <Highlight :code="code" lang="xml" />
       </el-col>
       <el-col class="text-left" :span="12">
         <!-- selector -->
@@ -18,6 +18,7 @@
           <el-select-tree
             v-if="show"
             :default-expand-all="defaultExpandAll"
+            :filterable="filterable"
             :multiple="multiple"
             :placeholder="placeholder"
             :disabled="disabled"
@@ -25,11 +26,10 @@
             :props="treeProps"
             :check-strictly="checkStrictly"
             :clearable="clearable"
-            :popover-width="popoverWidth"
             @change="log"
-            v-model="value1"
+            v-model="value"
           ></el-select-tree>
-          <div class="margin-left-medium">current value：{{ value1 }}</div>
+          <div class="margin-left-medium">current value：{{ value }}</div>
         </div>
         <el-divider></el-divider>
 
@@ -43,13 +43,21 @@
         </div>
         <el-divider></el-divider>
         <div class="flex-center-align">
+          <label><b>filterable：</b></label>
+          <el-switch v-model="filterable"></el-switch>
+        </div>
+        <el-divider></el-divider>
+        <div class="flex-center-align">
           <label>disabled(disabled)：</label>
           <el-switch v-model="disabled"></el-switch>
         </div>
         <el-divider></el-divider>
         <div class="flex-center-align">
           <label>multiple choose(multiple)：</label>
-          <el-switch v-model="multiple"></el-switch>
+          <el-switch
+            @change="value = multiple ? [] : ''"
+            v-model="multiple"
+          ></el-switch>
         </div>
         <el-divider></el-divider>
         <div class="flex-center-align">
@@ -66,14 +74,9 @@
         </div>
         <el-divider></el-divider>
         <div class="flex-center-align">
-          <label>popover-width：</label>
-          <el-input-number v-model="popoverWidth" :min="150"></el-input-number>
-        </div>
-        <el-divider></el-divider>
-        <div class="flex-center-align">
           <label>lazy load：</label>
           <el-select-tree
-            v-model="value1"
+            v-model="value"
             lazy
             :load="load"
             node-key="id"
@@ -94,7 +97,7 @@
             <el-select-tree
               v-if="show"
               :default-expand-all="defaultExpandAll"
-              :multiple="multiple"
+              :multiple="true"
               :placeholder="placeholder"
               :disabled="disabled"
               :data="treeData"
@@ -124,20 +127,14 @@
           look：https://github.com/yujinpan/el-select-tree#attributes</el-link
         >
         <el-divider></el-divider>
-        <h4>
-          Tips: you can get `el-tree` instance from
-          `$refs.elSelectTree.$refs.elTree`. :D
-        </h4>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import ElSelectTree from '../src';
+import ElSelectTree from '../src/components/ElSelectTree';
 import '../src/element-ui';
-
-import { highlight } from './plugins/highlight';
 
 const version = require('../package').version;
 
@@ -147,6 +144,8 @@ export default {
   },
   data() {
     return {
+      test: [],
+      filterable: true,
       clearable: true,
       defaultExpandAll: false,
       multiple: false,
@@ -154,8 +153,8 @@ export default {
       disabled: false,
       checkStrictly: false,
       version,
-      code1: highlight('html', require('./template/example1').example1),
-      value1: '2',
+      code: require('./template/example').default,
+      value: '2',
       treeData: [
         {
           label: '新疆维吾尔自治区',
@@ -196,22 +195,22 @@ export default {
         children: 'childrens',
         label: 'label'
       },
-      popoverWidth: undefined,
       show: true,
-      form: { area: '' },
+      form: { area: [] },
       formRule: {
         area: { required: true, message: 'area is required.' }
       }
     };
   },
   methods: {
+    // eslint-disable-next-line no-console
     log: console.log,
     refresh() {
       this.show = false;
       setTimeout(() => (this.show = true), 200);
     },
     load(node, resolve) {
-      if (node.data.isLeaf) return resolve([]);
+      if (node.data && node.data.isLeaf) return resolve([]);
       setTimeout(() => {
         resolve([
           {
@@ -232,16 +231,16 @@ export default {
 .app {
   .el-col {
     padding: $spacing-medium;
-    border-right: $border-base;
+    border-right: $--border-base;
     &:last-of-type {
       border-right: 0;
     }
   }
   pre {
     text-align: left;
-    border: $border-base;
-    border-radius: $border-radius-base;
-    background-color: $background-color-base;
+    border: $--border-base;
+    border-radius: $--border-radius-base;
+    background-color: $--background-color-base;
     padding: $spacing-medium;
   }
   code {
