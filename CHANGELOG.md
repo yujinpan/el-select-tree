@@ -1,3 +1,11 @@
+# 2.0.0 2021-09-30
+
+## Refactor
+
+- development env update to TS
+- make full use of the two components and combine them
+- better support for almost all attributes of components, like `filterable`, `multiple`
+
 # 1.1.1 2021-01-13
 
 ## Feature
