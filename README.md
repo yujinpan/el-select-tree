@@ -94,9 +94,17 @@ export default {
 | `value/v-model` | `*/*[]`  | bound value, the type must be array if attribute's `multiple` is true |
 | `props`         | `Object` | {value, label, children, isLeaf, disabled}                            |
 
-#### Extends ElTree And ElSelect All Props
+**Extends `ElTree` And `ElSelect` All Props.**
 
 See details:
 
 - el-tree https://element.eleme.io/#/zh-CN/component/tree
 - el-select https://element.eleme.io/#/zh-CN/component/select
+
+### Events
+
+**Support `ElSelect` events `change`, `visible-change`, `remove-tag`, `clear`.**
+
+See details:
+
+https://element.eleme.io/#/zh-CN/component/select#select-events
