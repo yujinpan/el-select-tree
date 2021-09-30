@@ -101,8 +101,6 @@ export default class ElSelectTree extends Vue {
     } else {
       component.handleExpandIconClick();
     }
-    // @ts-ignore
-    this.nodeClick && this.nodeClick(data, node, component);
   }
 
   canSelect(node) {
