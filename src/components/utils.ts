@@ -50,7 +50,7 @@ export const ElTreeMixin = {
     expandOnClickNode: Boolean,
     checkOnClickNode: Boolean,
     checkDescendants: Boolean,
-    autoExpandParent: Boolean,
+    autoExpandParent: { type: Boolean, default: true },
     defaultCheckedKeys: Array,
     defaultExpandedKeys: Array,
     currentNodeKey: [String, Number],
@@ -59,18 +59,7 @@ export const ElTreeMixin = {
     // draggable: Boolean,
     // allowDrag: Function,
     // allowDrop: Function,
-    props: {
-      type: Object,
-      default() {
-        return {
-          value: 'value',
-          label: 'label',
-          children: 'children',
-          disabled: 'disabled',
-          isLeaf: 'isLeaf'
-        };
-      }
-    },
+    props: Object,
     lazy: Boolean,
     highlightCurrent: Boolean,
     load: Function,

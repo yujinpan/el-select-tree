@@ -19,13 +19,15 @@
       ref="tree"
       v-bind="this.propsElTree"
       :filter-node-method="_filterNodeMethod"
+      :node-key="propsMixin.value"
+      :default-expanded-keys="_defaultExpandedKeys"
       @node-click="_nodeClick"
     >
       <template slot-scope="{ data }">
         <el-option
-          :value="data[props.value]"
-          :label="data[props.label]"
-          :disabled="data[props.disabled]"
+          :value="data[propsMixin.value]"
+          :label="data[propsMixin.label]"
+          :disabled="data[propsMixin.disabled]"
         ></el-option>
       </template>
     </el-tree>
@@ -72,11 +74,33 @@ export default class ElSelectTree extends Vue {
     this.$emit('change', val);
   }
 
+  get _defaultExpandedKeys() {
+    const value = Array.isArray(this._value) ? this._value : [this._value];
+    // @ts-ignore
+    return this.defaultExpandedKeys
+      ? // @ts-ignore
+        this.defaultExpandedKeys.concat(value)
+      : value;
+  }
+
   get propsElSelect() {
     return propsPick(this.$props, Object.keys(ElSelectMixin.props));
   }
   get propsElTree() {
     return propsPick(this.$props, Object.keys(ElTreeMixin.props));
+  }
+
+  get propsMixin() {
+    return {
+      // @ts-ignore
+      value: this.nodeKey || 'value',
+      label: 'label',
+      children: 'children',
+      disabled: 'disabled',
+      isLeaf: 'isLeaf',
+      // @ts-ignore
+      ...this.props
+    };
   }
 
   // el-select 的 query 事件转发至 el-tree 中
@@ -92,7 +116,7 @@ export default class ElSelectTree extends Vue {
   _nodeClick(data, node, component) {
     if (this.canSelect(node)) {
       // @ts-ignore
-      if (!data[this.props.disabled]) {
+      if (!data[this.propsMixin.disabled]) {
         // $children[0] === slot-scope
         // $children[0].$children[0] === el-option
         const elOption = component.$children[0].$children[0];
