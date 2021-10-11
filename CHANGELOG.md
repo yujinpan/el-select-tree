@@ -1,3 +1,14 @@
+# 2.0.1 2021-10-11
+
+## Feature
+
+- add the support with `renderContent` and `#option` slot
+
+## Refactor
+
+- auto expanded with selected
+- auto merge props
+
 # 2.0.0 2021-09-29
 
 ## Refactor
