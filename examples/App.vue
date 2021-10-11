@@ -26,9 +26,14 @@
             :props="treeProps"
             :check-strictly="checkStrictly"
             :clearable="clearable"
+            :render-content="useCustomRender ? renderContent : undefined"
             @change="log"
             v-model="value"
-          ></el-select-tree>
+          >
+            <span v-if="useSlot" slot="option" slot-scope="{ data }">
+              {{ data.label }} i am option slot
+            </span>
+          </el-select-tree>
           <div class="margin-left-medium">current value：{{ value }}</div>
         </div>
         <el-divider></el-divider>
@@ -71,6 +76,16 @@
         <div class="flex-center-align">
           <label>clearable(clearable)：</label>
           <el-switch v-model="clearable"></el-switch>
+        </div>
+        <el-divider></el-divider>
+        <div class="flex-center-align">
+          <label>use custom render(renderContent)：</label>
+          <el-switch v-model="useCustomRender"></el-switch>
+        </div>
+        <el-divider></el-divider>
+        <div class="flex-center-align">
+          <label>use option slot(#option)：</label>
+          <el-switch v-model="useSlot"></el-switch>
         </div>
         <el-divider></el-divider>
         <div class="flex-center-align">
@@ -199,7 +214,9 @@ export default {
       form: { area: [] },
       formRule: {
         area: { required: true, message: 'area is required.' }
-      }
+      },
+      useCustomRender: false,
+      useSlot: false
     };
   },
   methods: {
@@ -220,6 +237,9 @@ export default {
           }
         ]);
       }, 600);
+    },
+    renderContent(h, { data }) {
+      return [data.label, 'i am renderContent'];
     }
   }
 };

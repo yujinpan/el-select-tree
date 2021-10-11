@@ -21,15 +21,9 @@
       :filter-node-method="_filterNodeMethod"
       :node-key="propsMixin.value"
       :default-expanded-keys="_defaultExpandedKeys"
+      :render-content="_renderContent"
       @node-click="_nodeClick"
     >
-      <template slot-scope="{ data }">
-        <el-option
-          :value="data[propsMixin.value]"
-          :label="data[propsMixin.label]"
-          :disabled="data[propsMixin.disabled]"
-        ></el-option>
-      </template>
     </el-tree>
   </el-select>
 </template>
@@ -41,22 +35,21 @@ import { ElTree } from 'element-ui/types/tree';
 import { ElSelectMixin, ElTreeMixin, propsPick } from '@/components/utils';
 import { Option } from 'element-ui';
 
-@Component({
-  name: 'ElSelectTree',
-  mixins: [ElSelectMixin, ElTreeMixin],
-  components: {
-    ElOption: {
-      extends: Option,
-      methods: {
-        // 拦截点击事件，事件移至 node 节点上
-        selectOptionClick() {
-          // $parent === slot-scope
-          // $parent.$parent === el-tree-node
-          this.$parent.$parent.handleClick();
-        }
-      }
+const ElSelectTreeOption = {
+  extends: Option,
+  methods: {
+    // 拦截点击事件，事件移至 node 节点上
+    selectOptionClick() {
+      // $parent === slot-scope
+      // $parent.$parent === el-tree-node
+      this.$parent.$parent.handleClick();
     }
   }
+};
+
+@Component({
+  name: 'ElSelectTree',
+  mixins: [ElSelectMixin, ElTreeMixin]
 })
 export default class ElSelectTree extends Vue {
   @Ref('select') select: ElSelect;
@@ -103,6 +96,27 @@ export default class ElSelectTree extends Vue {
     };
   }
 
+  _renderContent(h, { node, data, store }) {
+    const { value, label, disabled } = this.propsMixin;
+    return h(
+      ElSelectTreeOption,
+      {
+        props: {
+          value: data[value],
+          label: data[label],
+          disabled: data[disabled]
+        }
+      },
+      // @ts-ignore
+      this.renderContent
+        ? // @ts-ignore
+          [this.renderContent(h, { node, data, store })]
+        : this.$scopedSlots.option
+        ? this.$scopedSlots.option({ node, data, store })
+        : undefined
+    );
+  }
+
   // el-select 的 query 事件转发至 el-tree 中
   _filterMethod(val) {
     this.tree.filter(val);
@@ -129,7 +143,7 @@ export default class ElSelectTree extends Vue {
 
   canSelect(node) {
     // @ts-ignore
-    return this.checkStrictly || node.isLeaf;
+    return this.checkStrictly || node[this.propsMixin.isLeaf];
   }
 }
 </script>

@@ -108,3 +108,16 @@ See details:
 See details:
 
 https://element.eleme.io/#/zh-CN/component/select#select-events
+
+### Slots
+
+- https://element.eleme.io/#/zh-CN/component/select#select-slots
+- `option` select-option slot
+
+```vue
+<template>
+  <el-select-tree>
+    <span slot="option" slot-scope="{ node, data }">{{ data.label }}</span>
+  </el-select-tree>
+</template>
+```

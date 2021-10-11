@@ -54,7 +54,7 @@ export const ElTreeMixin = {
     defaultCheckedKeys: Array,
     defaultExpandedKeys: Array,
     currentNodeKey: [String, Number],
-    // renderContent: Function,
+    renderContent: Function,
     // showCheckbox: Boolean,
     // draggable: Boolean,
     // allowDrag: Function,
