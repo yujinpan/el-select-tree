@@ -11,48 +11,13 @@ const version = require('../package').version;
 export default class Example extends Vue {
   value = '';
   values = [];
-  data = [
-    {
-      label: '新疆维吾尔自治区',
-      value: '1',
-      children: [
-        {
-          label: '乌鲁木齐市',
-          value: '2',
-          children: [
-            { label: '达坂城区', value: '7' },
-            { label: '头屯河区', value: '8' },
-            { label: '乌鲁木齐县', value: '9' }
-          ]
-        },
-        {
-          label: '克拉玛依市',
-          value: '3',
-          disabled: true,
-          children: [
-            {
-              label: '克拉玛依区',
-              value: '10',
-              disabled: true,
-              children: []
-            },
-            { label: '白碱滩区', value: '11', disabled: true },
-            { label: '独山子区', value: '12', disabled: true }
-          ]
-        },
-        { label: '吐鲁番地区', value: '4', children: [] },
-        { label: '哈密地区', value: '5', children: [] },
-        { label: '昌吉回族自治州', value: '6', children: [] }
-      ]
-    }
-  ];
 
   renderWithCheckStrictly() {
     return [
       <h4>
         选择任意级别 <code>check-strictly</code>
       </h4>,
-      <p>可以选择任意节点，包括非叶子节点，正常模式仅能选择叶子节点。</p>,
+      <p>可以选择任意节点，普通模式仅能选择叶子节点。</p>,
       <section>
         <ElSelectTree
           vModel={this.value}
