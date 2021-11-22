@@ -80,7 +80,10 @@ export default class ElSelectTree extends Vue {
     return propsPick(this.$props, Object.keys(ElSelectMixin.props));
   }
   get propsElTree() {
-    return propsPick(this.$props, Object.keys(ElTreeMixin.props));
+    return {
+      ...propsPick(this.$props, Object.keys(ElTreeMixin.props)),
+      props: this.propsMixin
+    };
   }
 
   get propsMixin() {
