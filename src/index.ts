@@ -2,6 +2,7 @@
 import ElSelectTree from './components/ElSelectTree.vue';
 
 // Vue.use()
+// @ts-ignore
 ElSelectTree.install = (Vue) => {
   Vue.component('ElSelectTree', ElSelectTree);
 };
