@@ -1,12 +1,10 @@
 import Vue from 'vue';
+// @ts-ignore
 import App from './App.vue';
 
 import './plugins/element';
+import './plugins/highlight';
 import './styles/index.scss';
-import VueHighlight from 'highlight-vue';
-import 'highlight.js/styles/atom-one-light.css';
-
-Vue.use(VueHighlight);
 
 Vue.config.productionTip = false;
 

@@ -1,273 +1,639 @@
-<template>
-  <div class="app padding-medium text-center">
-    <!-- author -->
-    <h2>el-select-tree</h2>
-    <p class="text-secondary">author: yujinpan - version: v{{ version }}</p>
-
-    <el-divider></el-divider>
-
-    <el-row type="flex">
-      <!-- example -->
-      <el-col :span="12">
-        <Highlight :code="code" lang="xml" />
-      </el-col>
-      <el-col class="text-left" :span="12">
-        <!-- selector -->
-        <div class="flex-center-align">
-          <label>choose：</label>
-          <el-select-tree
-            v-if="show"
-            :default-expand-all="defaultExpandAll"
-            :filterable="filterable"
-            :multiple="multiple"
-            :placeholder="placeholder"
-            :disabled="disabled"
-            :data="treeData"
-            :props="treeProps"
-            :check-strictly="checkStrictly"
-            :clearable="clearable"
-            :render-content="useCustomRender ? renderContent : undefined"
-            @change="log"
-            v-model="value"
-          >
-            <span v-if="useSlot" slot="option" slot-scope="{ data }">
-              {{ data.label }} i am option slot
-            </span>
-          </el-select-tree>
-          <div class="margin-left-medium">current value：{{ value }}</div>
-        </div>
-        <el-divider></el-divider>
-
-        <!-- options -->
-        <div class="flex-center-align">
-          <label>choose any level(check-strictly)：</label>
-          <el-switch v-model="checkStrictly"></el-switch>
-          <b class="margin-left-medium" v-if="checkStrictly"
-            >try to choose parent</b
-          >
-        </div>
-        <el-divider></el-divider>
-        <div class="flex-center-align">
-          <label><b>filterable：</b></label>
-          <el-switch v-model="filterable"></el-switch>
-        </div>
-        <el-divider></el-divider>
-        <div class="flex-center-align">
-          <label>disabled(disabled)：</label>
-          <el-switch v-model="disabled"></el-switch>
-        </div>
-        <el-divider></el-divider>
-        <div class="flex-center-align">
-          <label>multiple choose(multiple)：</label>
-          <el-switch
-            @change="value = multiple ? [] : ''"
-            v-model="multiple"
-          ></el-switch>
-        </div>
-        <el-divider></el-divider>
-        <div class="flex-center-align">
-          <label>expand all tree node(default-expand-all)：</label>
-          <el-switch v-model="defaultExpandAll" @change="refresh()"></el-switch>
-          <b class="margin-left-medium" v-if="defaultExpandAll"
-            >You know, this property must be defined when initializing!</b
-          >
-        </div>
-        <el-divider></el-divider>
-        <div class="flex-center-align">
-          <label>clearable(clearable)：</label>
-          <el-switch v-model="clearable"></el-switch>
-        </div>
-        <el-divider></el-divider>
-        <div class="flex-center-align">
-          <label>use custom render(renderContent)：</label>
-          <el-switch v-model="useCustomRender"></el-switch>
-        </div>
-        <el-divider></el-divider>
-        <div class="flex-center-align">
-          <label>use option slot(#option)：</label>
-          <el-switch v-model="useSlot"></el-switch>
-        </div>
-        <el-divider></el-divider>
-        <div class="flex-center-align">
-          <label>lazy load：</label>
-          <el-select-tree
-            v-model="value"
-            lazy
-            :load="load"
-            node-key="id"
-            clearable
-          ></el-select-tree>
-        </div>
-        <el-divider></el-divider>
-
-        <!-- form test -->
-        <el-form
-          ref="form"
-          :model="form"
-          :rules="formRule"
-          class="flex-center-align"
-          inline
-        >
-          <el-form-item label="with form：" prop="area">
-            <el-select-tree
-              v-if="show"
-              :default-expand-all="defaultExpandAll"
-              :multiple="true"
-              :placeholder="placeholder"
-              :disabled="disabled"
-              :data="treeData"
-              :props="treeProps"
-              :check-strictly="checkStrictly"
-              :clearable="clearable"
-              v-model="form.area"
-            ></el-select-tree>
-            <el-button
-              @click="$refs.form.validate()"
-              style="margin-left: 40px"
-              type="primary"
-              >Validate</el-button
-            >
-            <el-button
-              @click="$refs.form.resetFields()"
-              style="margin-left: 20px"
-              >Reset</el-button
-            >
-          </el-form-item>
-        </el-form>
-        <el-divider class="margin-top-none"></el-divider>
-        <el-link
-          type="primary"
-          href="https://github.com/yujinpan/el-select-tree#attributes"
-          >more attributes
-          look：https://github.com/yujinpan/el-select-tree#attributes</el-link
-        >
-        <el-divider></el-divider>
-      </el-col>
-    </el-row>
-  </div>
-</template>
-
-<script>
-import ElSelectTree from '../src/components/ElSelectTree';
-import '../src/element-ui';
+<script lang="tsx">
+import ElSelectTree from '../src';
+import '@/element-ui.ts';
+import { CMDoc } from '@yujinpan/common-modules';
+import Vue from 'vue';
+import { Component } from 'vue-property-decorator';
 
 const version = require('../package').version;
 
-export default {
-  components: {
-    ElSelectTree
-  },
-  data() {
-    return {
-      test: [],
-      filterable: true,
-      clearable: true,
-      defaultExpandAll: false,
-      multiple: false,
-      placeholder: 'please choose',
-      disabled: false,
-      checkStrictly: false,
-      version,
-      code: require('./template/example').default,
-      value: '2',
-      treeData: [
+@Component
+export default class Example extends Vue {
+  value = '';
+  values = [];
+  data = [
+    {
+      label: '新疆维吾尔自治区',
+      value: '1',
+      children: [
         {
-          label: '新疆维吾尔自治区',
-          id: '1',
-          childrens: [
+          label: '乌鲁木齐市',
+          value: '2',
+          children: [
+            { label: '达坂城区', value: '7' },
+            { label: '头屯河区', value: '8' },
+            { label: '乌鲁木齐县', value: '9' }
+          ]
+        },
+        {
+          label: '克拉玛依市',
+          value: '3',
+          disabled: true,
+          children: [
+            {
+              label: '克拉玛依区',
+              value: '10',
+              disabled: true,
+              children: []
+            },
+            { label: '白碱滩区', value: '11', disabled: true },
+            { label: '独山子区', value: '12', disabled: true }
+          ]
+        },
+        { label: '吐鲁番地区', value: '4', children: [] },
+        { label: '哈密地区', value: '5', children: [] },
+        { label: '昌吉回族自治州', value: '6', children: [] }
+      ]
+    }
+  ];
+
+  renderWithCheckStrictly() {
+    return [
+      <h4>
+        选择任意级别 <code>check-strictly</code>
+      </h4>,
+      <p>可以选择任意节点，包括非叶子节点，正常模式仅能选择叶子节点。</p>,
+      <section>
+        <ElSelectTree
+          vModel={this.value}
+          data={[
             {
               label: '乌鲁木齐市',
-              id: '2',
-              childrens: [
-                { label: '达坂城区', id: '7', childrens: [] },
-                { label: '头屯河区', id: '8', childrens: [] },
-                { label: '乌鲁木齐县', id: '9', childrens: [] }
+              value: '2',
+              children: [
+                { label: '达坂城区', value: '7' },
+                { label: '头屯河区', value: '8' },
+                { label: '乌鲁木齐县', value: '9' }
               ]
-            },
+            }
+          ]}
+          check-strictly
+        ></ElSelectTree>
+        <hr />
+        <Highlight
+          code={`
+<template>
+  <ElSelectTree
+    v-model="value"
+    data="[
+      {
+        label: '乌鲁木齐市',
+        value: '2',
+        children: [
+          { label: '达坂城区', value: '7' },
+          { label: '头屯河区', value: '8' },
+          { label: '乌鲁木齐县', value: '9' }
+        ]
+      }
+    ]"
+    check-strictly
+  ></ElSelectTree>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      value: ''
+    }
+  }
+};
+<\\/script>
+`}
+        ></Highlight>
+      </section>
+    ];
+  }
+
+  renderWithFilterable() {
+    return [
+      <h4>
+        支持过滤 <code>filterable</code>
+      </h4>,
+      <section>
+        <ElSelectTree
+          vModel={this.value}
+          data={[
             {
-              label: '克拉玛依市',
-              id: '3',
-              disabled: true,
-              childrens: [
-                {
-                  label: '克拉玛依区',
-                  id: '10',
-                  disabled: true,
-                  childrens: []
-                },
-                { label: '白碱滩区', id: '11', disabled: true, childrens: [] },
-                { label: '独山子区', id: '12', disabled: true, childrens: [] }
+              label: '乌鲁木齐市',
+              value: '2',
+              children: [
+                { label: '达坂城区', value: '7' },
+                { label: '头屯河区', value: '8' },
+                { label: '乌鲁木齐县', value: '9' }
               ]
-            },
-            { label: '吐鲁番地区', id: '4', childrens: [] },
-            { label: '哈密地区', id: '5', childrens: [] },
-            { label: '昌吉回族自治州', id: '6', childrens: [] }
-          ]
-        }
-      ],
-      treeProps: {
-        value: 'id',
-        children: 'childrens',
-        label: 'label'
-      },
-      show: true,
-      form: { area: [] },
-      formRule: {
-        area: { required: true, message: 'area is required.' }
-      },
-      useCustomRender: false,
-      useSlot: false
-    };
-  },
-  methods: {
-    // eslint-disable-next-line no-console
-    log: console.log,
-    refresh() {
-      this.show = false;
-      setTimeout(() => (this.show = true), 200);
-    },
-    load(node, resolve) {
+            }
+          ]}
+          filterable
+        ></ElSelectTree>
+        <hr />
+        <Highlight
+          code={`
+<template>
+  <ElSelectTree
+    v-model="value"
+    data="[
+      {
+        label: '乌鲁木齐市',
+        value: '2',
+        children: [
+          { label: '达坂城区', value: '7' },
+          { label: '头屯河区', value: '8' },
+          { label: '乌鲁木齐县', value: '9' }
+        ]
+      }
+    ]"
+    filterable
+  ></ElSelectTree>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      value: ''
+    }
+  }
+};
+<\\/script>
+`}
+        ></Highlight>
+      </section>
+    ];
+  }
+
+  renderWithMultiple() {
+    return [
+      <h4>
+        多选模式 <code>multiple</code>
+      </h4>,
+      <section>
+        <ElSelectTree
+          vModel={this.values}
+          data={[
+            {
+              label: '乌鲁木齐市',
+              value: '2',
+              children: [
+                { label: '达坂城区', value: '7' },
+                { label: '头屯河区', value: '8' },
+                { label: '乌鲁木齐县', value: '9' }
+              ]
+            }
+          ]}
+          multiple
+        ></ElSelectTree>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <label>过滤加多选：</label>
+        <ElSelectTree
+          vModel={this.values}
+          data={[
+            {
+              label: '乌鲁木齐市',
+              value: '2',
+              children: [
+                { label: '达坂城区', value: '7' },
+                { label: '头屯河区', value: '8' },
+                { label: '乌鲁木齐县', value: '9' }
+              ]
+            }
+          ]}
+          filterable
+          multiple
+        ></ElSelectTree>
+        <hr />
+        <Highlight
+          code={`
+<template>
+  <ElSelectTree
+    v-model="values"
+    data="[
+      {
+        label: '乌鲁木齐市',
+        value: '2',
+        children: [
+          { label: '达坂城区', value: '7' },
+          { label: '头屯河区', value: '8' },
+          { label: '乌鲁木齐县', value: '9' }
+        ]
+      }
+    ]"
+    filterable
+    multiple
+  ></ElSelectTree>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      values: []
+    }
+  }
+};
+<\\/script>
+`}
+        ></Highlight>
+      </section>
+    ];
+  }
+
+  renderLazyLoad() {
+    return [
+      <h4>
+        懒加载 <code>lazy</code>
+      </h4>,
+      <section>
+        <ElSelectTree
+          vModel={this.value}
+          lazy
+          load={(node, resolve) => {
+            if (node.data && node.data.isLeaf) return resolve([]);
+            setTimeout(() => {
+              resolve([
+                {
+                  value: Date.now(),
+                  label: '懒加载节点',
+                  isLeaf: node.level === 3
+                }
+              ]);
+            }, 600);
+          }}
+        ></ElSelectTree>
+        <hr />
+        <Highlight
+          code={`
+<template>
+  <ElSelectTree
+    v-model="value"
+    lazy
+    load="(node, resolve) => {
       if (node.data && node.data.isLeaf) return resolve([]);
       setTimeout(() => {
         resolve([
           {
-            id: Date.now(),
+            value: Date.now(),
             label: '懒加载节点',
             isLeaf: node.level === 3
           }
         ]);
       }, 600);
-    },
-    renderContent(h, { data }) {
-      return [data.label, 'i am renderContent'];
+    }"
+  ></ElSelectTree>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      value: ''
     }
   }
 };
-</script>
+<\\/script>
+`}
+        ></Highlight>
+      </section>
+    ];
+  }
 
-<style lang="scss" scoped>
-@import './styles/common-variables';
+  renderCustomSlot() {
+    return [
+      <h4>自定义选项内容</h4>,
+      <section>
+        <ElSelectTree
+          vModel={this.value}
+          data={[
+            {
+              label: '乌鲁木齐市',
+              value: '2',
+              children: [
+                { label: '达坂城区', value: '7' },
+                { label: '头屯河区', value: '8' },
+                { label: '乌鲁木齐县', value: '9' }
+              ]
+            }
+          ]}
+          {...{
+            scopedSlots: {
+              option: ({ data }) => [
+                <i class="el-icon-document"></i>,
+                data.label
+              ]
+            }
+          }}
+        ></ElSelectTree>
+        <hr />
+        <Highlight
+          code={`
+<template>
+  <ElSelectTree
+    v-model="value"
+    data="[
+      {
+        label: '乌鲁木齐市',
+        value: '2',
+        children: [
+          { label: '达坂城区', value: '7' },
+          { label: '头屯河区', value: '8' },
+          { label: '乌鲁木齐县', value: '9' }
+        ]
+      }
+    ]"
+  >
+    <span slot="option" slot-scope="{ data, node }">
+      <i class="el-icon-document"></i>
+      {{data.label}}
+    </span>
+  </ElSelectTree>
+</template>
 
-.app {
-  .el-col {
-    padding: $spacing-medium;
-    border-right: $--border-base;
-    &:last-of-type {
-      border-right: 0;
+<script>
+export default {
+  data() {
+    return {
+      value: ''
     }
   }
-  pre {
-    text-align: left;
-    border: $--border-base;
-    border-radius: $--border-radius-base;
-    background-color: $--background-color-base;
-    padding: $spacing-medium;
+};
+<\\/script>
+`}
+        ></Highlight>
+      </section>
+    ];
   }
-  code {
-    font-size: 12px;
-    line-height: 1.8;
-    font-family: Menlo, Monaco, Consolas, Courier, monospace;
-    -webkit-font-smoothing: auto;
+
+  renderCustomRender() {
+    return [
+      <h4>自定义节点的渲染方法</h4>,
+      <section>
+        <ElSelectTree
+          vModel={this.value}
+          data={[
+            {
+              label: '乌鲁木齐市',
+              value: '2',
+              children: [
+                { label: '达坂城区', value: '7' },
+                { label: '头屯河区', value: '8' },
+                { label: '乌鲁木齐县', value: '9' }
+              ]
+            }
+          ]}
+          render-content={(h, { data, node }) => [
+            h('i', { class: 'el-icon-document' }),
+            data.label
+          ]}
+        ></ElSelectTree>
+        <hr />
+        <Highlight
+          code={`
+<template>
+  <ElSelectTree
+    v-model="value"
+    data="[
+      {
+        label: '乌鲁木齐市',
+        value: '2',
+        children: [
+          { label: '达坂城区', value: '7' },
+          { label: '头屯河区', value: '8' },
+          { label: '乌鲁木齐县', value: '9' }
+        ]
+      }
+    ]"
+  >
+    <span slot="option" slot-scope="{ data, node }">
+      <i class="el-icon-document"></i>
+      {{data.label}}
+    </span>
+  </ElSelectTree>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      value: ''
+    }
+  }
+};
+<\\/script>
+`}
+        ></Highlight>
+      </section>
+    ];
+  }
+
+  model = {
+    value: ''
+  };
+  renderWithForm() {
+    return [
+      <h4>与表单一起使用</h4>,
+      <section>
+        <el-form ref="elForm" {...{ props: { model: this.model } }}>
+          <el-form-item prop="value" label="选择地区" required>
+            <ElSelectTree
+              vModel={this.model.value}
+              data={[
+                {
+                  label: '乌鲁木齐市',
+                  value: '2',
+                  children: [
+                    { label: '达坂城区', value: '7' },
+                    { label: '头屯河区', value: '8' },
+                    { label: '乌鲁木齐县', value: '9' }
+                  ]
+                }
+              ]}
+              clearable
+            ></ElSelectTree>
+          </el-form-item>
+        </el-form>
+        <el-button onclick={() => this.$refs.elForm.validate()}>
+          表单验证
+        </el-button>
+        <hr />
+        <Highlight
+          code={`
+<template>
+  <el-form ref="elForm" model="model">
+    <el-form-item prop="value" label="选择地区" required>
+      <ElSelectTree
+        v-model="model.value"
+        data="[
+          {
+            label: '乌鲁木齐市',
+            value: '2',
+            children: [
+              { label: '达坂城区', value: '7' },
+              { label: '头屯河区', value: '8' },
+              { label: '乌鲁木齐县', value: '9' }
+            ]
+          }
+        ]"
+        clearable
+      ></ElSelectTree>
+    </el-form-item>
+  </el-form>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      model: {
+        value: ''
+      }
+    }
+  }
+};
+<\\/script>
+`}
+        ></Highlight>
+      </section>
+    ];
+  }
+
+  renderMethods() {
+    return [
+      <h4>实例方法</h4>,
+      <ul>
+        <li>
+          访问 <code>el-select</code> 实例：
+          <code>this.$refs.ElSelectTree.select</code>
+        </li>
+        <li>
+          访问 <code>el-tree</code> 实例：
+          <code>this.$refs.ElSelectTree.tree</code>
+        </li>
+      </ul>
+    ];
+  }
+
+  renderProps() {
+    return [
+      <h4>Props</h4>,
+      <p>继承 el-select 与 el-tree 的所有属性。</p>,
+      <ul>
+        <li>
+          <a
+            target="_blank"
+            href="https://element.eleme.io/2.15/#/zh-CN/component/select#select-attributes"
+          >
+            el-select
+          </a>
+        </li>
+        <li>
+          <a
+            target="_blank"
+            href="https://element.eleme.io/2.15/#/zh-CN/component/tree#attributes"
+          >
+            el-tree
+          </a>
+        </li>
+      </ul>
+    ];
+  }
+
+  renderEvents() {
+    return [
+      <h4>Events</h4>,
+
+      <p>
+        继承{' '}
+        <a
+          target="_blank"
+          href="https://element.eleme.io/2.15/#/zh-CN/component/select#select-events"
+        >
+          el-select 的事件
+        </a>
+        ：<code>visible-change</code>&nbsp;&nbsp;
+        <code>remove-tag</code>&nbsp;&nbsp;
+        <code>clear</code>&nbsp;&nbsp;
+        <code>blur</code>&nbsp;&nbsp;
+        <code>focus</code>
+      </p>,
+
+      <p>
+        继承{' '}
+        <a
+          target="_blank"
+          href="https://element.eleme.io/2.15/#/zh-CN/component/tree#events"
+        >
+          el-tree 的事件
+        </a>
+        ：<code>node-click</code>
+      </p>
+    ];
+  }
+
+  renderSlots() {
+    return [
+      <h4>Slots</h4>,
+
+      <p>
+        继承{' '}
+        <a
+          target="_blank"
+          href="https://element.eleme.io/2.15/#/zh-CN/component/select#select-slots"
+        >
+          el-select 的插槽
+        </a>
+        ：<code>prefix</code>&nbsp;&nbsp;<code>empty</code>
+      </p>,
+
+      <p>
+        继承{' '}
+        <a
+          target="_blank"
+          href="https://element.eleme.io/2.15/#/zh-CN/component/tree#scoped-slot"
+        >
+          el-tree 的插槽
+        </a>
+        ：<code>option</code> 对应数节点默认插槽
+      </p>
+    ];
+  }
+
+  render() {
+    return (
+      <CMDoc class="cm-padding-medium">
+        <h3>el-select-tree</h3>
+        <p>
+          author:&nbsp;&nbsp;<code>yujinpan</code>
+          &nbsp;&nbsp;version:&nbsp;&nbsp;
+          <code>v{require('../package').version}</code>&nbsp;&nbsp;source
+          code:&nbsp;&nbsp;
+          <code>
+            <a href="https://github.com/yujinpan/el-select-tree">github</a>
+          </code>
+        </p>
+
+        <h4>安装</h4>
+        <Highlight
+          code={`
+$ npm install --save el-select-tree
+        `}
+          lang="sh"
+        ></Highlight>
+
+        {[
+          this.renderWithCheckStrictly(),
+          this.renderWithFilterable(),
+          this.renderWithMultiple(),
+          this.renderLazyLoad(),
+          this.renderCustomSlot(),
+          this.renderCustomRender(),
+          this.renderWithForm(),
+          this.renderMethods(),
+          this.renderProps(),
+          this.renderEvents(),
+          this.renderSlots()
+        ]}
+      </CMDoc>
+    );
   }
 }
-</style>
+</script>
