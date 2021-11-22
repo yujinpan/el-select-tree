@@ -5,9 +5,11 @@
     v-model="_value"
     v-bind="this.propsElSelect"
     :filter-method="_filterMethod"
-    @visible-change="$listeners['visible-change'] || undefined"
+    @visible-change="_visibleChange"
     @remove-tag="$listeners['remove-tag'] || undefined"
     @clear="$listeners['clear'] || undefined"
+    @blur="$listeners['blur'] || undefined"
+    @focus="$listeners['focus'] || undefined"
   >
     <template #prefix>
       <slot name="prefix"></slot>
@@ -121,7 +123,7 @@ export default class ElSelectTree extends Vue {
   }
 
   // el-select 的 query 事件转发至 el-tree 中
-  _filterMethod(val) {
+  _filterMethod(val = '') {
     this.tree.filter(val);
   }
   _filterNodeMethod(value, data) {
@@ -141,6 +143,18 @@ export default class ElSelectTree extends Vue {
       }
     } else {
       component.handleExpandIconClick();
+    }
+  }
+
+  _visibleChange(val) {
+    this.$listeners['visible-change'] &&
+      (this.$listeners['visible-change'] as Function)(val);
+
+    // @ts-ignore
+    if (this.filterable && !val) {
+      setTimeout(() => {
+        this._filterMethod();
+      }, 230);
     }
   }
 
