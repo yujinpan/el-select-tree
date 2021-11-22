@@ -1,5 +1,5 @@
 // 主组件
-import ElSelectTree from './components/ElSelectTree';
+import ElSelectTree from './components/ElSelectTree.vue';
 
 // Vue.use()
 ElSelectTree.install = (Vue) => {

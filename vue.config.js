@@ -19,7 +19,7 @@ module.exports = {
 
   // webpack config
   configureWebpack: {
-    entry: './examples/main.js',
+    entry: './examples/main.ts',
     plugins: [...BundleAnalyzerPlugin]
   }
 };
