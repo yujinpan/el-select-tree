@@ -125,7 +125,7 @@ export default class ElSelectTree extends Vue {
     // @ts-ignore
     if (this.filterMethod) return this.filterMethod(value);
     if (!value) return true;
-    return data.label.includes(value);
+    return data[this.propsMixin.label]?.includes(value);
   }
   _nodeClick(data, node, component) {
     if (this.canSelect(node)) {
