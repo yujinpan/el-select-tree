@@ -11,6 +11,17 @@ const version = require('../package').version;
 export default class Example extends Vue {
   value = '';
   values = [];
+  data = [
+    {
+      label: '乌鲁木齐市',
+      value: '2',
+      children: [
+        { label: '达坂城区', value: '7' },
+        { label: '头屯河区', value: '8' },
+        { label: '乌鲁木齐县', value: '9' }
+      ]
+    }
+  ];
 
   renderWithCheckStrictly() {
     return [
@@ -21,18 +32,16 @@ export default class Example extends Vue {
       <section>
         <ElSelectTree
           vModel={this.value}
-          data={[
-            {
-              label: '乌鲁木齐市',
-              value: '2',
-              children: [
-                { label: '达坂城区', value: '7' },
-                { label: '头屯河区', value: '8' },
-                { label: '乌鲁木齐县', value: '9' }
-              ]
-            }
-          ]}
+          data={this.data}
           check-strictly
+        ></ElSelectTree>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <label>使用勾选框： </label>
+        <ElSelectTree
+          vModel={this.value}
+          data={this.data}
+          check-strictly
+          show-checkbox
         ></ElSelectTree>
         <hr />
         <Highlight
@@ -78,17 +87,7 @@ export default {
       <section>
         <ElSelectTree
           vModel={this.value}
-          data={[
-            {
-              label: '乌鲁木齐市',
-              value: '2',
-              children: [
-                { label: '达坂城区', value: '7' },
-                { label: '头屯河区', value: '8' },
-                { label: '乌鲁木齐县', value: '9' }
-              ]
-            }
-          ]}
+          data={this.data}
           filterable
         ></ElSelectTree>
         <hr />
@@ -135,36 +134,17 @@ export default {
       <section>
         <ElSelectTree
           vModel={this.values}
-          data={[
-            {
-              label: '乌鲁木齐市',
-              value: '2',
-              children: [
-                { label: '达坂城区', value: '7' },
-                { label: '头屯河区', value: '8' },
-                { label: '乌鲁木齐县', value: '9' }
-              ]
-            }
-          ]}
+          data={this.data}
           multiple
         ></ElSelectTree>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <label>过滤加多选：</label>
+        <label>过滤 + 多选 + 勾选框：</label>
         <ElSelectTree
           vModel={this.values}
-          data={[
-            {
-              label: '乌鲁木齐市',
-              value: '2',
-              children: [
-                { label: '达坂城区', value: '7' },
-                { label: '头屯河区', value: '8' },
-                { label: '乌鲁木齐县', value: '9' }
-              ]
-            }
-          ]}
+          data={this.data}
           filterable
           multiple
+          show-checkbox
         ></ElSelectTree>
         <hr />
         <Highlight
@@ -268,17 +248,7 @@ export default {
       <section>
         <ElSelectTree
           vModel={this.value}
-          data={[
-            {
-              label: '乌鲁木齐市',
-              value: '2',
-              children: [
-                { label: '达坂城区', value: '7' },
-                { label: '头屯河区', value: '8' },
-                { label: '乌鲁木齐县', value: '9' }
-              ]
-            }
-          ]}
+          data={this.data}
           {...{
             scopedSlots: {
               option: ({ data }) => [
@@ -334,17 +304,7 @@ export default {
       <section>
         <ElSelectTree
           vModel={this.value}
-          data={[
-            {
-              label: '乌鲁木齐市',
-              value: '2',
-              children: [
-                { label: '达坂城区', value: '7' },
-                { label: '头屯河区', value: '8' },
-                { label: '乌鲁木齐县', value: '9' }
-              ]
-            }
-          ]}
+          data={this.data}
           render-content={(h, { data, node }) => [
             h('i', { class: 'el-icon-document' }),
             data.label
@@ -514,7 +474,8 @@ export default {
         >
           el-select 的事件
         </a>
-        ：<code>visible-change</code>&nbsp;&nbsp;
+        ：<code>change</code>&nbsp;&nbsp;
+        <code>visible-change</code>&nbsp;&nbsp;
         <code>remove-tag</code>&nbsp;&nbsp;
         <code>clear</code>&nbsp;&nbsp;
         <code>blur</code>&nbsp;&nbsp;
