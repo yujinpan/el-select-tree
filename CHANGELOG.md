@@ -1,3 +1,16 @@
+# 2.0.2 2021-11-23
+
+## Feature
+
+- new document and examples
+- add the option `show-checkbox`
+
+## Fix
+
+- read `label` un parsed
+- el-select props un merged
+- filter text not clear when visible change
+
 # 2.0.1 2021-10-11
 
 ## Feature
