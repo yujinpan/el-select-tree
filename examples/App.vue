@@ -61,6 +61,7 @@ export default class Example extends Vue {
       }
     ]"
     check-strictly
+    show-checkbox
   ></ElSelectTree>
 </template>
 
@@ -165,6 +166,7 @@ export default {
     ]"
     filterable
     multiple
+    show-checkbox
   ></ElSelectTree>
 </template>
 
