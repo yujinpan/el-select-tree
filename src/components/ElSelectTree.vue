@@ -25,16 +25,25 @@
       :default-expanded-keys="_defaultExpandedKeys"
       :render-content="_renderContent"
       @node-click="_nodeClick"
+      @check="_check"
     >
     </el-tree>
   </el-select>
 </template>
 
 <script lang="ts">
-import { Component, Ref, Vue } from 'vue-property-decorator';
+import { Component, Mixins, Ref, Watch } from 'vue-property-decorator';
 import { ElSelect } from 'element-ui/types/select';
 import { ElTree } from 'element-ui/types/tree';
-import { ElSelectMixin, ElTreeMixin, propsPick } from '@/components/utils';
+import {
+  ElSelectMixin,
+  ElTreeMixin,
+  propsPick,
+  ElSelectMixinOptions,
+  ElTreeMixinOptions,
+  toArr,
+  isValidArr
+} from '@/components/utils';
 import { Option } from 'element-ui';
 
 const ElSelectTreeOption = {
@@ -50,58 +59,74 @@ const ElSelectTreeOption = {
 };
 
 @Component({
-  name: 'ElSelectTree',
-  mixins: [ElSelectMixin, ElTreeMixin]
+  name: 'ElSelectTree'
 })
-export default class ElSelectTree extends Vue {
-  @Ref('select') select: ElSelect;
-  @Ref('tree') tree: ElTree<any, any>;
+export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
+  /**
+   * @api
+   */
+  @Ref('select') public select: ElSelect;
+
+  /**
+   * @api
+   */
+  @Ref('tree') public tree: ElTree<any, any>;
 
   constructor() {
     super();
   }
 
-  get _value() {
-    // @ts-ignore
+  private get _value() {
     return this.value;
   }
-  set _value(val) {
+  private set _value(val) {
     this.$emit('change', val);
   }
+  private get values() {
+    return toArr(this.value);
+  }
 
-  get _defaultExpandedKeys() {
-    const value = Array.isArray(this._value) ? this._value : [this._value];
-    // @ts-ignore
+  @Watch('value')
+  private onValueChange() {
+    if (this.showCheckbox) {
+      this.$nextTick(() => {
+        this.tree.setCheckedKeys(this.values);
+      });
+    }
+  }
+
+  /**
+   * expand selected
+   * @private
+   */
+  private get _defaultExpandedKeys() {
     return this.defaultExpandedKeys
-      ? // @ts-ignore
-        this.defaultExpandedKeys.concat(value)
-      : value;
+      ? this.defaultExpandedKeys.concat(this.values)
+      : this.values;
   }
 
-  get propsElSelect() {
-    return propsPick(this.$props, Object.keys(ElSelectMixin.props));
+  private get propsElSelect() {
+    return propsPick(this.$props, Object.keys(ElSelectMixinOptions.props));
   }
-  get propsElTree() {
+  private get propsElTree() {
     return {
-      ...propsPick(this.$props, Object.keys(ElTreeMixin.props)),
+      ...propsPick(this.$props, Object.keys(ElTreeMixinOptions.props)),
       props: this.propsMixin
     };
   }
 
-  get propsMixin() {
+  private get propsMixin() {
     return {
-      // @ts-ignore
       value: this.nodeKey || 'value',
       label: 'label',
       children: 'children',
       disabled: 'disabled',
       isLeaf: 'isLeaf',
-      // @ts-ignore
       ...this.props
     };
   }
 
-  _renderContent(h, { node, data, store }) {
+  private _renderContent(h, { node, data, store }) {
     const { value, label, disabled } = this.propsMixin;
     return h(
       ElSelectTreeOption,
@@ -112,10 +137,8 @@ export default class ElSelectTree extends Vue {
           disabled: data[disabled]
         }
       },
-      // @ts-ignore
       this.renderContent
-        ? // @ts-ignore
-          [this.renderContent(h, { node, data, store })]
+        ? [this.renderContent(h, { node, data, store })]
         : this.$scopedSlots.option
         ? this.$scopedSlots.option({ node, data, store })
         : undefined
@@ -123,22 +146,23 @@ export default class ElSelectTree extends Vue {
   }
 
   // el-select 的 query 事件转发至 el-tree 中
-  _filterMethod(val = '') {
+  private _filterMethod(val = '') {
     this.tree.filter(val);
   }
-  _filterNodeMethod(value, data) {
-    // @ts-ignore
+  private _filterNodeMethod(value, data) {
     if (this.filterMethod) return this.filterMethod(value);
     if (!value) return true;
     return data[this.propsMixin.label]?.includes(value);
   }
-  _nodeClick(data, node, component) {
+
+  // can not select
+  private _nodeClick(data, node, component) {
     if (this.canSelect(node)) {
-      // @ts-ignore
       if (!data[this.propsMixin.disabled]) {
-        // $children[0] === slot-scope
-        // $children[0].$children[0] === el-option
-        const elOption = component.$children[0].$children[0];
+        const elOptionSlot = component.$children.find(
+          (item) => item.$options._componentTag === 'node-content'
+        );
+        const elOption = elOptionSlot.$children[0];
         elOption.dispatch('ElSelect', 'handleOptionClick', [elOption, true]);
       }
     } else {
@@ -146,11 +170,11 @@ export default class ElSelectTree extends Vue {
     }
   }
 
-  _visibleChange(val) {
+  // clear filter text when visible change
+  private _visibleChange(val) {
     this.$listeners['visible-change'] &&
       (this.$listeners['visible-change'] as Function)(val);
 
-    // @ts-ignore
     if (this.filterable && !val) {
       setTimeout(() => {
         this._filterMethod();
@@ -158,8 +182,29 @@ export default class ElSelectTree extends Vue {
     }
   }
 
-  canSelect(node) {
-    // @ts-ignore
+  // set selected when check change
+  private _check(data, params) {
+    this.$listeners['check'] &&
+      (this.$listeners['check'] as Function)(data, params);
+
+    let { checkedKeys, checkedNodes } = params;
+
+    // remove folder node when `checkStrictly` is false
+    if (!this.checkStrictly) {
+      const { children, value } = this.propsMixin;
+      checkedKeys = checkedNodes
+        .filter((item) => !isValidArr(item[children]))
+        .map((item) => item[value]);
+    }
+
+    this._value = this.multiple
+      ? [...checkedKeys]
+      : checkedKeys.includes(data[this.propsMixin.value])
+      ? data[this.propsMixin.value]
+      : undefined;
+  }
+
+  private canSelect(node) {
     return this.checkStrictly || node[this.propsMixin.isLeaf];
   }
 }
@@ -167,6 +212,10 @@ export default class ElSelectTree extends Vue {
 
 <style lang="scss">
 .el-select-tree {
+  // fix: checkbox 在展示下拉框时跳动问题
+  .el-checkbox__input {
+    display: flex;
+  }
   .el-select-dropdown__item {
     flex: 1;
     padding: 0 30px 0 0;

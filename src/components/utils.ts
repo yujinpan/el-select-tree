@@ -1,4 +1,6 @@
-export const ElSelectMixin = {
+import Vue from 'vue';
+
+export const ElSelectMixinOptions = {
   model: {
     prop: 'value',
     event: 'change'
@@ -38,8 +40,9 @@ export const ElSelectMixin = {
     popperAppendToBody: Boolean
   }
 };
+export const ElSelectMixin = Vue.extend(ElSelectMixinOptions);
 
-export const ElTreeMixin = {
+export const ElTreeMixinOptions = {
   props: {
     data: Array,
     emptyText: String,
@@ -47,15 +50,15 @@ export const ElTreeMixin = {
     nodeKey: String,
     checkStrictly: Boolean,
     defaultExpandAll: Boolean,
-    expandOnClickNode: Boolean,
-    checkOnClickNode: Boolean,
+    // expandOnClickNode: Boolean,
+    // checkOnClickNode: Boolean,
     checkDescendants: Boolean,
     autoExpandParent: { type: Boolean, default: true },
     defaultCheckedKeys: Array,
     defaultExpandedKeys: Array,
     currentNodeKey: [String, Number],
     renderContent: Function,
-    // showCheckbox: Boolean,
+    showCheckbox: Boolean,
     // draggable: Boolean,
     // allowDrag: Function,
     // allowDrop: Function,
@@ -69,6 +72,7 @@ export const ElTreeMixin = {
     iconClass: String
   }
 };
+export const ElTreeMixin = Vue.extend(ElTreeMixinOptions);
 
 export function propsPick(props: Obj, keys: string[]) {
   const result: Obj = {};
@@ -76,6 +80,14 @@ export function propsPick(props: Obj, keys: string[]) {
     key in props && (result[key] = props[key]);
   });
   return result;
+}
+
+export function toArr(val: any) {
+  return Array.isArray(val) ? val : val || val === 0 ? [val] : [];
+}
+
+export function isValidArr(val: any) {
+  return Array.isArray(val) && val.length;
 }
 
 export type Obj = { [p: string]: any };
