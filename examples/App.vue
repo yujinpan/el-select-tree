@@ -589,7 +589,7 @@ export default {
   render() {
     return (
       <CMDoc class="cm-padding-medium">
-        <h3>el-select-tree</h3>
+        <h2>el-select-tree</h2>
         <p>
           author:&nbsp;&nbsp;<code>yujinpan</code>
           &nbsp;&nbsp;version:&nbsp;&nbsp;
@@ -600,14 +600,37 @@ export default {
           </code>
         </p>
 
-        <h4>安装</h4>
+        <h3>Installation</h3>
         <Highlight
           code={`
 $ npm install --save el-select-tree
         `}
           lang="sh"
         ></Highlight>
+        <Highlight
+          code={`
+import Vue from 'vue';
+import ElSelectTree from 'el-select-tree';
 
+Vue.use(ElSelectTree);
+        `}
+          lang="js"
+        ></Highlight>
+        <blockquote>
+          <p>如果你的项目不依赖 element-ui，则需要引入额外的组件包。</p>
+          <Highlight
+            code={`
+import 'el-select-tree/lib/element-ui';
+// 如果项目上是按需加载，则根据官方配置自行修改 babel.config.js
+// 这里引入了完整的样式文件
+// https://element.eleme.io/#/zh-CN/component/quickstart#an-xu-yin-ru
+import 'element-ui/lib/theme-chalk/index.css';
+        `}
+            lang="js"
+          ></Highlight>
+        </blockquote>
+
+        <h3>Usage</h3>
         {[
           this.renderWithCheckStrictly(),
           this.renderWithFilterable(),
