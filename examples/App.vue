@@ -49,7 +49,7 @@ export default class Example extends Vue {
 <template>
   <ElSelectTree
     v-model="value"
-    data="[
+    :data="[
       {
         label: '乌鲁木齐市',
         value: '2',
@@ -97,7 +97,7 @@ export default {
 <template>
   <ElSelectTree
     v-model="value"
-    data="[
+    :data="[
       {
         label: '乌鲁木齐市',
         value: '2',
@@ -153,7 +153,7 @@ export default {
 <template>
   <ElSelectTree
     v-model="values"
-    data="[
+    :data="[
       {
         label: '乌鲁木齐市',
         value: '2',
@@ -216,7 +216,7 @@ export default {
 <template>
   <ElSelectTree
     v-model="value"
-    data="[
+    :data="[
       {
         id: 1,
         name: 1,
@@ -275,7 +275,7 @@ export default {
   <ElSelectTree
     v-model="value"
     lazy
-    load="(node, resolve) => {
+    :load="(node, resolve) => {
       if (node.data && node.data.isLeaf) return resolve([]);
       setTimeout(() => {
         resolve([
@@ -327,7 +327,7 @@ export default {
 <template>
   <ElSelectTree
     v-model="value"
-    data="[
+    :data="[
       {
         label: '乌鲁木齐市',
         value: '2',
@@ -379,7 +379,7 @@ export default {
 <template>
   <ElSelectTree
     v-model="value"
-    data="[
+    :data="[
       {
         label: '乌鲁木齐市',
         value: '2',
@@ -450,7 +450,7 @@ export default {
     <el-form-item prop="value" label="选择地区" required>
       <ElSelectTree
         v-model="model.value"
-        data="[
+        :data="[
           {
             label: '乌鲁木齐市',
             value: '2',
