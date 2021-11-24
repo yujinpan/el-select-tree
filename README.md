@@ -103,11 +103,13 @@ See details:
 
 ### Events
 
-**Support `ElSelect` events `change`, `visible-change`, `remove-tag`, `clear`.**
+- **Support `ElSelect` events `change`, `visible-change`, `remove-tag`, `clear`, `blur`, `focus`.**
+- **Support `ElTree` events `node-click`.**
 
 See details:
 
-https://element.eleme.io/#/zh-CN/component/select#select-events
+- https://element.eleme.io/#/zh-CN/component/select#select-events
+- https://element.eleme.io/2.15/#/zh-CN/component/tree#events
 
 ### Slots
 
