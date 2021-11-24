@@ -185,6 +185,67 @@ export default {
     ];
   }
 
+  renderCustomProps() {
+    return [
+      <h4>
+        自定义别名 <code>props</code>
+      </h4>,
+      <section>
+        <ElSelectTree
+          vModel={this.value}
+          data={[
+            {
+              id: 1,
+              name: 1,
+              child: [{ id: 2, name: 2 }]
+            }
+          ]}
+          {...{
+            props: {
+              props: {
+                value: 'id',
+                label: (data) => data.name,
+                children: 'child'
+              }
+            }
+          }}
+        ></ElSelectTree>
+        <hr />
+        <Highlight
+          code={`
+<template>
+  <ElSelectTree
+    v-model="value"
+    data="[
+      {
+        id: 1,
+        name: 1,
+        child: [{ id: 2, name: 2 }]
+      }
+    ]"
+    :props="{
+      value: 'id',
+      label: (data) => data.name,
+      children: 'child'
+    }"
+  ></ElSelectTree>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      value: ''
+    }
+  }
+};
+<\\/script>
+`}
+        ></Highlight>
+      </section>
+    ];
+  }
+
   renderLazyLoad() {
     return [
       <h4>
@@ -551,6 +612,7 @@ $ npm install --save el-select-tree
           this.renderWithCheckStrictly(),
           this.renderWithFilterable(),
           this.renderWithMultiple(),
+          this.renderCustomProps(),
           this.renderLazyLoad(),
           this.renderCustomSlot(),
           this.renderCustomRender(),

@@ -42,7 +42,8 @@ import {
   ElSelectMixinOptions,
   ElTreeMixinOptions,
   toArr,
-  isValidArr
+  isValidArr,
+  Obj
 } from '@/components/utils';
 import { Option } from 'element-ui';
 
@@ -115,7 +116,13 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     };
   }
 
-  private get propsMixin() {
+  /**
+   * 禁止直接引用，通过 getValByProp 获取节点值
+   */
+  private get propsMixin(): Record<
+    'value' | 'label' | 'children' | 'disabled' | 'isLeaf',
+    string | ((data: Obj, node?: Obj) => any)
+  > {
     return {
       value: this.nodeKey || 'value',
       label: 'label',
@@ -126,15 +133,32 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     };
   }
 
+  /**
+   * 获取节点的 prop 对应的值
+   */
+  private getValByProp(
+    prop: 'value' | 'label' | 'children' | 'disabled' | 'isLeaf',
+    data: Obj
+  ) {
+    const propVal = this.propsMixin[prop];
+    if (propVal instanceof Function) {
+      return propVal(
+        data,
+        this.tree?.getNode(this.getValByProp('value', data))
+      );
+    } else {
+      return data[propVal];
+    }
+  }
+
   private _renderContent(h, { node, data, store }) {
-    const { value, label, disabled } = this.propsMixin;
     return h(
       ElSelectTreeOption,
       {
         props: {
-          value: data[value],
-          label: data[label],
-          disabled: data[disabled]
+          value: this.getValByProp('value', data),
+          label: this.getValByProp('label', data),
+          disabled: this.getValByProp('disabled', data)
         }
       },
       this.renderContent
@@ -152,13 +176,13 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   private _filterNodeMethod(value, data) {
     if (this.filterMethod) return this.filterMethod(value);
     if (!value) return true;
-    return data[this.propsMixin.label]?.includes(value);
+    return this.getValByProp('label', data)?.includes(value);
   }
 
   // can not select
   private _nodeClick(data, node, component) {
     if (this.canSelect(node)) {
-      if (!data[this.propsMixin.disabled]) {
+      if (!this.getValByProp('disabled', data)) {
         const elOptionSlot = component.$children.find(
           (item) => item.$options._componentTag === 'node-content'
         );
@@ -191,21 +215,20 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
 
     // remove folder node when `checkStrictly` is false
     if (!this.checkStrictly) {
-      const { children, value } = this.propsMixin;
       checkedKeys = checkedNodes
-        .filter((item) => !isValidArr(item[children]))
-        .map((item) => item[value]);
+        .filter((item) => !isValidArr(this.getValByProp('children', item)))
+        .map((item) => this.getValByProp('value', item));
     }
 
     this._value = this.multiple
       ? [...checkedKeys]
-      : checkedKeys.includes(data[this.propsMixin.value])
-      ? data[this.propsMixin.value]
+      : checkedKeys.includes(this.getValByProp('value', data))
+      ? this.getValByProp('value', data)
       : undefined;
   }
 
-  private canSelect(node) {
-    return this.checkStrictly || node[this.propsMixin.isLeaf];
+  private canSelect(data) {
+    return this.checkStrictly || this.getValByProp('isLeaf', data);
   }
 }
 </script>
