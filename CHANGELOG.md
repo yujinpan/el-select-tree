@@ -1,3 +1,9 @@
+# 2.0.3 2021-11-24
+
+## Feature
+
+- add props can resolve callback function type
+
 # 2.0.2 2021-11-23
 
 ## Feature
