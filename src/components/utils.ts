@@ -34,7 +34,10 @@ export const ElSelectMixinOptions = {
     reserveKeyword: Boolean,
     valueKey: String,
     collapseTags: Boolean,
-    popperAppendToBody: Boolean
+    popperAppendToBody: {
+      type: Boolean,
+      default: true
+    }
   }
 };
 export const ElSelectMixin = Vue.extend(ElSelectMixinOptions);
@@ -43,7 +46,10 @@ export const ElTreeMixinOptions = {
   props: {
     data: Array,
     emptyText: String,
-    renderAfterExpand: Boolean,
+    renderAfterExpand: {
+      type: Boolean,
+      default: true
+    },
     nodeKey: String,
     checkStrictly: Boolean,
     defaultExpandAll: Boolean,
