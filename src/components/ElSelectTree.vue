@@ -2,6 +2,12 @@
   <el-select
     class="el-select-tree"
     ref="select"
+    :popper-class="
+      'el-select-tree__popper' +
+        (this.propsElSelect.popperClass
+          ? ` ${this.propsElSelect.popperClass}`
+          : '')
+    "
     v-model="_value"
     v-bind="this.propsElSelect"
     :filter-method="_filterMethod"
@@ -235,16 +241,18 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
 
 <style lang="scss">
 .el-select-tree {
-  // fix: checkbox 在展示下拉框时跳动问题
-  .el-checkbox__input {
-    display: flex;
-  }
-  .el-select-dropdown__item {
-    flex: 1;
-    padding: 0 30px 0 0;
-    background: transparent !important;
-    &.selected:after {
-      right: 10px;
+  &__popper {
+    // fix: checkbox 在展示下拉框时跳动问题
+    .el-checkbox__input {
+      display: flex;
+    }
+    .el-select-dropdown__item {
+      flex: 1;
+      padding: 0 30px 0 0;
+      background: transparent !important;
+      &.selected:after {
+        right: 10px;
+      }
     }
   }
 }
