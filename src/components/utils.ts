@@ -29,10 +29,7 @@ export const ElSelectMixinOptions = {
     filterMethod: Function,
     multiple: Boolean,
     multipleLimit: Number,
-    placeholder: {
-      type: String,
-      default: '请选择'
-    },
+    placeholder: String,
     defaultFirstOption: Boolean,
     reserveKeyword: Boolean,
     valueKey: String,
