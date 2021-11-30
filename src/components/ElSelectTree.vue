@@ -250,6 +250,8 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
       flex: 1;
       padding: 0 30px 0 0;
       background: transparent !important;
+      height: unset;
+      line-height: unset;
       &.selected:after {
         right: 10px;
       }
