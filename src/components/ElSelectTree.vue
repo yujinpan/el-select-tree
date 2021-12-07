@@ -246,10 +246,16 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     .el-checkbox__input {
       display: flex;
     }
+
     .el-select-dropdown__item {
       flex: 1;
       padding: 0 30px 0 0;
       background: transparent !important;
+
+      // fix: 节点展开时 popper 底部抖动问题
+      height: 20px;
+      line-height: 20px;
+
       &.selected:after {
         right: 10px;
       }
