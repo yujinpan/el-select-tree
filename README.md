@@ -123,3 +123,10 @@ See details:
   </el-select-tree>
 </template>
 ```
+
+# Special Thanks
+
+Special thanks to [JetBrains](https://www.jetbrains.com/?from=el-table-infinite-scroll)
+for letting me use the free license.
+
+![JetBrains](./jetbrains.svg)
