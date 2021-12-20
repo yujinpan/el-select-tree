@@ -177,7 +177,9 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
 
   // el-select 的 query 事件转发至 el-tree 中
   private _filterMethod(val = '') {
-    this.tree.filter(val);
+    // fix: `tree` reference is empty when component destroy
+    // https://github.com/yujinpan/el-select-tree/issues/35
+    this.tree && this.tree.filter(val);
   }
   private _filterNodeMethod(value, data, node) {
     // fix: https://github.com/yujinpan/el-select-tree/issues/35
