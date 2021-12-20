@@ -254,6 +254,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
       background: transparent !important;
 
       // fix: 节点展开时 popper 底部抖动问题
+      // https://github.com/yujinpan/el-select-tree/pull/33
       height: 20px;
       line-height: 20px;
 
