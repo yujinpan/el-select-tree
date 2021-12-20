@@ -179,8 +179,9 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   private _filterMethod(val = '') {
     this.tree.filter(val);
   }
-  private _filterNodeMethod(value, data) {
-    if (this.filterMethod) return this.filterMethod(value);
+  private _filterNodeMethod(value, data, node) {
+    // fix: https://github.com/yujinpan/el-select-tree/issues/35
+    if (this.filterMethod) return this.filterMethod(value, data, node);
     if (!value) return true;
     return this.getValByProp('label', data)?.includes(value);
   }
