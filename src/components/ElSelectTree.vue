@@ -4,12 +4,10 @@
     ref="select"
     :popper-class="
       'el-select-tree__popper' +
-        (this.propsElSelect.popperClass
-          ? ` ${this.propsElSelect.popperClass}`
-          : '')
+        (propsElSelect.popperClass ? ` ${propsElSelect.popperClass}` : '')
     "
     v-model="_value"
-    v-bind="this.propsElSelect"
+    v-bind="propsElSelect"
     :filter-method="_filterMethod"
     @visible-change="_visibleChange"
     @remove-tag="$listeners['remove-tag'] || undefined"
@@ -25,7 +23,7 @@
     </template>
     <el-tree
       ref="tree"
-      v-bind="this.propsElTree"
+      v-bind="propsElTree"
       :filter-node-method="_filterNodeMethod"
       :node-key="propsMixin.value"
       :default-expanded-keys="_defaultExpandedKeys"
