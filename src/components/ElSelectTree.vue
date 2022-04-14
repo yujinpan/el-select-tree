@@ -88,6 +88,37 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     );
   }
 
+  mounted() {
+    // get ElTree/ElSelect all methods
+    this.$nextTick(() => {
+      ['focus', 'blur'].forEach((item) => {
+        this[item] = this.select[item];
+      });
+      [
+        'filter',
+        'updateKeyChildren',
+        'getCheckedNodes',
+        'setCheckedNodes',
+        'getCheckedKeys',
+        'setCheckedKeys',
+        'setChecked',
+        'getHalfCheckedNodes',
+        'getHalfCheckedKeys',
+        'getCurrentKey',
+        'getCurrentNode',
+        'setCurrentKey',
+        'setCurrentNode',
+        'getNode',
+        'remove',
+        'append',
+        'insertBefore',
+        'insertAfter'
+      ].forEach((item) => {
+        this[item] = this.tree[item];
+      });
+    });
+  }
+
   private get _value() {
     return this.value;
   }
