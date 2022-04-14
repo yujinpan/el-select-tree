@@ -77,10 +77,6 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
    */
   @Ref('tree') public tree: ElTree<any, any>;
 
-  constructor() {
-    super();
-  }
-
   private get _value() {
     return this.value;
   }
