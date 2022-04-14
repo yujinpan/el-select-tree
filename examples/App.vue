@@ -1,7 +1,7 @@
 <script lang="tsx">
 import ElSelectTree from '../src';
 import '@/element-ui.ts';
-import { CMDoc } from '@yujinpan/common-modules';
+import { CMDoc, CMTable } from '@yujinpan/common-modules';
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 
@@ -314,7 +314,7 @@ export default {
           data={this.data}
           {...{
             scopedSlots: {
-              option: ({ data }) => [
+              default: ({ data }) => [
                 <i class="el-icon-document"></i>,
                 data.label
               ]
@@ -339,7 +339,7 @@ export default {
       }
     ]"
   >
-    <span slot="option" slot-scope="{ data, node }">
+    <span slot-scope="{ data, node }">
       <i class="el-icon-document"></i>
       {{data.label}}
     </span>
@@ -484,105 +484,55 @@ export default {
     ];
   }
 
-  renderMethods() {
-    return [
-      <h4>实例方法</h4>,
-      <ul>
-        <li>
-          访问 <code>el-select</code> 实例：
-          <code>this.$refs.ElSelectTree.select</code>
-        </li>
-        <li>
-          访问 <code>el-tree</code> 实例：
-          <code>this.$refs.ElSelectTree.tree</code>
-        </li>
-      </ul>
-    ];
-  }
-
   renderProps() {
     return [
-      <h4>Props</h4>,
-      <p>继承 el-select 与 el-tree 的所有属性。</p>,
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://element.eleme.io/2.15/#/zh-CN/component/select#select-attributes"
-          >
-            el-select
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://element.eleme.io/2.15/#/zh-CN/component/tree#attributes"
-          >
-            el-tree
-          </a>
-        </li>
-      </ul>
-    ];
-  }
-
-  renderEvents() {
-    return [
-      <h4>Events</h4>,
-
+      <h4>Props/Methods/Events/Slots</h4>,
       <p>
-        继承{' '}
-        <a
-          target="_blank"
-          href="https://element.eleme.io/2.15/#/zh-CN/component/select#select-events"
-        >
-          el-select 的事件
-        </a>
-        ：<code>change</code>&nbsp;&nbsp;
-        <code>visible-change</code>&nbsp;&nbsp;
-        <code>remove-tag</code>&nbsp;&nbsp;
-        <code>clear</code>&nbsp;&nbsp;
-        <code>blur</code>&nbsp;&nbsp;
-        <code>focus</code>
+        继承了 el-select 与 el-tree 所有的
+        Props/Methods/Events/Slots，这里不再重复，请至官方文档查看。
       </p>,
-
-      <p>
-        继承{' '}
-        <a
-          target="_blank"
-          href="https://element.eleme.io/2.15/#/zh-CN/component/tree#events"
-        >
-          el-tree 的事件
-        </a>
-        ：<code>node-click</code>
-      </p>
-    ];
-  }
-
-  renderSlots() {
-    return [
-      <h4>Slots</h4>,
-
-      <p>
-        继承{' '}
-        <a
-          target="_blank"
-          href="https://element.eleme.io/2.15/#/zh-CN/component/select#select-slots"
-        >
-          el-select 的插槽
-        </a>
-        ：<code>prefix</code>&nbsp;&nbsp;<code>empty</code>
-      </p>,
-
-      <p>
-        继承{' '}
-        <a
-          target="_blank"
-          href="https://element.eleme.io/2.15/#/zh-CN/component/tree#scoped-slot"
-        >
-          el-tree 的插槽
-        </a>
-        ：<code>default</code> 对应数节点默认插槽
-      </p>
+      <CMTable
+        order={false}
+        columns={['props', 'methods', 'events', 'slots'].map((item) => ({
+          prop: item,
+          label: item,
+          type: 'handle',
+          width: 'auto',
+          handleButtons: (row) => [
+            { label: row[item], href: row[`${item}Link`], target: '_blandk' }
+          ]
+        }))}
+        data={[
+          {
+            props: 'el-select',
+            propsLink:
+              'https://element.eleme.io/#/zh-CN/component/select#select-attributes',
+            methods: 'el-select',
+            methodsLink:
+              'https://element.eleme.io/#/zh-CN/component/select#methods',
+            events: 'el-select',
+            eventsLink:
+              'https://element.eleme.io/#/zh-CN/component/select#select-events',
+            slots: 'el-select',
+            slotsLink:
+              'https://element.eleme.io/#/zh-CN/component/select#select-slots'
+          },
+          {
+            props: 'el-tree',
+            propsLink:
+              'https://element.eleme.io/#/zh-CN/component/tree#attributes',
+            methods: 'el-tree',
+            methodsLink:
+              'https://element.eleme.io/#/zh-CN/component/tree#fang-fa',
+            events: 'el-tree',
+            eventsLink:
+              'https://element.eleme.io/#/zh-CN/component/tree#events',
+            slots: 'el-tree',
+            slotsLink:
+              'https://element.eleme.io/#/zh-CN/component/tree#scoped-slot'
+          }
+        ]}
+      ></CMTable>
     ];
   }
 
@@ -640,10 +590,7 @@ import 'element-ui/lib/theme-chalk/index.css';
           this.renderCustomSlot(),
           this.renderCustomRender(),
           this.renderWithForm(),
-          this.renderMethods(),
-          this.renderProps(),
-          this.renderEvents(),
-          this.renderSlots()
+          this.renderProps()
         ]}
       </CMDoc>
     );
