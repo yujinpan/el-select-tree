@@ -1,41 +1,5 @@
-<template>
-  <el-select
-    class="el-select-tree"
-    ref="select"
-    :popper-class="
-      'el-select-tree__popper' +
-        (propsElSelect.popperClass ? ` ${propsElSelect.popperClass}` : '')
-    "
-    v-model="_value"
-    v-bind="propsElSelect"
-    :filter-method="_filterMethod"
-    @visible-change="_visibleChange"
-    @remove-tag="$listeners['remove-tag'] || undefined"
-    @clear="$listeners['clear'] || undefined"
-    @blur="$listeners['blur'] || undefined"
-    @focus="$listeners['focus'] || undefined"
-  >
-    <template #prefix>
-      <slot name="prefix"></slot>
-    </template>
-    <template #empty>
-      <slot name="empty"></slot>
-    </template>
-    <el-tree
-      ref="tree"
-      v-bind="propsElTree"
-      :filter-node-method="_filterNodeMethod"
-      :node-key="propsMixin.value"
-      :default-expanded-keys="_defaultExpandedKeys"
-      :render-content="_renderContent"
-      @node-click="_nodeClick"
-      @check="_check"
-    >
-    </el-tree>
-  </el-select>
-</template>
-
 <script lang="ts">
+import { CreateElement } from 'vue';
 import { Component, Mixins, Ref, Watch } from 'vue-property-decorator';
 import { ElSelect } from 'element-ui/types/select';
 import { ElTree } from 'element-ui/types/tree';
@@ -76,6 +40,53 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
    * @api
    */
   @Ref('tree') public tree: ElTree<any, any>;
+
+  render(h: CreateElement) {
+    const slots = [];
+    this.$slots.prefix &&
+      slots.push(h('template', { slot: 'prefix' }, this.$slots.prefix));
+    this.$slots.empty &&
+      slots.push(h('template', { slot: 'empty' }, this.$slots.empty));
+    return h(
+      'el-select',
+      {
+        ref: 'select',
+        props: {
+          ...this.propsElSelect,
+          value: this._value,
+          popperClass: `el-select-tree__popper ${this.propsElSelect
+            .popperClass || ''}`,
+          filterMethod: this._filterMethod
+        },
+        on: {
+          ...this.$listeners,
+          change: (val) => {
+            this._value = val;
+            (this.$listeners['change'] as Function)?.(val);
+          },
+          'visible-change': this._visibleChange
+        }
+      },
+      [
+        ...slots,
+        h('el-tree', {
+          ref: 'tree',
+          props: {
+            ...this.propsElTree,
+            filterNodeMethod: this._filterNodeMethod,
+            nodeKey: this.propsMixin.value,
+            defaultExpandedKeys: this._defaultExpandedKeys,
+            renderContent: this._renderContent
+          },
+          on: {
+            ...this.$listeners,
+            'node-click': this._nodeClick,
+            check: this._check
+          }
+        })
+      ]
+    );
+  }
 
   private get _value() {
     return this.value;
@@ -184,6 +195,8 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
 
   // can not select
   private _nodeClick(data, node, component) {
+    (this.$listeners.nodeClick as Function)?.(...arguments);
+
     if (this.canSelect(node)) {
       if (!this.getValByProp('disabled', data)) {
         const elOptionSlot = component.$children.find(
@@ -199,20 +212,16 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
 
   // clear filter text when visible change
   private _visibleChange(val) {
-    this.$listeners['visible-change'] &&
-      (this.$listeners['visible-change'] as Function)(val);
+    (this.$listeners['visible-change'] as Function)?.(...arguments);
 
-    if (this.filterable && !val) {
-      setTimeout(() => {
-        this._filterMethod();
-      }, 230);
+    if (this.filterable && val) {
+      this._filterMethod();
     }
   }
 
   // set selected when check change
   private _check(data, params) {
-    this.$listeners['check'] &&
-      (this.$listeners['check'] as Function)(data, params);
+    (this.$listeners['check'] as Function)?.(...arguments);
 
     let { checkedKeys, checkedNodes } = params;
 
