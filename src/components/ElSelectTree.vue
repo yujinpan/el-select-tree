@@ -163,8 +163,8 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
       },
       this.renderContent
         ? [this.renderContent(h, { node, data, store })]
-        : this.$scopedSlots.option
-        ? this.$scopedSlots.option({ node, data, store })
+        : this.$scopedSlots.default
+        ? this.$scopedSlots.default({ node, data, store })
         : undefined
     );
   }

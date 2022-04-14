@@ -581,7 +581,7 @@ export default {
         >
           el-tree 的插槽
         </a>
-        ：<code>option</code> 对应数节点默认插槽
+        ：<code>default</code> 对应数节点默认插槽
       </p>
     ];
   }

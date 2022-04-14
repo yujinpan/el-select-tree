@@ -114,15 +114,8 @@ See details:
 ### Slots
 
 - https://element.eleme.io/#/zh-CN/component/select#select-slots
-- `option` select-option slot
-
-```vue
-<template>
-  <el-select-tree>
-    <span slot="option" slot-scope="{ node, data }">{{ data.label }}</span>
-  </el-select-tree>
-</template>
-```
+- `v2.0.6 used` https://element.eleme.io/#/zh-CN/component/tree#scoped-slot
+- `v2.0.6 deprecated` use `default` instead of it: ~~`option` select-option slot~~
 
 # Special Thanks
 
