@@ -66,6 +66,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
           ref: 'tree',
           props: {
             ...this.propsElTree,
+            expandOnClickNode: !this.checkStrictly,
             filterNodeMethod: this._filterNodeMethod,
             nodeKey: this.propsMixin.value,
             defaultExpandedKeys: this._defaultExpandedKeys,
@@ -136,9 +137,14 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
    * @private
    */
   private get _defaultExpandedKeys() {
-    return this.defaultExpandedKeys
-      ? this.defaultExpandedKeys.concat(this.values)
+    const parentKeys = this.tree
+      ? this.values
+          .map((item) => this.tree.getNode(item)?.parent?.key)
+          .filter((item) => !!item)
       : this.values;
+    return this.defaultExpandedKeys
+      ? this.defaultExpandedKeys.concat(parentKeys)
+      : parentKeys;
   }
 
   private get propsElSelect() {
