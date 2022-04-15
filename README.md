@@ -87,35 +87,12 @@ export default {
 
 ## Component API
 
-### Attributes
+**Extends `ElTree` And `ElSelect` All Props/Methods/Events/Slots.**
 
-| name            | type     | description                                                           |
-| --------------- | -------- | --------------------------------------------------------------------- |
-| `value/v-model` | `*/*[]`  | bound value, the type must be array if attribute's `multiple` is true |
-| `props`         | `Object` | {value, label, children, isLeaf, disabled}                            |
-
-**Extends `ElTree` And `ElSelect` All Props.**
-
-See details:
-
-- el-tree https://element.eleme.io/#/zh-CN/component/tree
-- el-select https://element.eleme.io/#/zh-CN/component/select
-
-### Events
-
-- **Support `ElSelect` events `change`, `visible-change`, `remove-tag`, `clear`, `blur`, `focus`.**
-- **Support `ElTree` events `node-click`.**
-
-See details:
-
-- https://element.eleme.io/#/zh-CN/component/select#select-events
-- https://element.eleme.io/2.15/#/zh-CN/component/tree#events
-
-### Slots
-
-- https://element.eleme.io/#/zh-CN/component/select#select-slots
-- `v2.0.6 used` https://element.eleme.io/#/zh-CN/component/tree#scoped-slot
-- `v2.0.6 deprecated` use `default` instead of it: ~~`option` select-option slot~~
+| props                                                                            | methods                                                                | events                                                                       | slots                                                                       |
+| -------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| [el-select](https://element.eleme.io/#/zh-CN/component/select#select-attributes) | [el-select](https://element.eleme.io/#/zh-CN/component/select#methods) | [el-select](https://element.eleme.io/#/zh-CN/component/select#select-events) | [el-select](https://element.eleme.io/#/zh-CN/component/select#select-slots) |
+| [el-tree](https://element.eleme.io/#/zh-CN/component/tree#attributes)            | [el-tree](https://element.eleme.io/#/zh-CN/component/tree#fang-fa)     | [el-tree](https://element.eleme.io/#/zh-CN/component/tree#events)            | [el-tree](https://element.eleme.io/#/zh-CN/component/tree#scoped-slot)      |
 
 # Special Thanks
 
