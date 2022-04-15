@@ -31,14 +31,7 @@ const ElSelectTreeOption = {
   name: 'ElSelectTree'
 })
 export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
-  /**
-   * @api
-   */
   @Ref('select') public select: ElSelect;
-
-  /**
-   * @api
-   */
   @Ref('tree') public tree: ElTree<any, any>;
 
   render(h: CreateElement) {
