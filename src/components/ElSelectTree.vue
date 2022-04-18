@@ -11,9 +11,9 @@ import {
   isValidArr,
   Obj
 } from '@/components/utils';
-import ElOption from 'element-ui/packages/option';
-import ElSelect from 'element-ui/packages/select';
-import ElTree from 'element-ui/packages/tree';
+import ElOption from 'element-ui/lib/option';
+import ElSelect from 'element-ui/lib/select';
+import ElTree from 'element-ui/lib/tree';
 
 const ElSelectTreeOption = {
   extends: ElOption,
