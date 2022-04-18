@@ -1,8 +1,6 @@
 <script lang="ts">
 import { CreateElement } from 'vue';
 import { Component, Mixins, Ref, Watch } from 'vue-property-decorator';
-import { ElSelect } from 'element-ui/types/select';
-import { ElTree } from 'element-ui/types/tree';
 import {
   ElSelectMixin,
   ElTreeMixin,
@@ -13,10 +11,12 @@ import {
   isValidArr,
   Obj
 } from '@/components/utils';
-import { Option } from 'element-ui';
+import ElOption from 'element-ui/packages/option';
+import ElSelect from 'element-ui/packages/select';
+import ElTree from 'element-ui/packages/tree';
 
 const ElSelectTreeOption = {
-  extends: Option,
+  extends: ElOption,
   methods: {
     // 拦截点击事件，事件移至 node 节点上
     selectOptionClick() {
@@ -41,7 +41,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     this.$slots.empty &&
       slots.push(h('template', { slot: 'empty' }, this.$slots.empty));
     return h(
-      'el-select',
+      ElSelect,
       {
         ref: 'select',
         props: {
@@ -62,7 +62,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
       },
       [
         ...slots,
-        h('el-tree', {
+        h(ElTree, {
           ref: 'tree',
           props: {
             ...this.propsElTree,
