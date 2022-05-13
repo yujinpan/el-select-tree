@@ -55,7 +55,6 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
           ...this.$listeners,
           change: (val) => {
             this._value = val;
-            (this.$listeners['change'] as Function)?.(val);
           },
           'visible-change': this._visibleChange
         }
