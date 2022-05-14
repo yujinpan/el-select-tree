@@ -9,16 +9,33 @@ const version = require('../package').version;
 
 @Component
 export default class Example extends Vue {
-  value = '';
+  value = '2-1';
   values = [];
   data = [
     {
       label: '乌鲁木齐市',
+      value: '1',
+      children: [
+        { label: '达坂城区', value: '1-1' },
+        { label: '头屯河区', value: '1-2' },
+        {
+          label: '乌鲁木齐县',
+          value: '1-3',
+          children: [
+            { label: '1-3-1', value: '1-3-1' },
+            { label: '1-3-2', value: '1-3-2' },
+            { label: '1-3-3', value: '1-3-3' }
+          ]
+        }
+      ]
+    },
+    {
+      label: '武汉市',
       value: '2',
       children: [
-        { label: '达坂城区', value: '7' },
-        { label: '头屯河区', value: '8' },
-        { label: '乌鲁木齐县', value: '9' }
+        { label: '汉口', value: '2-1' },
+        { label: '武昌', value: '2-2' },
+        { label: '汉阳', value: '2-3' }
       ]
     }
   ];
