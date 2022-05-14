@@ -93,4 +93,44 @@ export function isValidArr(val: any) {
   return Array.isArray(val) && val.length;
 }
 
+export function getParentKeys(
+  currentKeys: (number | string)[],
+  data: Obj[],
+  getValByProp: (prop: 'value' | 'children', data: Obj) => any
+) {
+  const result = new Set<string | number>();
+  const getKeys = (tree) => {
+    tree.forEach((node) => {
+      const children = getValByProp('children', node);
+      if (children && children.length) {
+        if (
+          children.find((item) =>
+            currentKeys.includes(getValByProp('value', item))
+          )
+        ) {
+          result.add(getValByProp('value', node));
+        }
+        getKeys(children);
+      }
+    });
+  };
+  getKeys(data);
+  return Array.from(result);
+}
+
+type Value = string | number | (string | number)[];
+
+export function cloneValue(val: Value) {
+  return Array.isArray(val) ? [...val] : val;
+}
+
+export function isEqualsValue(val1: Value, val2: Value) {
+  return (
+    val1 === val2 ||
+    (Array.isArray(val1) &&
+      Array.isArray(val2) &&
+      val1.toString() === val2.toString())
+  );
+}
+
 export type Obj = { [p: string]: any };

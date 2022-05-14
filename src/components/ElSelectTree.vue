@@ -9,7 +9,10 @@ import {
   ElTreeMixinOptions,
   toArr,
   isValidArr,
-  Obj
+  Obj,
+  getParentKeys,
+  cloneValue,
+  isEqualsValue
 } from '@/components/utils';
 import ElOption from 'element-ui/lib/option';
 import ElSelect from 'element-ui/lib/select';
@@ -46,7 +49,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
         ref: 'select',
         props: {
           ...this.propsElSelect,
-          value: this._value,
+          value: this.privateValue,
           popperClass: `el-select-tree__popper ${this.propsElSelect
             .popperClass || ''}`,
           filterMethod: this._filterMethod
@@ -54,7 +57,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
         on: {
           ...this.$listeners,
           change: (val) => {
-            this._value = val;
+            this.privateValue = val;
           },
           'visible-change': this._visibleChange
         }
@@ -112,18 +115,22 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     });
   }
 
-  private get _value() {
-    return this.value;
-  }
-  private set _value(val) {
-    this.$emit('change', val);
-  }
   private get values() {
     return toArr(this.value);
   }
 
-  @Watch('value')
-  private onValueChange() {
+  /**
+   * change from current component
+   * @private
+   */
+  private privateValue = null;
+  @Watch('privateValue')
+  onPrivateValueChange(val) {
+    // update when difference only
+    if (!isEqualsValue(val, this.value as string)) {
+      this.$emit('change', cloneValue(val));
+    }
+
     if (this.showCheckbox) {
       this.$nextTick(() => {
         this.tree.setCheckedKeys(this.values);
@@ -132,18 +139,31 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   }
 
   /**
-   * expand selected
-   * @private
+   * change from user assign value
    */
-  private get _defaultExpandedKeys() {
-    const parentKeys = this.tree
-      ? this.values
-          .map((item) => this.tree.getNode(item)?.parent?.key)
-          .filter((item) => !!item)
-      : this.values;
-    return this.defaultExpandedKeys
+  @Watch('value', { deep: true, immediate: true })
+  private onValueChange(val) {
+    // update when difference only
+    if (!isEqualsValue(val, this.privateValue)) {
+      this.privateValue = cloneValue(val);
+      this._updateDefaultExpandedKeys();
+    }
+  }
+
+  // Expand the parent node of the selected node by default,
+  // "default" is the value/data/defaultExpandedKeys
+  // changed from user assign value, rather than current component
+  private _defaultExpandedKeys = [];
+  @Watch('data')
+  @Watch('defaultExpandedKeys', { immediate: true })
+  _updateDefaultExpandedKeys() {
+    const parentKeys =
+      isValidArr(this.values) && isValidArr(this.data)
+        ? getParentKeys(this.values, this.data, this.getValByProp)
+        : [];
+    return (this._defaultExpandedKeys = this.defaultExpandedKeys
       ? this.defaultExpandedKeys.concat(parentKeys)
-      : parentKeys;
+      : parentKeys);
   }
 
   private get propsElSelect() {
@@ -265,7 +285,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
         .map((item) => this.getValByProp('value', item));
     }
 
-    this._value = this.multiple
+    this.privateValue = this.multiple
       ? [...checkedKeys]
       : checkedKeys.includes(this.getValByProp('value', data))
       ? this.getValByProp('value', data)
