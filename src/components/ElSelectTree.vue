@@ -248,7 +248,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
 
   // can not select
   private _nodeClick(data, node, component) {
-    (this.$listeners.nodeClick as Function)?.(...arguments);
+    (this.$listeners.['node-click'] as Function)?.(...arguments);
 
     if (this.canSelect(node)) {
       if (!this.getValByProp('disabled', data)) {
