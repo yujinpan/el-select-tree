@@ -1,5 +1,5 @@
 <script lang="ts">
-import { CreateElement } from 'vue';
+import Vue, { CreateElement } from 'vue';
 import { Component, Mixins, Ref, Watch } from 'vue-property-decorator';
 import {
   ElSelectMixin,
@@ -14,37 +14,28 @@ import {
   cloneValue,
   isEqualsValue
 } from '@/components/utils';
-import ElOption from 'element-ui/lib/option';
-import ElSelect from 'element-ui/lib/select';
-import ElTree from 'element-ui/lib/tree';
 
-const ElSelectTreeOption = {
-  extends: ElOption,
-  methods: {
-    // 拦截点击事件，事件移至 node 节点上
-    selectOptionClick() {
-      // $parent === slot-scope
-      // $parent.$parent === el-tree-node
-      this.$parent.$parent.handleClick();
-    }
-  }
-};
+import type {Select as ElSelectType, Tree as ElTreeType} from 'element-ui';
 
 @Component({
   name: 'ElSelectTree'
 })
 export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
-  @Ref('select') public select: ElSelect;
-  @Ref('tree') public tree: ElTree<any, any>;
+  @Ref('select') public select: ElSelectType;
+  @Ref('tree') public tree: ElTreeType<any, any>;
 
   render(h: CreateElement) {
+    if (!Vue.component('ElSelect') || !Vue.component('ElTree') || !Vue.component('ElOption')) {
+      throw new Error(`[ElSelectTree]: ElSelect/ElTree/ElOption unregistered.`)
+    }
+
     const slots = [];
     this.$slots.prefix &&
       slots.push(h('template', { slot: 'prefix' }, this.$slots.prefix));
     this.$slots.empty &&
       slots.push(h('template', { slot: 'empty' }, this.$slots.empty));
     return h(
-      ElSelect,
+      'el-select',
       {
         ref: 'select',
         props: {
@@ -64,7 +55,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
       },
       [
         ...slots,
-        h(ElTree, {
+        h('el-tree', {
           ref: 'tree',
           props: {
             ...this.propsElTree,
@@ -212,6 +203,17 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   }
 
   private _renderContent(h, { node, data, store }) {
+    const ElSelectTreeOption = {
+      extends: Vue.component('ElOption'),
+      methods: {
+        // 拦截点击事件，事件移至 node 节点上
+        selectOptionClick() {
+          // $parent === slot-scope
+          // $parent.$parent === el-tree-node
+          this.$parent.$parent.handleClick();
+        }
+      }
+    };
     return h(
       ElSelectTreeOption,
       {
