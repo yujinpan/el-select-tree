@@ -12,6 +12,10 @@
     "lib"
   ],
   "scripts": {
+    "publish:beta": "npm version prerelease --preid=beta && npm publish",
+    "publish:patch": "npm version patch && npm publish",
+    "version": "npm run build",
+    "postversion": "git push --all && git push --tags",
     "serve": "vue-cli-service serve",
     "build": "cross-env NODE_ENV=production rollupx && eslint --fix --no-ignore lib/**/*.d.ts",
     "build:example": "vue-cli-service build",
