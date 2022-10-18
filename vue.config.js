@@ -5,12 +5,6 @@
  * 1. 使用 devServer 的代理模式指向正式接口的域名。
  * 2. 注册 webpack alias 路径。
  */
-const argv = process.argv.splice(2);
-
-// 打包体积分析插件
-const BundleAnalyzerPlugin = argv.includes('--analyzer')
-  ? [new (require('webpack-bundle-analyzer')).BundleAnalyzerPlugin()]
-  : [];
 
 module.exports = {
   indexPath: '../_layouts/default.html',
@@ -19,7 +13,6 @@ module.exports = {
 
   // webpack config
   configureWebpack: {
-    entry: './examples/main.ts',
-    plugins: [...BundleAnalyzerPlugin]
+    entry: './examples/main.ts'
   }
 };
