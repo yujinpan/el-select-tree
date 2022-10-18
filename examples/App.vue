@@ -1,6 +1,5 @@
 <script lang="tsx">
 import ElSelectTree from '../src';
-import '@/element-ui.ts';
 import { CMDoc, CMTable } from '@yujinpan/common-modules';
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
