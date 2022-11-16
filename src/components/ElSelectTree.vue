@@ -12,21 +12,25 @@ import {
   Obj,
   getParentKeys,
   cloneValue,
-  isEqualsValue
+  isEqualsValue,
 } from '@/components/utils';
 
-import type {Select as ElSelectType, Tree as ElTreeType} from 'element-ui';
+import type { Select as ElSelectType, Tree as ElTreeType } from 'element-ui';
 
 @Component({
-  name: 'ElSelectTree'
+  name: 'ElSelectTree',
 })
 export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   @Ref('select') public select: ElSelectType;
   @Ref('tree') public tree: ElTreeType<any, any>;
 
   render(h: CreateElement) {
-    if (!Vue.component('ElSelect') || !Vue.component('ElTree') || !Vue.component('ElOption')) {
-      throw new Error(`[ElSelectTree]: ElSelect/ElTree/ElOption unregistered.`)
+    if (
+      !Vue.component('ElSelect') ||
+      !Vue.component('ElTree') ||
+      !Vue.component('ElOption')
+    ) {
+      throw new Error(`[ElSelectTree]: ElSelect/ElTree/ElOption unregistered.`);
     }
 
     const slots = [];
@@ -41,17 +45,18 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
         props: {
           ...this.propsElSelect,
           value: this.privateValue,
-          popperClass: `el-select-tree__popper ${this.propsElSelect
-            .popperClass || ''}`,
-          filterMethod: this._filterMethod
+          popperClass: `el-select-tree__popper ${
+            this.propsElSelect.popperClass || ''
+          }`,
+          filterMethod: this._filterMethod,
         },
         on: {
           ...this.$listeners,
           change: (val) => {
             this.privateValue = val;
           },
-          'visible-change': this._visibleChange
-        }
+          'visible-change': this._visibleChange,
+        },
       },
       [
         ...slots,
@@ -63,14 +68,14 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
             filterNodeMethod: this._filterNodeMethod,
             nodeKey: this.propsMixin.value,
             defaultExpandedKeys: this._defaultExpandedKeys,
-            renderContent: this._renderContent
+            renderContent: this._renderContent,
           },
           on: {
             ...this.$listeners,
             'node-click': this._nodeClick,
-            check: this._check
-          }
-        })
+            check: this._check,
+          },
+        }),
       ]
     );
   }
@@ -99,7 +104,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
         'remove',
         'append',
         'insertBefore',
-        'insertAfter'
+        'insertAfter',
       ].forEach((item) => {
         this[item] = this.tree[item];
       });
@@ -163,7 +168,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   private get propsElTree() {
     return {
       ...propsPick(this.$props, Object.keys(ElTreeMixinOptions.props)),
-      props: this.propsMixin
+      props: this.propsMixin,
     };
   }
 
@@ -180,7 +185,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
       children: 'children',
       disabled: 'disabled',
       isLeaf: 'isLeaf',
-      ...this.props
+      ...this.props,
     };
   }
 
@@ -211,8 +216,8 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
           // $parent === slot-scope
           // $parent.$parent === el-tree-node
           this.$parent.$parent.handleClick();
-        }
-      }
+        },
+      },
     };
     return h(
       ElSelectTreeOption,
@@ -220,8 +225,8 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
         props: {
           value: this.getValByProp('value', data),
           label: this.getValByProp('label', data),
-          disabled: this.getValByProp('disabled', data)
-        }
+          disabled: this.getValByProp('disabled', data),
+        },
       },
       this.renderContent
         ? [this.renderContent(h, { node, data, store })]

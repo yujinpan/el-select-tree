@@ -3,13 +3,13 @@ import Vue from 'vue';
 export const ElSelectMixinOptions = {
   model: {
     prop: 'value',
-    event: 'change'
+    event: 'change',
   },
   props: {
     name: String,
     id: String,
     value: {
-      required: true
+      required: true,
     },
     autocomplete: String,
     autoComplete: String,
@@ -36,9 +36,9 @@ export const ElSelectMixinOptions = {
     collapseTags: Boolean,
     popperAppendToBody: {
       type: Boolean,
-      default: true
-    }
-  }
+      default: true,
+    },
+  },
 };
 export const ElSelectMixin = Vue.extend(ElSelectMixinOptions);
 
@@ -48,7 +48,7 @@ export const ElTreeMixinOptions = {
     emptyText: String,
     renderAfterExpand: {
       type: Boolean,
-      default: true
+      default: true,
     },
     nodeKey: String,
     checkStrictly: Boolean,
@@ -72,8 +72,8 @@ export const ElTreeMixinOptions = {
     // filterNodeMethod: Function,
     accordion: Boolean,
     indent: Number,
-    iconClass: String
-  }
+    iconClass: String,
+  },
 };
 export const ElTreeMixin = Vue.extend(ElTreeMixinOptions);
 

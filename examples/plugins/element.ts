@@ -8,7 +8,7 @@ import {
   Table,
   TableColumn,
   Loading,
-  Link
+  Link,
 } from 'element-ui';
 
 Vue.use(Form);
