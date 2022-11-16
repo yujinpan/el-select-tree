@@ -3,6 +3,7 @@ import ElSelectTree from '../src';
 import { CMDoc, CMTable } from '@yujinpan/common-modules';
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
+import Highlight from 'highlight-vue';
 
 const version = require('../package').version;
 
@@ -23,10 +24,10 @@ export default class Example extends Vue {
           children: [
             { label: '1-3-1', value: '1-3-1' },
             { label: '1-3-2', value: '1-3-2' },
-            { label: '1-3-3', value: '1-3-3' }
-          ]
-        }
-      ]
+            { label: '1-3-3', value: '1-3-3' },
+          ],
+        },
+      ],
     },
     {
       label: '武汉市',
@@ -34,9 +35,9 @@ export default class Example extends Vue {
       children: [
         { label: '汉口', value: '2-1' },
         { label: '武昌', value: '2-2' },
-        { label: '汉阳', value: '2-3' }
-      ]
-    }
+        { label: '汉阳', value: '2-3' },
+      ],
+    },
   ];
 
   renderWithCheckStrictly() {
@@ -92,7 +93,7 @@ export default {
 <\\/script>
 `}
         ></Highlight>
-      </section>
+      </section>,
     ];
   }
 
@@ -139,7 +140,7 @@ export default {
 <\\/script>
 `}
         ></Highlight>
-      </section>
+      </section>,
     ];
   }
 
@@ -197,7 +198,7 @@ export default {
 <\\/script>
 `}
         ></Highlight>
-      </section>
+      </section>,
     ];
   }
 
@@ -213,17 +214,17 @@ export default {
             {
               id: 1,
               name: 1,
-              child: [{ id: 2, name: 2 }]
-            }
+              child: [{ id: 2, name: 2 }],
+            },
           ]}
           {...{
             props: {
               props: {
                 value: 'id',
                 label: (data) => data.name,
-                children: 'child'
-              }
-            }
+                children: 'child',
+              },
+            },
           }}
         ></ElSelectTree>
         <hr />
@@ -258,7 +259,7 @@ export default {
 <\\/script>
 `}
         ></Highlight>
-      </section>
+      </section>,
     ];
   }
 
@@ -278,8 +279,8 @@ export default {
                 {
                   value: Date.now(),
                   label: '懒加载节点',
-                  isLeaf: node.level === 3
-                }
+                  isLeaf: node.level === 3,
+                },
               ]);
             }, 600);
           }}
@@ -317,7 +318,7 @@ export default {
 <\\/script>
 `}
         ></Highlight>
-      </section>
+      </section>,
     ];
   }
 
@@ -332,9 +333,9 @@ export default {
             scopedSlots: {
               default: ({ data }) => [
                 <i class="el-icon-document"></i>,
-                data.label
-              ]
-            }
+                data.label,
+              ],
+            },
           }}
         ></ElSelectTree>
         <hr />
@@ -373,7 +374,7 @@ export default {
 <\\/script>
 `}
         ></Highlight>
-      </section>
+      </section>,
     ];
   }
 
@@ -386,7 +387,7 @@ export default {
           data={this.data}
           render-content={(h, { data, node }) => [
             h('i', { class: 'el-icon-document' }),
-            data.label
+            data.label,
           ]}
         ></ElSelectTree>
         <hr />
@@ -425,12 +426,12 @@ export default {
 <\\/script>
 `}
         ></Highlight>
-      </section>
+      </section>,
     ];
   }
 
   model = {
-    value: ''
+    value: '',
   };
   renderWithForm() {
     return [
@@ -447,9 +448,9 @@ export default {
                   children: [
                     { label: '达坂城区', value: '7' },
                     { label: '头屯河区', value: '8' },
-                    { label: '乌鲁木齐县', value: '9' }
-                  ]
-                }
+                    { label: '乌鲁木齐县', value: '9' },
+                  ],
+                },
               ]}
               clearable
             ></ElSelectTree>
@@ -496,7 +497,7 @@ export default {
 <\\/script>
 `}
         ></Highlight>
-      </section>
+      </section>,
     ];
   }
 
@@ -515,8 +516,8 @@ export default {
           type: 'handle',
           width: 'auto',
           handleButtons: (row) => [
-            { label: row[item], href: row[`${item}Link`], target: '_blandk' }
-          ]
+            { label: row[item], href: row[`${item}Link`], target: '_blandk' },
+          ],
         }))}
         data={[
           {
@@ -531,7 +532,7 @@ export default {
               'https://element.eleme.io/#/zh-CN/component/select#select-events',
             slots: 'el-select',
             slotsLink:
-              'https://element.eleme.io/#/zh-CN/component/select#select-slots'
+              'https://element.eleme.io/#/zh-CN/component/select#select-slots',
           },
           {
             props: 'el-tree',
@@ -545,10 +546,10 @@ export default {
               'https://element.eleme.io/#/zh-CN/component/tree#events',
             slots: 'el-tree',
             slotsLink:
-              'https://element.eleme.io/#/zh-CN/component/tree#scoped-slot'
-          }
+              'https://element.eleme.io/#/zh-CN/component/tree#scoped-slot',
+          },
         ]}
-      ></CMTable>
+      ></CMTable>,
     ];
   }
 
@@ -606,7 +607,7 @@ import 'element-ui/lib/theme-chalk/index.css';
           this.renderCustomSlot(),
           this.renderCustomRender(),
           this.renderWithForm(),
-          this.renderProps()
+          this.renderProps(),
         ]}
       </CMDoc>
     );

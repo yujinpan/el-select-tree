@@ -1,5 +1,5 @@
 import Highlight from 'highlight-vue';
-import 'highlight.js/styles/atom-one-light.css';
+import 'highlight-vue/lib/themes/light';
 import Vue from 'vue';
 
 // @ts-ignore

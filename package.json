@@ -44,7 +44,7 @@
     "element-ui": "^2.15.10",
     "eslint": "^8.25.0",
     "eslint-plugin-vue": "^9.6.0",
-    "highlight-vue": "^1.1.3",
+    "highlight-vue": "^1.1.6",
     "postcss": "^8.4.18",
     "rollupx": "^2.0.25",
     "sass": "^1.54.4",
