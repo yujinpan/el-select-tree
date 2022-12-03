@@ -17,6 +17,7 @@
     "version": "npm run build",
     "postversion": "git push --all && git push --tags",
     "serve": "vue-cli-service serve",
+    "docs:publish": "npm run build:example && git add dist _layouts && git commit -m 'build docs' && git push -u",
     "build": "cross-env NODE_ENV=production rollupx",
     "build:example": "vue-cli-service build",
     "lint": "vue-cli-service lint",
