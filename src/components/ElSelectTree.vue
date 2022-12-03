@@ -1,6 +1,7 @@
 <script lang="ts">
+import CacheOptions, { CacheOption } from '@/components/CacheOption';
 import Vue, { CreateElement } from 'vue';
-import { Component, Mixins, Ref, Watch } from 'vue-property-decorator';
+import { Component, Mixins, Prop, Ref, Watch } from 'vue-property-decorator';
 import {
   ElSelectMixin,
   ElTreeMixin,
@@ -13,6 +14,7 @@ import {
   getParentKeys,
   cloneValue,
   isEqualsValue,
+  treeEach,
 } from '@/components/utils';
 
 import type { Select as ElSelectType, Tree as ElTreeType } from 'element-ui';
@@ -21,6 +23,8 @@ import type { Select as ElSelectType, Tree as ElTreeType } from 'element-ui';
   name: 'ElSelectTree',
 })
 export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
+  @Prop({ type: Array, default: () => [] }) cacheData!: Obj[];
+
   @Ref('select') public select: ElSelectType;
   @Ref('tree') public tree: ElTreeType<any, any>;
 
@@ -60,6 +64,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
       },
       [
         ...slots,
+        h(CacheOptions, { props: { data: this.cacheOptions } }),
         h('el-tree', {
           ref: 'tree',
           props: {
@@ -109,6 +114,27 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
         this[item] = this.tree[item];
       });
     });
+  }
+
+  private get cacheOptions() {
+    if (!this.renderAfterExpand && !this.lazy) return [];
+
+    const options: CacheOption[] = [];
+
+    treeEach(
+      this.data.concat(this.cacheData),
+      (node) => {
+        const value = this.getValByProp('value', node);
+        options.push({
+          value,
+          currentLabel: this.getValByProp('label', node),
+          isDisabled: this.getValByProp('disabled', node),
+        });
+      },
+      (data) => this.getValByProp('children', data)
+    );
+
+    return options;
   }
 
   private get values() {

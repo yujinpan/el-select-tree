@@ -263,6 +263,8 @@ export default {
     ];
   }
 
+  private lazyValue = 2;
+  private lazyId = 0;
   renderLazyLoad() {
     return [
       <h4>
@@ -312,6 +314,59 @@ export default {
   data() {
     return {
       value: ''
+    }
+  }
+};
+<\\/script>
+`}
+        ></Highlight>
+      </section>,
+      <h5>
+        使用 <code>cacheData</code> 显示未加载节点的名称
+      </h5>,
+      <section>
+        <ElSelectTree
+          vModel={this.lazyValue}
+          lazy
+          cache-data={[{ value: 2, label: '2-label' }]}
+          load={(node, resolve) => {
+            setTimeout(() => {
+              resolve([
+                {
+                  value: ++this.lazyId,
+                  label: this.lazyId + '-label',
+                },
+              ]);
+            }, 600);
+          }}
+        ></ElSelectTree>
+        <hr />
+        <Highlight
+          code={`
+<template>
+  <ElSelectTree
+    v-model="value"
+    lazy
+    :cache-data="[{value: 2, label: '2-label'}]"
+    :load="(node, resolve) => {
+      setTimeout(() => {
+        resolve([
+          {
+            value: this.lazyId++,
+            label: this.lazyId + '-label',
+          }
+        ]);
+      }, 600);
+    }"
+  ></ElSelectTree>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      value: 2,
+      lazyId: 0,
     }
   }
 };
@@ -547,6 +602,22 @@ export default {
             slots: 'el-tree',
             slotsLink:
               'https://element.eleme.io/#/zh-CN/component/tree#scoped-slot',
+          },
+        ]}
+      ></CMTable>,
+      <h5>Own Props</h5>,
+      <CMTable
+        order={false}
+        columns={[
+          { prop: 'name', label: '属性名' },
+          { prop: 'type', label: '类型' },
+          { prop: 'desc', label: '描述' },
+        ]}
+        data={[
+          {
+            name: 'cacheData',
+            type: 'Array',
+            desc: '缓存数据，结构与 data 相同，做为未加载节点的预览',
           },
         ]}
       ></CMTable>,

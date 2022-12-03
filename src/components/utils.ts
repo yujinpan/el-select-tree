@@ -44,7 +44,10 @@ export const ElSelectMixin = Vue.extend(ElSelectMixinOptions);
 
 export const ElTreeMixinOptions = {
   props: {
-    data: Array,
+    data: {
+      type: Array,
+      default: () => [],
+    },
     emptyText: String,
     renderAfterExpand: {
       type: Boolean,
@@ -134,3 +137,27 @@ export function isEqualsValue(val1: Value, val2: Value) {
 }
 
 export type Obj = { [p: string]: any };
+
+type TreeCallback<T extends Obj, R> = (
+  data: T,
+  index: number,
+  array: T[],
+  parent?: T
+) => R;
+
+export function treeEach<T extends Obj>(
+  treeData: T[],
+  callback: TreeCallback<T, void>,
+  getChildren: (data: T) => T[],
+  parent?: T
+) {
+  for (let i = 0; i < treeData.length; i++) {
+    const data = treeData[i];
+    callback(data, i, treeData, parent);
+
+    const children = getChildren(data);
+    if (isValidArr(children)) {
+      treeEach(children, callback, getChildren, data);
+    }
+  }
+}
