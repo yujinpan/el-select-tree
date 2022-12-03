@@ -90,7 +90,7 @@ export default {
     }
   }
 };
-<\\/script>
+</${'script'}>
 `}
         ></Highlight>
       </section>,
@@ -137,7 +137,7 @@ export default {
     }
   }
 };
-<\\/script>
+</${'script'}>
 `}
         ></Highlight>
       </section>,
@@ -195,7 +195,7 @@ export default {
     }
   }
 };
-<\\/script>
+</${'script'}>
 `}
         ></Highlight>
       </section>,
@@ -256,7 +256,7 @@ export default {
     }
   }
 };
-<\\/script>
+</${'script'}>
 `}
         ></Highlight>
       </section>,
@@ -317,7 +317,7 @@ export default {
     }
   }
 };
-<\\/script>
+</${'script'}>
 `}
         ></Highlight>
       </section>,
@@ -370,7 +370,7 @@ export default {
     }
   }
 };
-<\\/script>
+</${'script'}>
 `}
         ></Highlight>
       </section>,
@@ -426,7 +426,7 @@ export default {
     }
   }
 };
-<\\/script>
+</${'script'}>
 `}
         ></Highlight>
       </section>,
@@ -478,7 +478,7 @@ export default {
     }
   }
 };
-<\\/script>
+</${'script'}>
 `}
         ></Highlight>
       </section>,
@@ -549,7 +549,7 @@ export default {
     }
   }
 };
-<\\/script>
+</${'script'}>
 `}
         ></Highlight>
       </section>,
