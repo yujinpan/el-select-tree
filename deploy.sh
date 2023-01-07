@@ -8,4 +8,4 @@ git init
 git add .
 git commit -m 'deploy'
 
-git push -f git@github.com:yujinpan/el-select-tree.git master:gh-pages
+git push -f git@github.com:yujinpan/el-select-tree.git main:gh-pages
