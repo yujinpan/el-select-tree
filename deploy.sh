@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-npm run build:docs &&
+npm run build:example &&
 
 cd dist
 
