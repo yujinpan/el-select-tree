@@ -1,7 +1,13 @@
 <script lang="ts">
-import CacheOptions, { CacheOption } from '@/components/CacheOption';
-import Vue, { CreateElement } from 'vue';
+import Vue from 'vue';
 import { Component, Mixins, Prop, Ref, Watch } from 'vue-property-decorator';
+
+import type { Select as ElSelectType, Tree as ElTreeType } from 'element-ui';
+import type { CreateElement } from 'vue';
+
+import type { CacheOption } from '@/components/CacheOption';
+import CacheOptions from '@/components/CacheOption';
+import type { Obj } from '@/components/utils';
 import {
   ElSelectMixin,
   ElTreeMixin,
@@ -10,14 +16,11 @@ import {
   ElTreeMixinOptions,
   toArr,
   isValidArr,
-  Obj,
   getParentKeys,
   cloneValue,
   isEqualsValue,
   treeEach,
 } from '@/components/utils';
-
-import type { Select as ElSelectType, Tree as ElTreeType } from 'element-ui';
 
 @Component({
   name: 'ElSelectTree',
@@ -81,7 +84,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
             check: this._check,
           },
         }),
-      ]
+      ],
     );
   }
 
@@ -131,7 +134,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
           isDisabled: this.getValByProp('disabled', node),
         });
       },
-      (data) => this.getValByProp('children', data)
+      (data) => this.getValByProp('children', data),
     );
 
     return options;
@@ -220,13 +223,13 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
    */
   private getValByProp(
     prop: 'value' | 'label' | 'children' | 'disabled' | 'isLeaf',
-    data: Obj
+    data: Obj,
   ) {
     const propVal = this.propsMixin[prop];
     if (propVal instanceof Function) {
       return propVal(
         data,
-        this.tree?.getNode(this.getValByProp('value', data))
+        this.tree?.getNode(this.getValByProp('value', data)),
       );
     } else {
       return data[propVal];
@@ -258,7 +261,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
         ? [this.renderContent(h, { node, data, store })]
         : this.$scopedSlots.default
         ? this.$scopedSlots.default({ node, data, store })
-        : undefined
+        : undefined,
     );
   }
 
@@ -286,7 +289,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     if (this.canSelect(node)) {
       if (!this.getValByProp('disabled', data)) {
         const elOptionSlot = component.$children.find(
-          (item) => item.$options._componentTag === 'node-content'
+          (item) => item.$options._componentTag === 'node-content',
         );
         const elOption = elOptionSlot.$children[0];
         elOption.dispatch('ElSelect', 'handleOptionClick', [elOption, true]);

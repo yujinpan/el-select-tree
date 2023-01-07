@@ -1,4 +1,5 @@
-import Vue, { ComponentOptions, PropType } from 'vue';
+import type { ComponentOptions, PropType } from 'vue';
+import type Vue from 'vue';
 
 export type CacheOption = {
   value: string | number | boolean | object;
@@ -18,7 +19,7 @@ const CacheOptions: ComponentOptions<Vue> = {
         this.data.forEach((item) => {
           if (
             !this.select.cachedOptions.some(
-              (cache) => cache.value === item.value
+              (cache) => cache.value === item.value,
             )
           ) {
             this.select.cachedOptions.push(item);

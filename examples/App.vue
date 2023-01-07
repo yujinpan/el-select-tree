@@ -1,11 +1,13 @@
 <script lang="tsx">
-import ElSelectTree from '../src';
 import { CMDoc, CMTable } from '@yujinpan/common-modules';
+import Highlight from 'highlight-vue';
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import Highlight from 'highlight-vue';
 
-const version = require('../package').version;
+import pkg from '../package.json';
+import ElSelectTree from '../src';
+
+const version = pkg.version;
 
 @Component
 export default class Example extends Vue {
@@ -631,8 +633,7 @@ export default {
         <p>
           author:&nbsp;&nbsp;<code>yujinpan</code>
           &nbsp;&nbsp;version:&nbsp;&nbsp;
-          <code>v{require('../package').version}</code>&nbsp;&nbsp;source
-          code:&nbsp;&nbsp;
+          <code>v{version}</code>&nbsp;&nbsp;source code:&nbsp;&nbsp;
           <code>
             <a href="https://github.com/yujinpan/el-select-tree">github</a>
           </code>

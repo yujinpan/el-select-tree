@@ -99,7 +99,7 @@ export function isValidArr(val: any) {
 export function getParentKeys(
   currentKeys: (number | string)[],
   data: Obj[],
-  getValByProp: (prop: 'value' | 'children', data: Obj) => any
+  getValByProp: (prop: 'value' | 'children', data: Obj) => any,
 ) {
   const result = new Set<string | number>();
   const getKeys = (tree) => {
@@ -108,7 +108,7 @@ export function getParentKeys(
       if (children && children.length) {
         if (
           children.find((item) =>
-            currentKeys.includes(getValByProp('value', item))
+            currentKeys.includes(getValByProp('value', item)),
           )
         ) {
           result.add(getValByProp('value', node));
@@ -142,14 +142,14 @@ type TreeCallback<T extends Obj, R> = (
   data: T,
   index: number,
   array: T[],
-  parent?: T
+  parent?: T,
 ) => R;
 
 export function treeEach<T extends Obj>(
   treeData: T[],
   callback: TreeCallback<T, void>,
   getChildren: (data: T) => T[],
-  parent?: T
+  parent?: T,
 ) {
   for (let i = 0; i < treeData.length; i++) {
     const data = treeData[i];
