@@ -1,2 +1,4 @@
+!.eslintrc.js
 lib
+dist
 stat

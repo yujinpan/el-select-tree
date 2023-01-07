@@ -1,3 +1,4 @@
+/* eslint-env node */
 module.exports = {
   banner:
     '/*!\n' +
@@ -10,5 +11,4 @@ module.exports = {
   stylesParseFiles: [],
   stylesCopyFiles: [],
   typesOutputDir: 'lib',
-  singleFile: true
 };
