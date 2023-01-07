@@ -2,6 +2,7 @@
 node_modules
 stat
 lib
+dist
 package-lock.json
 
 # local env files
