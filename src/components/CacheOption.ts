@@ -24,10 +24,16 @@ const CacheOptions: ComponentOptions<Vue> = {
           ) {
             this.select.cachedOptions.push(item);
           }
-          this.select.setSelected();
+
+          // fork from element-ui/packages/select/src/select.vue#435
+          const inputs = Array.from(
+            this.select.$el?.querySelectorAll('input') || [],
+          );
+          if (!inputs.includes(document.activeElement)) {
+            this.select.setSelected();
+          }
         });
       },
-      deep: true,
       immediate: true,
     },
   },
