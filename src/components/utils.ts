@@ -72,7 +72,7 @@ export const ElTreeMixinOptions = {
     lazy: Boolean,
     highlightCurrent: Boolean,
     load: Function,
-    // filterNodeMethod: Function,
+    filterNodeMethod: Function,
     accordion: Boolean,
     indent: Number,
     iconClass: String,
