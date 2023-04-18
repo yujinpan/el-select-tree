@@ -25,8 +25,8 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "start": "npm run dev",
     "test": "vitest --environment jsdom",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:dev": "npm run build && vuepress dev docs",
+    "docs:build": "npm run build && vuepress build docs"
   },
   "dependencies": {
     "core-js": "^3.17.3",
