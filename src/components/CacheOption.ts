@@ -1,5 +1,6 @@
-import type { ComponentOptions, PropType } from 'vue';
-import type Vue from 'vue';
+import Vue from 'vue';
+
+import type { PropType } from 'vue';
 
 export type CacheOption = {
   value: string | number | boolean | object;
@@ -7,7 +8,7 @@ export type CacheOption = {
   isDisabled: boolean;
 };
 
-const CacheOptions: ComponentOptions<Vue> = {
+const CacheOptions = Vue.extend({
   inject: ['select'],
   props: {
     data: Array as PropType<CacheOption[]>,
@@ -20,19 +21,23 @@ const CacheOptions: ComponentOptions<Vue> = {
   },
   methods: {
     update() {
+      const select = this['select'] as {
+        $el: HTMLElement;
+        cachedOptions: CacheOption[];
+        setSelected: () => any;
+      };
+
       this.data.forEach((item) => {
-        if (
-          !this.select.cachedOptions.some((cache) => cache.value === item.value)
-        ) {
-          this.select.cachedOptions.push(item);
+        if (!select.cachedOptions.some((cache) => cache.value === item.value)) {
+          select.cachedOptions.push(item);
         }
 
         // fork from element-ui/packages/select/src/select.vue#435
-        const inputs = Array.from(
-          this.select.$el?.querySelectorAll('input') || [],
+        const inputs: Element[] = Array.from(
+          select.$el?.querySelectorAll('input') || [],
         );
         if (!inputs.includes(document.activeElement)) {
-          this.select.setSelected();
+          select.setSelected();
         }
       });
     },
@@ -41,8 +46,8 @@ const CacheOptions: ComponentOptions<Vue> = {
     return undefined;
   },
   mounted() {
-    this.updated();
+    this.update();
   },
-};
+});
 
 export default CacheOptions;
