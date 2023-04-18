@@ -8,5 +8,13 @@ export default defineConfig({
     repo: 'yujinpan/el-select-tree',
     logo: '/logo.svg',
   },
-  plugins: ['vuepress-plugin-component-demo' as any],
+  plugins: [
+    'vuepress-plugin-component-demo' as any,
+    [
+      '@vuepress/google-analytics',
+      {
+        ga: 'G-WP35BEJPHM',
+      },
+    ],
+  ],
 });
