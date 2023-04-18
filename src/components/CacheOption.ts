@@ -27,19 +27,21 @@ const CacheOptions = Vue.extend({
         setSelected: () => any;
       };
 
+      const cachedValues = select.cachedOptions.map((item) => item.value);
+
       this.data.forEach((item) => {
-        if (!select.cachedOptions.some((cache) => cache.value === item.value)) {
+        if (!cachedValues.includes(item.value)) {
           select.cachedOptions.push(item);
         }
-
-        // fork from element-ui/packages/select/src/select.vue#435
-        const inputs: Element[] = Array.from(
-          select.$el?.querySelectorAll('input') || [],
-        );
-        if (!inputs.includes(document.activeElement)) {
-          select.setSelected();
-        }
       });
+
+      // fork from element-ui/packages/select/src/select.vue#435
+      const inputs: Element[] = Array.from(
+        select.$el?.querySelectorAll('input') || [],
+      );
+      if (!inputs.includes(document.activeElement)) {
+        select.setSelected();
+      }
     },
   },
   render() {
