@@ -14,31 +14,34 @@ const CacheOptions: ComponentOptions<Vue> = {
     default: () => [],
   },
   watch: {
-    data: {
-      handler() {
-        this.data.forEach((item) => {
-          if (
-            !this.select.cachedOptions.some(
-              (cache) => cache.value === item.value,
-            )
-          ) {
-            this.select.cachedOptions.push(item);
-          }
+    data() {
+      this.update();
+    },
+  },
+  methods: {
+    update() {
+      this.data.forEach((item) => {
+        if (
+          !this.select.cachedOptions.some((cache) => cache.value === item.value)
+        ) {
+          this.select.cachedOptions.push(item);
+        }
 
-          // fork from element-ui/packages/select/src/select.vue#435
-          const inputs = Array.from(
-            this.select.$el?.querySelectorAll('input') || [],
-          );
-          if (!inputs.includes(document.activeElement)) {
-            this.select.setSelected();
-          }
-        });
-      },
-      immediate: true,
+        // fork from element-ui/packages/select/src/select.vue#435
+        const inputs = Array.from(
+          this.select.$el?.querySelectorAll('input') || [],
+        );
+        if (!inputs.includes(document.activeElement)) {
+          this.select.setSelected();
+        }
+      });
     },
   },
   render() {
     return undefined;
+  },
+  mounted() {
+    this.updated();
   },
 };
 
