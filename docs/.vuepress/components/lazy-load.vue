@@ -26,5 +26,8 @@ export default {
       value: '',
     };
   },
+  methods: {
+    setTimeout,
+  },
 };
 </script>
