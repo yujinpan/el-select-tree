@@ -3,18 +3,7 @@
     v-model="value"
     lazy
     :cache-data="[{ value: 2, label: '2-label' }]"
-    :load="
-      (node, resolve) => {
-        setTimeout(() => {
-          resolve([
-            {
-              value: ++this.lazyId,
-              label: this.lazyId + '-label',
-            },
-          ]);
-        }, 600);
-      }
-    "
+    :load="load"
   ></ElSelectTree>
 </template>
 
@@ -27,7 +16,16 @@ export default {
     };
   },
   methods: {
-    setTimeout,
+    load(node, resolve) {
+      setTimeout(() => {
+        resolve([
+          {
+            value: ++this.lazyId,
+            label: this.lazyId + '-label',
+          },
+        ]);
+      }, 600);
+    },
   },
 };
 </script>
