@@ -12,7 +12,7 @@ export default {
   data() {
     return {
       lazyId: 0,
-      value: '',
+      value: 2,
     };
   },
   methods: {
