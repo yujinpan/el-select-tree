@@ -1,4 +1,6 @@
 // 主组件
+import type { PluginObject } from 'vue';
+
 import ElSelectTree from './components/ElSelectTree.vue';
 
 // Vue.use()
@@ -9,4 +11,4 @@ ElSelectTree.install = (Vue) => {
 };
 
 // Vue.component()
-export default ElSelectTree;
+export default ElSelectTree as typeof ElSelectTree & PluginObject<any>;
