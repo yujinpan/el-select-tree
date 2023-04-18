@@ -1,6 +1,7 @@
 import { defineConfig } from 'vuepress/config';
 
 export default defineConfig({
+  base: '/el-select-tree/',
   title: 'el-select-tree',
   description: "ElementUI's el-select combined with el-tree.",
   themeConfig: {
