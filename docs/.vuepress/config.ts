@@ -9,6 +9,8 @@ export default defineConfig({
     lastUpdated: 'Last Updated',
     repo: 'yujinpan/el-select-tree',
     logo: '/logo.svg',
+    sidebar: 'auto',
+    nav: [{ text: 'Guide', link: '/' }],
   },
   plugins: ['vuepress-plugin-component-demo' as any],
 });
