@@ -65,7 +65,7 @@
     "vue": "^2.7.14",
     "vue-tsc": "^0.40.12",
     "vuepress": "^1.9.9",
-    "vuepress-plugin-component-demo": "^1.0.1"
+    "vuepress-plugin-component-demo": "^1.0.2"
   },
   "peerDependencies": {
     "element-ui": "^2.15.6",
