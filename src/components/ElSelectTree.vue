@@ -68,7 +68,9 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
       },
       [
         ...slots,
-        h(CacheOptions, { props: { data: this.cacheOptions } }),
+        h(CacheOptions, {
+          props: { data: this.cacheOptions, values: this.values },
+        }),
         h('el-tree', {
           ref: 'tree',
           props: {

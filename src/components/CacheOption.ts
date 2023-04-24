@@ -15,6 +15,10 @@ const CacheOptions = Vue.extend({
       type: Array as PropType<CacheOption[]>,
       default: () => [],
     },
+    values: {
+      type: Array,
+      default: () => [],
+    },
   },
   watch: {
     data() {
@@ -32,7 +36,11 @@ const CacheOptions = Vue.extend({
       const cachedValues = select.cachedOptions.map((item) => item.value);
 
       this.data.forEach((item) => {
-        if (!cachedValues.includes(item.value)) {
+        // cache the selected but no rendered options
+        if (
+          this.values.includes(item.value) &&
+          !cachedValues.includes(item.value)
+        ) {
           select.cachedOptions.push(item);
         }
       });
