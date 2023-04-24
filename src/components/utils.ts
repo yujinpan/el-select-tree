@@ -161,3 +161,13 @@ export function treeEach<T extends Obj>(
     }
   }
 }
+
+export function compareArrayChanges(source: any[], target: any[]) {
+  const add = target.filter((item) => !source.includes(item));
+  const remove = source.filter((item) => !target.includes(item));
+
+  return {
+    add,
+    remove,
+  };
+}

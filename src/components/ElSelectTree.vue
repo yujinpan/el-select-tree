@@ -20,6 +20,7 @@ import {
   cloneValue,
   isEqualsValue,
   treeEach,
+  compareArrayChanges,
 } from '@/components/utils';
 
 @Component({
@@ -158,7 +159,16 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
 
     if (this.showCheckbox) {
       this.$nextTick(() => {
-        this.tree.setCheckedKeys(this.values);
+        const { add, remove } = compareArrayChanges(
+          this.tree.getCheckedKeys(!this.checkStrictly),
+          this.values,
+        );
+        add.forEach((item) => {
+          this.tree.setChecked(item, true, false);
+        });
+        remove.forEach((item) => {
+          this.tree.setChecked(item, false, false);
+        });
       });
     }
   }
