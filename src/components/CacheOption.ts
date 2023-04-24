@@ -11,8 +11,10 @@ export type CacheOption = {
 const CacheOptions = Vue.extend({
   inject: ['select'],
   props: {
-    data: Array as PropType<CacheOption[]>,
-    default: () => [],
+    data: {
+      type: Array as PropType<CacheOption[]>,
+      default: () => [],
+    },
   },
   watch: {
     data() {
