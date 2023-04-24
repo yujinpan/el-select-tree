@@ -1,11 +1,11 @@
 <template>
-  <BigData />
+  <BigDataMultipleSelect />
 </template>
 
 <script>
-import BigData from './tests/big-data.vue';
+import BigDataMultipleSelect from './tests/big-data-multiple-select.vue';
 
 export default {
-  components: { BigData },
+  components: { BigDataMultipleSelect },
 };
 </script>
