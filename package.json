@@ -28,6 +28,7 @@
     "docs:build": "npm run build && vuepress build docs"
   },
   "dependencies": {
+    "@babel/runtime": "7.x",
     "core-js": "^3.28.0",
     "style-inject": "^0.3.0",
     "vue-class-component": "^7.x",
@@ -69,8 +70,7 @@
   },
   "peerDependencies": {
     "element-ui": "^2.15.6",
-    "vue": "^2.x",
-    "@babel/runtime": "7.x"
+    "vue": "^2.x"
   },
   "browserslist": [
     "> 1%",
