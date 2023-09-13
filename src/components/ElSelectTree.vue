@@ -159,6 +159,11 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
       this.$emit('change', cloneValue(val));
     }
 
+    this.updateCheckbox();
+  }
+
+  @Watch('data')
+  private updateCheckbox() {
     if (this.showCheckbox) {
       this.$nextTick(() => {
         const { add, remove } = compareArrayChanges(
