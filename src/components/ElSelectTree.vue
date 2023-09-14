@@ -7,6 +7,7 @@ import type { CreateElement } from 'vue';
 
 import type { CacheOption } from '@/components/CacheOption';
 import CacheOptions from '@/components/CacheOption';
+import getElSelectTreeOption from '@/components/ElSelectTreeOption';
 import type { Obj } from '@/components/utils';
 import {
   ElSelectMixin,
@@ -254,19 +255,8 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   }
 
   private _renderContent(h, { node, data, store }) {
-    const ElSelectTreeOption = {
-      extends: Vue.component('ElOption'),
-      methods: {
-        // 拦截点击事件，事件移至 node 节点上
-        selectOptionClick() {
-          // $parent === slot-scope
-          // $parent.$parent === el-tree-node
-          this.$parent.$parent.handleClick();
-        },
-      },
-    };
     return h(
-      ElSelectTreeOption,
+      getElSelectTreeOption(),
       {
         props: {
           value: this.getValByProp('value', data),
