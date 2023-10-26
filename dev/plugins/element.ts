@@ -12,7 +12,7 @@ import {
 } from 'element-ui';
 import Vue from 'vue';
 
-import ElTreeSelect from '@/index';
+import ElTreeSelect, { ElSelectTreeVirtual } from '@/index';
 
 Vue.use(Form);
 Vue.use(FormItem);
@@ -22,3 +22,4 @@ Vue.use(TableColumn);
 Vue.use(Loading);
 Vue.use(Link);
 Vue.use(ElTreeSelect);
+Vue.use(ElSelectTreeVirtual);

@@ -3,7 +3,7 @@ import Vue from 'vue';
 import { Component, Mixins, Prop, Ref, Watch } from 'vue-property-decorator';
 
 import type { Select as ElSelectType, Tree as ElTreeType } from 'element-ui';
-import type { CreateElement } from 'vue';
+import type { CreateElement, VNodeData } from 'vue';
 
 import type { CacheOption } from '@/components/CacheOption';
 import CacheOptions from '@/components/CacheOption';
@@ -34,62 +34,13 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   @Ref('tree') public tree: ElTreeType<any, any>;
 
   render(h: CreateElement) {
-    if (
-      !Vue.component('ElSelect') ||
-      !Vue.component('ElTree') ||
-      !Vue.component('ElOption')
-    ) {
-      throw new Error(`[ElSelectTree]: ElSelect/ElTree/ElOption unregistered.`);
-    }
+    this.renderValidate();
 
-    const slots = [];
-    this.$slots.prefix &&
-      slots.push(h('template', { slot: 'prefix' }, this.$slots.prefix));
-    this.$slots.empty &&
-      slots.push(h('template', { slot: 'empty' }, this.$slots.empty));
-    return h(
-      'el-select',
-      {
-        ref: 'select',
-        props: {
-          ...this.propsElSelect,
-          value: this.privateValue,
-          popperClass: `el-select-tree__popper ${
-            this.propsElSelect.popperClass || ''
-          }`,
-          filterMethod: this._filterMethod,
-        },
-        on: {
-          ...this.$listeners,
-          change: (val) => {
-            this.privateValue = val;
-          },
-          'visible-change': this._visibleChange,
-        },
-      },
-      [
-        ...slots,
-        h(CacheOptions, {
-          props: { data: this.cacheOptions, values: this.values },
-        }),
-        h('el-tree', {
-          ref: 'tree',
-          props: {
-            ...this.propsElTree,
-            expandOnClickNode: !this.checkStrictly,
-            filterNodeMethod: this._filterNodeMethod,
-            nodeKey: this.propsMixin.value,
-            defaultExpandedKeys: this._defaultExpandedKeys,
-            renderContent: this._renderContent,
-          },
-          on: {
-            ...this.$listeners,
-            'node-click': this._nodeClick,
-            check: this._check,
-          },
-        }),
-      ],
-    );
+    return h('el-select', this.getSelectVNodeData(), [
+      ...this.renderSlots(h),
+      this.renderCacheOptions(h),
+      h('el-tree', this.getTreeVNodeData()),
+    ]);
   }
 
   mounted() {
@@ -123,6 +74,71 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     });
   }
 
+  protected getSelectVNodeData(): VNodeData {
+    return {
+      ref: 'select',
+      props: {
+        ...this.propsElSelect,
+        value: this.privateValue,
+        popperClass: `el-select-tree__popper ${
+          this.propsElSelect.popperClass || ''
+        }`,
+        filterMethod: this._filterMethod,
+      },
+      on: {
+        ...this.$listeners,
+        change: (val) => {
+          this.privateValue = val;
+        },
+        'visible-change': this._visibleChange,
+      },
+    };
+  }
+
+  protected getTreeVNodeData(): VNodeData {
+    return {
+      ref: 'tree',
+      props: {
+        ...this.propsElTree,
+        expandOnClickNode: !this.checkStrictly,
+        filterNodeMethod: this._filterNodeMethod,
+        nodeKey: this.propsMixin.value,
+        defaultExpandedKeys: this._defaultExpandedKeys,
+        renderContent: this._renderContent,
+      },
+      on: {
+        ...this.$listeners,
+        'node-click': this._nodeClick,
+        check: this._check,
+      },
+    };
+  }
+
+  protected renderCacheOptions(h: CreateElement) {
+    return h(CacheOptions, {
+      props: { data: this.cacheOptions, values: this.values },
+    });
+  }
+
+  protected renderSlots(h: CreateElement) {
+    const slots = [];
+    this.$slots.prefix &&
+      slots.push(h('template', { slot: 'prefix' }, this.$slots.prefix));
+    this.$slots.empty &&
+      slots.push(h('template', { slot: 'empty' }, this.$slots.empty));
+    return slots;
+  }
+
+  protected renderValidate() {
+    if (
+      !Vue.component('ElSelect') ||
+      !Vue.component('ElTree') ||
+      !Vue.component('ElOption')
+    ) {
+      throw new Error(`[ElSelectTree]: ElSelect/ElTree/ElOption unregistered.`);
+    }
+  }
+
   private get cacheOptions() {
     if (!this.renderAfterExpand && !this.lazy) return [];
 
@@ -144,7 +160,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     return options;
   }
 
-  private get values() {
+  protected get values() {
     return toArr(this.value);
   }
 
@@ -196,7 +212,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   // Expand the parent node of the selected node by default,
   // "default" is the value/data/defaultExpandedKeys
   // changed from user assign value, rather than current component
-  private _defaultExpandedKeys = [];
+  protected _defaultExpandedKeys = [];
   @Watch('data')
   @Watch('defaultExpandedKeys', { immediate: true })
   _updateDefaultExpandedKeys() {
@@ -222,7 +238,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   /**
    * 禁止直接引用，通过 getValByProp 获取节点值
    */
-  private get propsMixin(): Record<
+  protected get propsMixin(): Record<
     'value' | 'label' | 'children' | 'disabled' | 'isLeaf',
     string | ((data: Obj, node?: Obj) => any)
   > {
@@ -239,7 +255,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   /**
    * 获取节点的 prop 对应的值
    */
-  private getValByProp(
+  protected getValByProp(
     prop: 'value' | 'label' | 'children' | 'disabled' | 'isLeaf',
     data: Obj,
   ) {
@@ -273,7 +289,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   }
 
   // el-select 的 query 事件转发至 el-tree 中
-  private _filterMethod(val = '') {
+  protected _filterMethod(val = '') {
     this.filterMethod?.(val);
 
     // fix: `tree` reference is empty when component destroy
@@ -282,7 +298,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
       this.tree && this.tree.filter(val);
     });
   }
-  private _filterNodeMethod(value, data, node) {
+  protected _filterNodeMethod(value, data, node) {
     // fix: https://github.com/yujinpan/el-select-tree/issues/35
     if (this.filterMethod) return this.filterMethod(value, data, node);
     if (this.filterNodeMethod) return this.filterNodeMethod(value, data, node);
@@ -308,7 +324,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   }
 
   // clear filter text when visible change
-  private _visibleChange(val) {
+  protected _visibleChange(val) {
     (this.$listeners['visible-change'] as Function)?.(...arguments);
 
     if (this.filterable && val) {
