@@ -16,7 +16,6 @@ export const virtualList: ObjectDirective<
   inserted(el, bindings) {
     const { target, virtualStore } = bindings.value;
     const targetElem = el.querySelector(target) as HTMLElement;
-    virtualStore.updateScroll(0, targetElem.clientHeight);
 
     targetElem.prepend(virtualStore.sketchTopElem);
     targetElem.append(virtualStore.sketchBottomElem);
@@ -125,8 +124,9 @@ export class VirtualStore {
           }
         } else {
           // show less children when expanded
-          newChildren.length = Math.ceil(
-            this.clientHeight / this.options.itemHeight,
+          newChildren.length = Math.min(
+            Math.ceil(this.clientHeight / this.options.itemHeight),
+            newChildren.length,
           );
         }
       }
