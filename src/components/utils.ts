@@ -93,7 +93,7 @@ export function toArr(val: any) {
 }
 
 export function isValidArr(val: any) {
-  return Array.isArray(val) && val.length;
+  return Array.isArray(val) && !!val.length;
 }
 
 export function getParentKeys(
@@ -160,6 +160,48 @@ export function treeEach<T extends Obj>(
       treeEach(children, callback, getChildren, data);
     }
   }
+}
+
+export async function treeFilter(
+  data: Obj[],
+  callback: (node: Obj) => boolean,
+  propChildren = 'children',
+  state: { stop: boolean },
+) {
+  let startTime = Date.now();
+  const handleData = async (data: Obj[], result: Obj[] = []) => {
+    if (state.stop) return Promise.reject();
+    if (!data.length) return result;
+
+    // rest/50ms
+    const endTime = Date.now();
+    if (endTime - startTime > 50) {
+      await new Promise((resolve) => {
+        startTime = endTime;
+        setTimeout(resolve);
+      });
+    }
+
+    const node = data[0];
+    let hasChildren = false;
+    const newItem = { ...node };
+    const children = node[propChildren];
+    if (isValidArr(children)) {
+      const newItemChildren = await handleData(children);
+      if ((hasChildren = isValidArr(newItemChildren))) {
+        newItem[propChildren] = newItemChildren;
+      } else {
+        newItem[propChildren] = null;
+      }
+    }
+    if (callback(node) || hasChildren) {
+      result.push(newItem);
+    }
+
+    return handleData(data.slice(1), result);
+  };
+
+  return handleData(data);
 }
 
 export function compareArrayChanges(source: any[], target: any[]) {
