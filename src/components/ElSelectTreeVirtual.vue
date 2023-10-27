@@ -4,7 +4,7 @@ import { Component, Watch } from 'vue-property-decorator';
 import type { CreateElement, VNodeData } from 'vue';
 
 import ElSelectTree from '@/components/ElSelectTree.vue';
-import { isValidArr, toArr } from '@/components/utils';
+import { isValidArr, toArr, treeFilter } from '@/components/utils';
 import { virtualList, VirtualStore } from '@/components/virtual-list';
 
 @Component({
@@ -20,17 +20,11 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
     childrenProp: 'children',
   });
 
-  @Watch('data', { immediate: true })
+  @Watch('data')
   onDataChange(val) {
     this.virtualStore.setOptions({
       sourceData: val,
-    });
-  }
-
-  @Watch('propsMixin', { immediate: true })
-  onPorpsChange(val) {
-    this.virtualStore.setOptions({
-      childrenProp: val.children,
+      childrenProp: this.propsMixin.children as string,
     });
   }
 
@@ -106,16 +100,39 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
     return data;
   }
 
-  // el-select 的 query 事件转发至 el-tree 中
+  private filterState = { stop: false };
+  private debounceTimeId: any;
   protected _filterMethod(val = '') {
-    this.filterMethod?.(val);
+    if (this.filterMethod) return this.filterMethod(val);
 
-    // fix: `tree` reference is empty when component destroy
-    // https://github.com/yujinpan/el-select-tree/issues/35
-    this.$nextTick(() => {
-      // @TODO filter
-      // this.tree && this.tree.filter(val);
-    });
+    this.filterState.stop = true;
+
+    if (!val) {
+      return this.virtualStore.setOptions({
+        sourceData: this.data,
+      });
+    }
+
+    if (this.debounceTimeId) {
+      clearTimeout(this.debounceTimeId);
+    }
+    this.debounceTimeId = setTimeout(() => {
+      treeFilter(
+        this.data,
+        (node) => this._filterNodeMethod(val, node, node),
+        this.propsMixin.children as string,
+        (this.filterState = { stop: false }),
+      ).then(
+        (data) => {
+          this.virtualStore.setOptions({
+            sourceData: data,
+          });
+        },
+        () => {
+          // ignore
+        },
+      );
+    }, 200);
   }
 }
 </script>
