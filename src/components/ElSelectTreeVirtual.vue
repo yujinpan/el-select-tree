@@ -4,7 +4,7 @@ import { Component, Watch } from 'vue-property-decorator';
 import type { CreateElement, VNodeData } from 'vue';
 
 import ElSelectTree from '@/components/ElSelectTree.vue';
-import { isValidArr, toArr, treeFilter } from '@/components/utils';
+import { toArr, treeFilter } from '@/components/utils';
 import { virtualList, VirtualStore } from '@/components/virtual-list';
 
 @Component({
@@ -56,7 +56,7 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
         this._visibleChange(val);
 
         // reset when no selected
-        if (val && !isValidArr(this.values)) {
+        if (val) {
           this.virtualStore.updateScroll(0);
         }
       },

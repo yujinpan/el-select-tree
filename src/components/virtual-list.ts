@@ -22,12 +22,16 @@ export const virtualList: ObjectDirective<
 
     const handleScroll = () => {
       const old = targetElem.scrollTop;
-      virtualStore.updateScroll(targetElem.scrollTop, targetElem.clientHeight);
-
-      targetElem.scrollTop = old;
-      nextTick(() => {
-        targetElem.scrollTop = old;
-      });
+      virtualStore.updateScroll(
+        targetElem.scrollTop,
+        targetElem.clientHeight,
+        () => {
+          targetElem.scrollTop = old;
+          nextTick(() => {
+            targetElem.scrollTop = old;
+          });
+        },
+      );
     };
 
     targetElem.addEventListener('scroll', handleScroll);
@@ -48,7 +52,7 @@ export class VirtualStore {
   public data: VirtualStoreNode[] = [];
 
   constructor(private readonly options: VirtualStoreOptions) {
-    this.updateScroll = throttle(this.updateScroll, 30);
+    this.updateScroll = throttle(this.updateScroll, 15);
   }
 
   setOptions(options: Partial<VirtualStoreOptions>) {
@@ -70,9 +74,10 @@ export class VirtualStore {
   updateScroll(
     scrollTop: number = this.scrollTop,
     clientHeight: number = this.clientHeight,
+    callback?: () => any,
   ) {
     this.scrollTop = scrollTop;
-    this.clientHeight = clientHeight || this.options.itemHeight * 10;
+    this.clientHeight = clientHeight || this.options.itemHeight * 15;
 
     const result: VirtualStoreNode[] = [];
     let height = 0;
@@ -82,8 +87,8 @@ export class VirtualStore {
     const add = (
       node: VirtualStoreNode,
       data = result,
-      minHeight = scrollTop - this.options.itemHeight * 5,
-      maxHeight = scrollTop + this.clientHeight + this.options.itemHeight * 5,
+      minHeight = scrollTop - this.options.itemHeight * 3,
+      maxHeight = scrollTop + this.clientHeight + this.options.itemHeight * 3,
     ) => {
       height += this.options.itemHeight;
 
@@ -137,5 +142,7 @@ export class VirtualStore {
 
     this.sketchTopElem.style.height = heightTop + 'px';
     this.sketchBottomElem.style.height = heightBottom + 'px';
+
+    callback?.();
   }
 }
