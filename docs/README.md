@@ -97,7 +97,9 @@ export default {
 };
 ```
 
+<ClientOnly>
 <demo name="virtual" />
+</ClientOnly>
 
 :::warning
 Use `banReactive` when the amount of data is large. Otherwise, performance will be slower.
