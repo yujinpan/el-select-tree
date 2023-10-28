@@ -118,7 +118,7 @@ export class VirtualStore {
               child,
               newChildren,
               // fix parent will show when scroll fast
-              scrollTop - this.options.itemHeight * 50,
+              scrollTop - this.options.itemHeight * 15,
             ),
           );
           if (newChildren.length && !data.includes(newNode)) {
