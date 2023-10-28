@@ -29,16 +29,22 @@ export default {
     return {
       value: '',
       data: banReactive(
-        Array(1000)
+        Array(500)
           .fill('')
           .map((item, index) => ({
             value: index,
-            label: index,
-            children: Array(500)
+            label: index + '',
+            children: Array(20)
               .fill('')
               .map((item, index2) => ({
                 value: `${index}-${index2}`,
                 label: `${index}-${index2}`,
+                children: Array(10)
+                  .fill('')
+                  .map((item, index3) => ({
+                    value: `${index}-${index2}-${index3}`,
+                    label: `${index}-${index2}-${index3}`,
+                  })),
               })),
           })),
       ),
