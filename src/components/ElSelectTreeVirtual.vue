@@ -26,7 +26,7 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
     childrenProp: 'children',
   });
 
-  @Watch('data')
+  @Watch('data', { immediate: true })
   onDataChange(val) {
     this.virtualStore.setOptions({
       sourceData: val,
