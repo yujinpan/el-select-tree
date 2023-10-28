@@ -83,9 +83,13 @@ Use with `el-form`.
 
 <demo name="with-form" />
 
-### `virtual` <Badge text="Experimental" type="warning"/>
+### `virtual` <Badge text="Experimental" type="warning"/> <Badge text="2.1-beta" type="warning"/>
 
 Use virtual list. `ElSelectTreeVirtual` is optional, need register first.
+
+```shell
+npm i el-select-tree@2.1
+```
 
 ```ts
 import { ElSelectTreeVirtual } from "el-select-tree";
