@@ -3,7 +3,7 @@ import { nextTick } from 'vue';
 
 import type { ObjectDirective } from 'vue';
 
-import { isValidArr } from '@/components/utils';
+import { getCompoundVal, isValidArr } from '@/components/utils';
 import type { Obj } from '@/components/utils';
 
 export const virtualList: ObjectDirective<
@@ -44,7 +44,9 @@ export type VirtualStoreNode = Obj & {
 
 export type VirtualStoreOptions = {
   sourceData: VirtualStoreNode[];
+  expandedKeys: any[];
   itemHeight: number;
+  valueProp: any | ((node: Obj) => any);
   childrenProp: string;
 };
 
@@ -60,11 +62,6 @@ export class VirtualStore {
     this.updateScroll(0);
   }
 
-  updateNodeExpanded(node: VirtualStoreNode, expanded: boolean) {
-    this.sourceDataItemMap.get(node).$expanded = expanded;
-    this.updateScroll();
-  }
-
   readonly sketchTopElem = document.createElement('div');
   readonly sketchBottomElem = document.createElement('div');
 
@@ -78,6 +75,7 @@ export class VirtualStore {
   ) {
     this.scrollTop = scrollTop;
     this.clientHeight = clientHeight || this.options.itemHeight * 15;
+    this.sourceDataItemMap.clear();
 
     const result: VirtualStoreNode[] = [];
     let height = 0;
@@ -111,7 +109,11 @@ export class VirtualStore {
       }
 
       if (isValidArr(newChildren)) {
-        if (newNode.$expanded) {
+        if (
+          this.options.expandedKeys?.includes(
+            getCompoundVal(newNode, this.options.valueProp),
+          )
+        ) {
           newChildren.length = 0;
           nodeChildren.forEach((child) =>
             add(
