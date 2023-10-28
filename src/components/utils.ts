@@ -213,3 +213,10 @@ export function compareArrayChanges(source: any[], target: any[]) {
     remove,
   };
 }
+
+export function splitItem(array: any[], item: any) {
+  const index = array.indexOf(item);
+  if (index !== -1) {
+    array.splice(index, 1);
+  }
+}

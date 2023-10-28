@@ -4,7 +4,13 @@ import { Component, Watch } from 'vue-property-decorator';
 import type { CreateElement, VNodeData } from 'vue';
 
 import ElSelectTree from '@/components/ElSelectTree.vue';
-import { toArr, treeFilter } from '@/components/utils';
+import {
+  isValidArr,
+  splitItem,
+  toArr,
+  treeEach,
+  treeFilter,
+} from '@/components/utils';
 import { virtualList, VirtualStore } from '@/components/virtual-list';
 
 @Component({
@@ -76,24 +82,41 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
     data.props.data = this.virtualStore.data;
     Object.assign(data.on, {
       'node-expand': (node, ...args) => {
-        this.virtualStore.updateNodeExpanded(node, true);
-        this._defaultExpandedKeys.push(this.getValByProp('value', node));
+        const value = this.getValByProp('value', node);
+        if (!this._defaultExpandedKeys.includes(value)) {
+          this.virtualStore.updateNodeExpanded(node, true);
+          this._defaultExpandedKeys.push(value);
 
-        toArr(this.$listeners['node-expand']).forEach((item) =>
-          item(node, ...args),
-        );
+          toArr(this.$listeners['node-expand']).forEach((item) =>
+            item(node, ...args),
+          );
+        }
       },
       'node-collapse': (node, ...args) => {
-        this.virtualStore.updateNodeExpanded(node, false);
         const value = this.getValByProp('value', node);
-        this._defaultExpandedKeys.splice(
-          this._defaultExpandedKeys.indexOf(value),
-          1,
-        );
+        if (this._defaultExpandedKeys.includes(value)) {
+          this.virtualStore.updateNodeExpanded(node, false);
+          splitItem(this._defaultExpandedKeys, value);
 
-        toArr(this.$listeners['node-collapse']).forEach((item) =>
-          item(node, ...args),
-        );
+          const children = this.getValByProp('children', node);
+          if (isValidArr(children)) {
+            treeEach(
+              children,
+              (node) => {
+                const value = this.getValByProp('value', node);
+                if (this._defaultExpandedKeys.includes(value)) {
+                  this.virtualStore.updateNodeExpanded(node, false);
+                  splitItem(this._defaultExpandedKeys, value);
+                }
+              },
+              (node) => this.getValByProp('children', node),
+            );
+          }
+
+          toArr(this.$listeners['node-collapse']).forEach((item) =>
+            item(node, ...args),
+          );
+        }
       },
     });
 
