@@ -104,7 +104,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
         expandOnClickNode: !this.checkStrictly,
         filterNodeMethod: this._filterNodeMethod,
         nodeKey: this.propsMixin.value,
-        defaultExpandedKeys: this._defaultExpandedKeys,
+        defaultExpandedKeys: this.expandedKeys,
         renderContent: this._renderContent,
       },
       on: {
@@ -213,7 +213,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   // Expand the parent node of the selected node by default,
   // "default" is the value/data/defaultExpandedKeys
   // changed from user assign value, rather than current component
-  protected _defaultExpandedKeys = [];
+  protected expandedKeys = [];
   @Watch('data')
   @Watch('defaultExpandedKeys', { immediate: true })
   _updateDefaultExpandedKeys() {
@@ -221,7 +221,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
       isValidArr(this.values) && isValidArr(this.data)
         ? getParentKeys(this.values, this.data, this.getValByProp)
         : [];
-    return (this._defaultExpandedKeys = this.defaultExpandedKeys
+    return (this.expandedKeys = this.defaultExpandedKeys
       ? this.defaultExpandedKeys.concat(parentKeys)
       : parentKeys);
   }
