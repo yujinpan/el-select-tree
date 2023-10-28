@@ -38,12 +38,8 @@ export const virtualList: ObjectDirective<
   },
 };
 
-export type VirtualStoreNode = Obj & {
-  $expanded?: boolean;
-};
-
 export type VirtualStoreOptions = {
-  sourceData: VirtualStoreNode[];
+  sourceData: Obj[];
   expandedKeys: any[];
   itemHeight: number;
   valueProp: any | ((node: Obj) => any);
@@ -51,7 +47,7 @@ export type VirtualStoreOptions = {
 };
 
 export class VirtualStore {
-  public data: VirtualStoreNode[] = [];
+  public data: Obj[] = [];
 
   constructor(private readonly options: VirtualStoreOptions) {
     this.updateScroll = throttle(this.updateScroll, 15);
@@ -77,13 +73,13 @@ export class VirtualStore {
     this.clientHeight = clientHeight || this.options.itemHeight * 15;
     this.sourceDataItemMap.clear();
 
-    const result: VirtualStoreNode[] = [];
+    const result: Obj[] = [];
     let height = 0;
     let heightTop = 0;
     let heightBottom = 0;
 
     const add = (
-      node: VirtualStoreNode,
+      node: Obj,
       data = result,
       minHeight = scrollTop - this.options.itemHeight * 3,
       maxHeight = scrollTop + this.clientHeight + this.options.itemHeight * 3,
