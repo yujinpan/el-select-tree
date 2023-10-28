@@ -220,3 +220,15 @@ export function splitItem(array: any[], item: any) {
     array.splice(index, 1);
   }
 }
+
+export function getCompoundVal(
+  data: Obj,
+  prop: any | ((...args: any[]) => any),
+  ...args: any[]
+) {
+  if (prop instanceof Function) {
+    return prop(data, ...args);
+  } else {
+    return data[prop];
+  }
+}

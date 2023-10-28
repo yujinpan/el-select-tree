@@ -22,6 +22,7 @@ import {
   isEqualsValue,
   treeEach,
   compareArrayChanges,
+  getCompoundVal,
 } from '@/components/utils';
 
 @Component({
@@ -260,14 +261,11 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     data: Obj,
   ) {
     const propVal = this.propsMixin[prop];
-    if (propVal instanceof Function) {
-      return propVal(
-        data,
-        this.tree?.getNode(this.getValByProp('value', data)),
-      );
-    } else {
-      return data[propVal];
-    }
+    return getCompoundVal(
+      data,
+      propVal,
+      this.tree?.getNode(getCompoundVal(data, this.propsMixin.value)),
+    );
   }
 
   private _renderContent(h, { node, data, store }) {
