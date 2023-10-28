@@ -4,7 +4,8 @@ ElementUI's el-select combined with el-tree.
 
 - Online examples [https://yujinpan.github.io/el-select-tree/](https://yujinpan.github.io/el-select-tree/)
 
-> Now the new version 2.0 is released, which comprehensively improves the utilization of the original components.
+> - 2.1 Support [virtual list](https://yujinpan.github.io/el-select-tree/#virtual).
+> - 2.0 Comprehensively improve the utilization rate of original parts.
 
 ## Usage
 
@@ -20,14 +21,14 @@ If your project does not use element-ui,
 you need to introduce a separate element-ui package, like this:
 
 ```js
-import 'el-select-tree/lib/element-ui';
+import "el-select-tree/lib/element-ui";
 ```
 
 ### Global registration
 
 ```js
-import Vue from 'vue';
-import ElSelectTree from 'el-select-tree';
+import Vue from "vue";
+import ElSelectTree from "el-select-tree";
 
 Vue.use(ElSelectTree);
 ```
@@ -35,12 +36,12 @@ Vue.use(ElSelectTree);
 ### In-component registration
 
 ```js
-import ElSelectTree from 'el-select-tree';
+import ElSelectTree from "el-select-tree";
 
 export default {
   components: {
-    ElSelectTree
-  }
+    ElSelectTree,
+  },
 };
 ```
 
@@ -57,11 +58,11 @@ export default {
 </template>
 
 <script>
-import ElSelectTree from 'el-select-tree';
+import ElSelectTree from "el-select-tree";
 
 export default {
   components: {
-    ElSelectTree
+    ElSelectTree,
   },
   data() {
     return {
@@ -69,18 +70,18 @@ export default {
       treeData: [
         {
           value: 1,
-          label: 'text1',
+          label: "text1",
           children: [
-            { value: 5, label: 'text5' },
-            { value: 6, label: 'text6' }
-          ]
+            { value: 5, label: "text5" },
+            { value: 6, label: "text6" },
+          ],
         },
-        { value: 2, label: 'text2' },
-        { value: 3, label: 'text3' },
-        { value: 4, label: 'text5' }
-      ]
+        { value: 2, label: "text2" },
+        { value: 3, label: "text3" },
+        { value: 4, label: "text5" },
+      ],
     };
-  }
+  },
 };
 </script>
 ```
