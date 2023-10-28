@@ -55,7 +55,9 @@ export class VirtualStore {
 
   setOptions(options: Partial<VirtualStoreOptions>) {
     const scrollTop =
-      this.options.sourceData !== options.sourceData ? 0 : undefined;
+      options.sourceData && this.options.sourceData !== options.sourceData
+        ? 0
+        : undefined;
     Object.assign(this.options, options);
     this.updateScroll(scrollTop);
   }

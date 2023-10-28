@@ -29,13 +29,19 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
   });
 
   @Watch('data', { immediate: true })
-  @Watch('expandedKeys', { immediate: true, deep: true })
   onDataChange() {
     this.virtualStore.setOptions({
       sourceData: this.data,
       expandedKeys: this.expandedKeys,
       valueProp: this.propsMixin.value,
       childrenProp: this.propsMixin.children as string,
+    });
+  }
+
+  @Watch('expandedKeys', { immediate: true, deep: true })
+  onExpandedKeysChange() {
+    this.virtualStore.setOptions({
+      expandedKeys: this.expandedKeys,
     });
   }
 
