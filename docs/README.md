@@ -83,6 +83,48 @@ Use with `el-form`.
 
 <demo name="with-form" />
 
+### `virtual` <Badge text="Experimental" type="warning"/>
+
+Use virtual list. `ElSelectTreeVirtual` is optional, need register first.
+
+```ts
+import { ElSelectTreeVirtual } from "el-select-tree";
+
+export default {
+  components: {
+    ElSelectTreeVirtual,
+  },
+};
+```
+
+<demo name="virtual" />
+
+:::warning
+Use `banReactive` when the amount of data is large. Otherwise, performance will be slower.
+
+```ts
+const empty = reactive({});
+const banReactive = (obj) => {
+  // skip vue reactive
+  obj.__ob__ = empty.__ob__;
+  return obj;
+};
+
+export default {
+  data() {
+    return {
+      data: banReactive(
+        Array(100000)
+          .fill("")
+          .map((item, index) => ({ value: index, label: index + "" }))
+      ),
+    };
+  },
+};
+```
+
+:::
+
 ## Props
 
 `el-select-tree` inherits `el-tree` and `el-select` all props/methods/events/slots.

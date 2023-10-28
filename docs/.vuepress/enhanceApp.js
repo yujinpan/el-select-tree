@@ -10,7 +10,7 @@ import {
   Divider,
 } from 'element-ui';
 
-import ElSelectTree from '../../lib/index';
+import ElSelectTree, { ElSelectTreeVirtual } from '../../lib/index';
 import 'element-ui/lib/theme-chalk/index.css';
 
 export default (ctx) => {
@@ -24,5 +24,6 @@ export default (ctx) => {
   Vue.use(Loading);
   Vue.use(Link);
   Vue.use(ElSelectTree);
+  Vue.use(ElSelectTreeVirtual);
   Vue.use(Divider);
 };
