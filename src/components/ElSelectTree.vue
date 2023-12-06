@@ -21,6 +21,8 @@ import {
   treeEach,
   compareArrayChanges,
   getCompoundVal,
+  isValidValue,
+  treeFind,
 } from '@/components/utils';
 
 @Component({
@@ -99,7 +101,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
       ref: 'tree',
       props: {
         ...this.propsElTree,
-        expandOnClickNode: !this.checkStrictly,
+        expandOnClickNode: !this.checkStrictly && this.expandOnClickNode,
         filterNodeMethod: this._filterNodeMethod,
         nodeKey: this.propsMixin.value,
         defaultExpandedKeys: this.expandedKeys,
@@ -159,6 +161,12 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     return options;
   }
 
+  private get cacheOptionsMap() {
+    const result = {};
+    this.cacheOptions.forEach((item) => (result[item.value] = item));
+    return result;
+  }
+
   protected get values() {
     return toArr(this.value);
   }
@@ -171,27 +179,22 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   }
 
   @Watch('data')
-  @Watch('value')
-  private updateCheckbox() {
+  @Watch('value', { immediate: true })
+  private async updateCheckbox() {
     if (this.showCheckbox) {
-      this.$nextTick(() => {
-        const { add, remove } = compareArrayChanges(
-          this.tree.getCheckedKeys(!this.checkStrictly),
-          this.values,
-        );
-        add.forEach((item) => {
-          this.tree.setChecked(item, true, false);
-        });
-        remove.forEach((item) => {
-          this.tree.setChecked(item, false, false);
-        });
+      await this.$nextTick();
+
+      const { add, remove } = compareArrayChanges(
+        this.tree.getCheckedKeys(!this.checkStrictly),
+        this.values,
+      );
+      add.forEach((item) => {
+        this.tree.setChecked(item, true, false);
+      });
+      remove.forEach((item) => {
+        this.tree.setChecked(item, false, false);
       });
     }
-  }
-
-  @Watch('value', { deep: true, immediate: true })
-  private onValueChange() {
-    this._updateDefaultExpandedKeys();
   }
 
   // Expand the parent node of the selected node by default,
@@ -292,7 +295,11 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   private _nodeClick(data, node, component) {
     (this.$listeners['node-click'] as Function)?.(...arguments);
 
-    if (this.canSelect(node)) {
+    // `onCheck` is trigger when `checkOnClickNode`
+    if (this.showCheckbox && this.checkOnClickNode) return;
+
+    // now `checkOnClickNode` is false, only no checkbox and `checkStrictly` or `isLeaf`
+    if (!this.showCheckbox && this.canSelect(node)) {
       if (!this.getValByProp('disabled', data)) {
         const elOptionSlot = component.$children.find(
           (item) => item.$options._componentTag === 'node-content',
@@ -300,7 +307,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
         const elOption = elOptionSlot.$children[0];
         elOption.dispatch('ElSelect', 'handleOptionClick', [elOption, true]);
       }
-    } else {
+    } else if (this.expandOnClickNode) {
       component.handleExpandIconClick();
     }
   }
@@ -315,23 +322,73 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   }
 
   // set selected when check change
-  private _check(data, params) {
-    (this.$listeners['check'] as Function)?.(...arguments);
+  private async _check(data, params) {
+    // ignore when no checkbox, like only `checkOnClickNode` is true
+    if (!this.showCheckbox) return;
 
-    let { checkedKeys, checkedNodes } = params;
+    const dataValue = this.getValByProp('value', data);
 
-    // remove folder node when `checkStrictly` is false
-    if (!this.checkStrictly) {
-      checkedKeys = checkedNodes
-        .filter((item) => !isValidArr(this.getValByProp('children', item)))
-        .map((item) => this.getValByProp('value', item));
+    // fix: checkedKeys has not cached keys
+    const uncachedCheckedKeys = params.checkedKeys;
+    const cachedKeys = this.multiple
+      ? this.values.filter(
+          (item) =>
+            item in this.cacheOptionsMap &&
+            !this.tree.getNode(item) &&
+            !uncachedCheckedKeys.includes(item),
+        )
+      : [];
+    const checkedKeys = uncachedCheckedKeys.concat(cachedKeys);
+
+    if (this.checkStrictly) {
+      // Checking for changes may come from `check-on-node-click`
+      this.privateValue = this.multiple
+        ? checkedKeys
+        : checkedKeys.includes(dataValue)
+        ? dataValue
+        : undefined;
+    }
+    // only can select leaf node
+    else {
+      if (this.multiple) {
+        this.privateValue = this.tree.getCheckedKeys(true);
+      } else {
+        // select first leaf node when check parent
+        const firstLeaf = treeFind(
+          [data],
+          (data) =>
+            !isValidArr(this.getValByProp('children', data)) &&
+            !this.getValByProp('disabled', data),
+          (data) => this.getValByProp('children', data),
+        );
+        const firstLeafKey = firstLeaf
+          ? this.getValByProp('value', firstLeaf)
+          : undefined;
+
+        // unselect when any child checked
+        const hasCheckedChild =
+          isValidValue(this.value) &&
+          !!treeFind(
+            [data],
+            (data) => this.getValByProp('value', data) === this.value,
+            (data) => this.getValByProp('children', data),
+          );
+
+        this.privateValue =
+          firstLeafKey === this.value || hasCheckedChild
+            ? undefined
+            : firstLeafKey;
+      }
     }
 
-    this.privateValue = this.multiple
-      ? [...checkedKeys]
-      : checkedKeys.includes(this.getValByProp('value', data))
-      ? this.getValByProp('value', data)
-      : undefined;
+    await this.updateCheckbox();
+
+    this.$listeners.check?.(data, {
+      checkedKeys: this.tree.getCheckedKeys(),
+      checkedNodes: this.tree.getCheckedNodes(),
+      halfCheckedKeys: this.tree.getHalfCheckedKeys(),
+      halfCheckedNodes: this.tree.getHalfCheckedNodes(),
+    });
   }
 
   private canSelect(data) {

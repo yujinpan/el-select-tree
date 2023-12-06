@@ -56,8 +56,11 @@ export const ElTreeMixinOptions = {
     nodeKey: String,
     checkStrictly: Boolean,
     defaultExpandAll: Boolean,
-    // expandOnClickNode: Boolean,
-    // checkOnClickNode: Boolean,
+    expandOnClickNode: {
+      type: Boolean,
+      default: true,
+    },
+    checkOnClickNode: Boolean,
     checkDescendants: Boolean,
     autoExpandParent: { type: Boolean, default: true },
     defaultCheckedKeys: Array,
@@ -65,9 +68,9 @@ export const ElTreeMixinOptions = {
     currentNodeKey: [String, Number],
     renderContent: Function,
     showCheckbox: Boolean,
-    // draggable: Boolean,
-    // allowDrag: Function,
-    // allowDrop: Function,
+    draggable: Boolean,
+    allowDrag: Function,
+    allowDrop: Function,
     props: Object,
     lazy: Boolean,
     highlightCurrent: Boolean,
@@ -94,6 +97,10 @@ export function toArr(val: any) {
 
 export function isValidArr(val: any) {
   return Array.isArray(val) && !!val.length;
+}
+
+export function isValidValue(val: any) {
+  return val || val === 0;
 }
 
 export function getParentKeys(
@@ -144,6 +151,49 @@ type TreeCallback<T extends Obj, R> = (
   array: T[],
   parent?: T,
 ) => R;
+
+type TreeNodeData = Obj;
+
+type TreeFindCallback<T extends TreeNodeData> = TreeCallback<T, boolean>;
+
+export function treeFind<T extends TreeNodeData>(
+  treeData: T[],
+  findCallback: TreeFindCallback<T>,
+  getChildren: (data: T) => T[],
+): T | undefined;
+export function treeFind<T extends TreeNodeData, R>(
+  treeData: T[],
+  findCallback: TreeFindCallback<T>,
+  getChildren: (data: T) => T[],
+  resultCallback?: TreeCallback<T, R>,
+  parent?: T,
+): R | undefined;
+export function treeFind<T extends TreeNodeData, R>(
+  treeData: T[],
+  findCallback: TreeFindCallback<T>,
+  getChildren: (data: T) => T[],
+  resultCallback?: TreeCallback<T, R>,
+  parent?: T,
+): T | R | undefined {
+  for (let i = 0; i < treeData.length; i++) {
+    const data = treeData[i];
+    if (findCallback(data, i, treeData, parent)) {
+      return resultCallback ? resultCallback(data, i, treeData, parent) : data;
+    } else {
+      const children = getChildren(data);
+      if (isValidArr(children)) {
+        const find = treeFind(
+          children,
+          findCallback,
+          getChildren,
+          resultCallback,
+          data,
+        );
+        if (find) return find;
+      }
+    }
+  }
+}
 
 export function treeEach<T extends Obj>(
   treeData: T[],
