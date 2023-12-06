@@ -18,8 +18,6 @@ import {
   toArr,
   isValidArr,
   getParentKeys,
-  cloneValue,
-  isEqualsValue,
   treeEach,
   compareArrayChanges,
   getCompoundVal,
@@ -165,22 +163,15 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     return toArr(this.value);
   }
 
-  /**
-   * change from current component
-   * @private
-   */
-  private privateValue = null;
-  @Watch('privateValue')
-  onPrivateValueChange(val) {
-    // update when difference only
-    if (!isEqualsValue(val, this.value as string)) {
-      this.$emit('change', cloneValue(val));
-    }
-
-    this.updateCheckbox();
+  get privateValue() {
+    return this.value;
+  }
+  set privateValue(val) {
+    this.$emit('change', val);
   }
 
   @Watch('data')
+  @Watch('value')
   private updateCheckbox() {
     if (this.showCheckbox) {
       this.$nextTick(() => {
@@ -198,16 +189,9 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     }
   }
 
-  /**
-   * change from user assign value
-   */
   @Watch('value', { deep: true, immediate: true })
-  private onValueChange(val) {
-    // update when difference only
-    if (!isEqualsValue(val, this.privateValue)) {
-      this.privateValue = cloneValue(val);
-      this._updateDefaultExpandedKeys();
-    }
+  private onValueChange() {
+    this._updateDefaultExpandedKeys();
   }
 
   // Expand the parent node of the selected node by default,
