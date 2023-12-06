@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100vh; overflow-y: auto">
+  <div style="height: 200px; overflow-y: auto">
     <el-button @click="setData">setData</el-button>
     <table>
       <tr v-for="(item, index) in tableData" :key="item.id">

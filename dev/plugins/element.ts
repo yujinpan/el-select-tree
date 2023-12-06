@@ -9,6 +9,7 @@ import {
   TableColumn,
   Loading,
   Link,
+  Divider,
 } from 'element-ui';
 import Vue from 'vue';
 
@@ -21,5 +22,6 @@ Vue.use(Table);
 Vue.use(TableColumn);
 Vue.use(Loading);
 Vue.use(Link);
+Vue.use(Divider);
 Vue.use(ElTreeSelect);
 Vue.use(ElSelectTreeVirtual);
