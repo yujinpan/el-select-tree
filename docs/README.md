@@ -2,7 +2,7 @@
 
 ElementUI's el-select combined with el-tree.
 
-> - 2.1 `check-on-click-node` is available, default is `false`.
+> - 2.1 `check-on-click-node` is available with `show-checkobx`, default is `false`. <Badge text="Broken Change" type="warning"/>
 > - 2.1 `expand-on-click-node` is available, default is `true`.
 > - 2.1 Support [virtual list](#virtual).
 > - 2.0 Comprehensively improve the utilization rate of original parts.
