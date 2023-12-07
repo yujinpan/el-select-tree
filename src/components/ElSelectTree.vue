@@ -73,6 +73,8 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
         this[item] = this.tree[item];
       });
     });
+
+    this.updateCheckbox();
   }
 
   protected getSelectVNodeData(): VNodeData {
@@ -179,7 +181,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   }
 
   @Watch('data')
-  @Watch('value', { immediate: true })
+  @Watch('value')
   private async updateCheckbox() {
     if (this.showCheckbox) {
       await this.$nextTick();
