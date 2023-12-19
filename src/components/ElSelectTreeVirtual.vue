@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Component, Watch } from 'vue-property-decorator';
+import { Component, Prop, Watch } from 'vue-property-decorator';
 
 import type { CreateElement, VNodeData } from 'vue';
 
@@ -20,6 +20,8 @@ import { virtualList, VirtualStore } from '@/components/virtual-list';
   },
 })
 export default class ElSelectTreeVirtual extends ElSelectTree {
+  @Prop({ type: Number, default: 200 }) filterDebounceDuration!: number;
+
   virtualStore = new VirtualStore({
     expandedKeys: [],
     sourceData: [],
@@ -163,7 +165,7 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
           // ignore
         },
       );
-    }, 200);
+    }, this.filterDebounceDuration);
   }
 }
 </script>
