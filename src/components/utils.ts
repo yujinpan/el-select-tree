@@ -264,10 +264,10 @@ export function compareArrayChanges(source: any[], target: any[]) {
   };
 }
 
-export function splitItem(array: any[], item: any) {
-  const index = array.indexOf(item);
+export function spliceItem(array: any[], remove: any, ...add: any[]) {
+  const index = array.indexOf(remove);
   if (index !== -1) {
-    array.splice(index, 1);
+    array.splice(index, 1, ...add);
   }
 }
 

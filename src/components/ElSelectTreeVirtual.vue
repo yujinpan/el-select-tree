@@ -6,7 +6,7 @@ import type { CreateElement, VNodeData } from 'vue';
 import ElSelectTree from '@/components/ElSelectTree.vue';
 import {
   isValidArr,
-  splitItem,
+  spliceItem,
   toArr,
   treeEach,
   treeFilter,
@@ -107,7 +107,7 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
       'node-collapse': (node, ...args) => {
         const value = this.getValByProp('value', node);
         if (this.expandedKeys.includes(value)) {
-          splitItem(this.expandedKeys, value);
+          spliceItem(this.expandedKeys, value);
 
           const children = this.getValByProp('children', node);
           if (isValidArr(children)) {
@@ -116,7 +116,7 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
               (node) => {
                 const value = this.getValByProp('value', node);
                 if (this.expandedKeys.includes(value)) {
-                  splitItem(this.expandedKeys, value);
+                  spliceItem(this.expandedKeys, value);
                 }
               },
               (node) => this.getValByProp('children', node),
