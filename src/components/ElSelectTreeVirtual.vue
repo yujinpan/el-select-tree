@@ -4,6 +4,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import type { CreateElement, VNodeData } from 'vue';
 
 import ElSelectTree from '@/components/ElSelectTree.vue';
+import getElSelectVirtual from '@/components/ElSelectVirtual';
 import {
   isValidArr,
   spliceItem,
@@ -50,7 +51,7 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
   render(h: CreateElement) {
     this.renderValidate();
 
-    return h('el-select', this._getSelectVNodeData(), [
+    return h(getElSelectVirtual(), this._getSelectVNodeData(), [
       ...this.renderSlots(h),
       this.renderCacheOptions(h),
       h('el-tree', this._getTreeVNodeData()),
