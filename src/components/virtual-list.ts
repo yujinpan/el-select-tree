@@ -65,7 +65,6 @@ export class VirtualStore {
   readonly sketchTopElem = document.createElement('div');
   readonly sketchBottomElem = document.createElement('div');
 
-  private sourceDataItemMap = new Map();
   private scrollTop = 0;
   private clientHeight = 0;
   updateScroll(
@@ -75,7 +74,6 @@ export class VirtualStore {
   ) {
     this.scrollTop = scrollTop;
     this.clientHeight = clientHeight || this.options.itemHeight * 15;
-    this.sourceDataItemMap.clear();
 
     const result: Obj[] = [];
     let height = 0;
@@ -103,7 +101,6 @@ export class VirtualStore {
         height - this.options.itemHeight < maxHeight
       ) {
         data.push(newNode);
-        this.sourceDataItemMap.set(newNode, node);
       } else {
         heightBottom += this.options.itemHeight;
       }
@@ -127,7 +124,6 @@ export class VirtualStore {
             heightTop -= this.options.itemHeight;
             height += this.options.itemHeight;
             data.push(newNode);
-            this.sourceDataItemMap.set(newNode, node);
           }
         } else {
           // show less children when expanded
