@@ -54,12 +54,20 @@ export class VirtualStore {
   }
 
   setOptions(options: Partial<VirtualStoreOptions>) {
-    const scrollTop =
+    Object.assign(this.options, options);
+
+    this.setScrollTop(
       options.sourceData && this.options.sourceData !== options.sourceData
         ? 0
-        : undefined;
-    Object.assign(this.options, options);
-    this.updateScroll(scrollTop);
+        : undefined,
+    );
+
+    this.updateScroll();
+  }
+
+  setScrollTop(scrollTop: number = this.scrollTop) {
+    this.scrollTop = scrollTop;
+    this.updateScroll();
   }
 
   readonly sketchTopElem = document.createElement('div');
@@ -67,7 +75,7 @@ export class VirtualStore {
 
   private scrollTop = 0;
   private clientHeight = 0;
-  updateScroll(
+  private updateScroll(
     scrollTop: number = this.scrollTop,
     clientHeight: number = this.clientHeight,
     callback?: () => any,

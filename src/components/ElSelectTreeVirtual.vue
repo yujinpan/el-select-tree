@@ -77,7 +77,7 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
 
         // reset when no selected
         if (val) {
-          this.virtualStore.updateScroll(0);
+          this.virtualStore.setScrollTop(0);
         }
       },
     };
