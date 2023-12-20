@@ -6,11 +6,13 @@ import type { CreateElement, VNodeData } from 'vue';
 import ElSelectTree from '@/components/ElSelectTree.vue';
 import getElSelectVirtual from '@/components/ElSelectVirtual';
 import {
+  getParentKeys,
   isValidArr,
   spliceItem,
   toArr,
   treeEach,
   treeFilter,
+  treeFind,
 } from '@/components/utils';
 import { virtualList, VirtualStore } from '@/components/virtual-list';
 
@@ -35,16 +37,15 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
   onDataChange() {
     this.virtualStore.setOptions({
       sourceData: this.data,
-      expandedKeys: this.expandedKeys,
       valueProp: this.propsMixin.value,
       childrenProp: this.propsMixin.children as string,
     });
   }
 
-  @Watch('expandedKeys', { immediate: true, deep: true })
-  onExpandedKeysChange() {
+  @Watch('_expandedKeys', { immediate: true, deep: true })
+  onExpandedKeysChange(val) {
     this.virtualStore.setOptions({
-      expandedKeys: this.expandedKeys,
+      expandedKeys: val,
     });
   }
 
@@ -56,6 +57,11 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
       this.renderCacheOptions(h),
       h('el-tree', this._getTreeVNodeData()),
     ]);
+  }
+
+  private virtualExpandedKeys = [];
+  private get _expandedKeys() {
+    return this.expandedKeys.concat(this.virtualExpandedKeys);
   }
 
   private _getSelectVNodeData(): VNodeData {
@@ -90,6 +96,7 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
 
     data.props = {
       ...data.props,
+      defaultExpandedKeys: this._expandedKeys,
       defaultCheckedKeys: this.values.concat(this.defaultCheckedKeys || []),
     };
 
@@ -97,8 +104,8 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
     Object.assign(data.on, {
       'node-expand': (node, ...args) => {
         const value = this.getValByProp('value', node);
-        if (!this.expandedKeys.includes(value)) {
-          this.expandedKeys.push(value);
+        if (!this.virtualExpandedKeys.includes(value)) {
+          this.virtualExpandedKeys.push(value);
 
           toArr(this.$listeners['node-expand']).forEach((item) =>
             item(node, ...args),
@@ -107,8 +114,8 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
       },
       'node-collapse': (node, ...args) => {
         const value = this.getValByProp('value', node);
-        if (this.expandedKeys.includes(value)) {
-          spliceItem(this.expandedKeys, value);
+        if (this.virtualExpandedKeys.includes(value)) {
+          spliceItem(this.virtualExpandedKeys, value);
 
           const children = this.getValByProp('children', node);
           if (isValidArr(children)) {
@@ -116,8 +123,8 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
               children,
               (node) => {
                 const value = this.getValByProp('value', node);
-                if (this.expandedKeys.includes(value)) {
-                  spliceItem(this.expandedKeys, value);
+                if (this.virtualExpandedKeys.includes(value)) {
+                  spliceItem(this.virtualExpandedKeys, value);
                 }
               },
               (node) => this.getValByProp('children', node),
@@ -142,6 +149,7 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
     this.filterState.stop = true;
 
     if (!val) {
+      this.virtualExpandedKeys = [];
       return this.virtualStore.setOptions({
         sourceData: this.data,
       });
@@ -158,6 +166,16 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
         (this.filterState = { stop: false }),
       ).then(
         (data) => {
+          const firstLeaf = treeFind(
+            data,
+            (node) => !isValidArr(node.children),
+            (node) => this.getValByProp('children', node),
+          );
+          const firstLeafValue = this.getValByProp('value', firstLeaf);
+          this.virtualExpandedKeys = [
+            firstLeafValue,
+            ...getParentKeys(firstLeafValue, data, this.getValByProp),
+          ];
           this.virtualStore.setOptions({
             sourceData: data,
           });
