@@ -171,11 +171,15 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
             (node) => !isValidArr(node.children),
             (node) => this.getValByProp('children', node),
           );
-          const firstLeafValue = this.getValByProp('value', firstLeaf);
-          this.virtualExpandedKeys = [
-            firstLeafValue,
-            ...getParentKeys(firstLeafValue, data, this.getValByProp),
-          ];
+          const firstLeafValue = firstLeaf
+            ? this.getValByProp('value', firstLeaf)
+            : undefined;
+          this.virtualExpandedKeys = firstLeafValue
+            ? [
+                firstLeafValue,
+                ...getParentKeys(firstLeafValue, data, this.getValByProp),
+              ]
+            : [];
           this.virtualStore.setOptions({
             sourceData: data,
           });
