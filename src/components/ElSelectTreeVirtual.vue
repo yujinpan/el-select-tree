@@ -148,6 +148,10 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
 
     this.filterState.stop = true;
 
+    if (this.debounceTimeId) {
+      clearTimeout(this.debounceTimeId);
+    }
+
     if (!val) {
       this.virtualExpandedKeys = [];
       return this.virtualStore.setOptions({
@@ -155,9 +159,6 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
       });
     }
 
-    if (this.debounceTimeId) {
-      clearTimeout(this.debounceTimeId);
-    }
     this.debounceTimeId = setTimeout(() => {
       treeFilter(
         this.data,
