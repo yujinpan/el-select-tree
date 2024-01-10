@@ -157,3 +157,10 @@ So no repeat here.
 | Name       | Type  | Desc                                                                                        |
 | ---------- | ----- | ------------------------------------------------------------------------------------------- |
 | cache-data | Array | The cache data for lazy load tree nodes, it can resolved correct label with unloaded nodes. |
+
+## Own Slots <Badge text="2.1-beta"/>
+
+| Name   | Desc        |
+| ------ | ----------- |
+| header | menu header |
+| footer | menu footer |
