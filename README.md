@@ -4,6 +4,7 @@ ElementUI's el-select combined with el-tree.
 
 - Online examples [https://yujinpan.github.io/el-select-tree/](https://yujinpan.github.io/el-select-tree/)
 
+> - 2.1 Support custom menu header/footer.
 > - 2.1 `check-on-click-node` is available with `show-checkobx`, default is `false`. **Broken Change**
 > - 2.1 `expand-on-click-node` is available, default is `true`.
 > - 2.1 Support [virtual list](https://yujinpan.github.io/el-select-tree/#virtual).

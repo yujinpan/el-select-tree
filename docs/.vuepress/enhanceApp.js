@@ -8,6 +8,7 @@ import {
   Loading,
   Link,
   Divider,
+  Checkbox,
 } from 'element-ui';
 
 import ElSelectTree, { ElSelectTreeVirtual } from '../../lib/index';
@@ -26,4 +27,5 @@ export default (ctx) => {
   Vue.use(ElSelectTree);
   Vue.use(ElSelectTreeVirtual);
   Vue.use(Divider);
+  Vue.use(Checkbox);
 };
