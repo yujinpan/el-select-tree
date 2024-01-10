@@ -1,5 +1,7 @@
 import Vue from 'vue';
 
+import { getElSelectMenu } from '@/components/ElSelect';
+
 /**
  * create when use
  */
@@ -15,6 +17,9 @@ export default function getElSelectVirtual() {
         ...ElSelect.options.watch,
         options: undefined,
       },
+    },
+    components: {
+      ElSelectMenu: getElSelectMenu(),
     },
     props: {},
     watch: {

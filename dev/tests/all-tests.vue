@@ -41,6 +41,9 @@
 
     <div>WithForm</div>
     <WithForm />
+
+    <div>Slots</div>
+    <Slots />
   </div>
 </template>
 
@@ -51,6 +54,7 @@ import BigData from './big-data.vue';
 import CheckOrExpand from './check-or-expand.vue';
 import SetValueInMounted from './set-value-in-mounted.vue';
 import ShowUnrenderLabel from './show-unrender-label.vue';
+import Slots from './slots.vue';
 import CheckStrictly from '../../docs/.vuepress/components/check-strictly.vue';
 import CustomProps from '../../docs/.vuepress/components/custom-props.vue';
 import CustomRender from '../../docs/.vuepress/components/custom-render.vue';
@@ -78,6 +82,7 @@ export default {
     BigData,
     ShowUnrenderLabel,
     BigDataMultipleSelect,
+    Slots,
   },
 };
 </script>

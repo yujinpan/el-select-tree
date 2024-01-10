@@ -10,6 +10,7 @@ import {
   Loading,
   Link,
   Divider,
+  Checkbox,
 } from 'element-ui';
 import Vue from 'vue';
 
@@ -23,5 +24,6 @@ Vue.use(TableColumn);
 Vue.use(Loading);
 Vue.use(Link);
 Vue.use(Divider);
+Vue.use(Checkbox);
 Vue.use(ElTreeSelect);
 Vue.use(ElSelectTreeVirtual);

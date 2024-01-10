@@ -7,6 +7,7 @@ import type { CreateElement, VNodeData } from 'vue';
 
 import type { CacheOption } from '@/components/CacheOption';
 import CacheOptions from '@/components/CacheOption';
+import getElSelect from '@/components/ElSelect';
 import getElSelectTreeOption from '@/components/ElSelectTreeOption';
 import type { Obj } from '@/components/utils';
 import {
@@ -37,7 +38,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   render(h: CreateElement) {
     this.renderValidate();
 
-    return h('el-select', this.getSelectVNodeData(), [
+    return h(getElSelect(), this.getSelectVNodeData(), [
       ...this.renderSlots(h),
       this.renderCacheOptions(h),
       h('el-tree', this.getTreeVNodeData()),
@@ -125,10 +126,11 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
 
   protected renderSlots(h: CreateElement) {
     const slots = [];
-    this.$slots.prefix &&
-      slots.push(h('template', { slot: 'prefix' }, this.$slots.prefix));
-    this.$slots.empty &&
-      slots.push(h('template', { slot: 'empty' }, this.$slots.empty));
+    ['prefix', 'empty', 'header', 'footer'].forEach((key) => {
+      if (this.$scopedSlots[key]) {
+        slots.push(h('template', { slot: key }, this.$scopedSlots[key](this)));
+      }
+    });
     return slots;
   }
 
@@ -402,9 +404,11 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
 <style lang="scss">
 .el-select-tree {
   &__popper {
-    // fix: checkbox 在展示下拉框时跳动问题
-    .el-checkbox__input {
-      display: flex;
+    .el-tree {
+      // fix: checkbox 在展示下拉框时跳动问题
+      .el-checkbox__input {
+        display: flex;
+      }
     }
 
     .el-select-dropdown__item {
@@ -419,6 +423,19 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
 
       &.selected:after {
         right: 10px;
+      }
+    }
+
+    .el-select-dropdown {
+      &__header,
+      &__footer {
+        padding: 10px;
+      }
+      &__header {
+        border-bottom: 1px solid #e4e7ed;
+      }
+      &__footer {
+        border-top: 1px solid #e4e7ed;
       }
     }
   }
