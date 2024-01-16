@@ -1,5 +1,4 @@
 import throttle from 'lodash/throttle';
-import { nextTick } from 'vue';
 
 import type { ObjectDirective } from 'vue';
 
@@ -13,7 +12,7 @@ export const virtualList: ObjectDirective<
     virtualStore: VirtualStore;
   }
 > = {
-  inserted(el, bindings) {
+  inserted(el, bindings, vNode) {
     const { target, virtualStore } = bindings.value;
     const targetElem = el.querySelector(target) as HTMLElement;
 
@@ -27,7 +26,7 @@ export const virtualList: ObjectDirective<
         targetElem.clientHeight,
         () => {
           targetElem.scrollTop = old;
-          nextTick(() => {
+          vNode.componentInstance?.$nextTick(() => {
             targetElem.scrollTop = old;
           });
         },
