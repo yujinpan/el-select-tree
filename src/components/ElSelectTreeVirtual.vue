@@ -178,7 +178,7 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
           this.virtualExpandedKeys = firstLeafValue
             ? [
                 firstLeafValue,
-                ...getParentKeys(firstLeafValue, data, this.getValByProp),
+                ...getParentKeys([firstLeafValue], data, this.getValByProp),
               ]
             : [];
           this.virtualStore.setOptions({
