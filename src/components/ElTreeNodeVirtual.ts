@@ -12,6 +12,10 @@ export default function getElTreeNodeVirtual() {
     name: 'ElTreeNode',
     extends: ElTreeNode,
     methods: {
+      getDataKeys(data) {
+        const storeVirtual = this.tree.storeVirtual;
+        return data.map((item) => storeVirtual.getNode(item).key);
+      },
       handleCheckChange(value, ev) {
         this.node.setChecked(ev.target.checked, !this.tree.checkStrictly);
 
@@ -23,10 +27,10 @@ export default function getElTreeNodeVirtual() {
 
         this.$nextTick(() => {
           const checkedNodes = storeVirtual.getCheckedNodes();
-          const checkedKeys = checkedNodes.map((item) => item.key);
+          const checkedKeys = this.getDataKeys(checkedNodes);
 
           const halfCheckedNodes = storeVirtual.getHalfCheckedNodes();
-          const halfCheckedKeys = halfCheckedNodes.map((item) => item.key);
+          const halfCheckedKeys = this.getDataKeys(halfCheckedNodes);
 
           this.tree.$emit('check', this.node.data, {
             checkedNodes,
