@@ -24,6 +24,11 @@ export default function getElTreeVirtual() {
         storeVirtual: null,
       };
     },
+    watch: {
+      dataVirtual(newVal) {
+        this.storeVirtual.setData(newVal);
+      },
+    },
     methods: {
       getCheckedNodes(leafOnly, includeHalfChecked) {
         return this.storeVirtual.getCheckedNodes(leafOnly, includeHalfChecked);
