@@ -5,6 +5,7 @@ import type { CreateElement, VNodeData } from 'vue';
 
 import ElSelectTree from '@/components/ElSelectTree.vue';
 import getElSelectVirtual from '@/components/ElSelectVirtual';
+import getElTreeVirtual from '@/components/ElTreeVirtual';
 import {
   getParentKeys,
   isValidArr,
@@ -55,7 +56,7 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
     return h(getElSelectVirtual(), this._getSelectVNodeData(), [
       ...this.renderSlots(h),
       this.renderCacheOptions(h),
-      h('el-tree', this._getTreeVNodeData()),
+      h(getElTreeVirtual(), this._getTreeVNodeData()),
     ]);
   }
 
@@ -101,6 +102,7 @@ export default class ElSelectTreeVirtual extends ElSelectTree {
     };
 
     data.props.data = this.virtualStore.data;
+    data.props.dataVirtual = this.data;
     Object.assign(data.on, {
       'node-expand': (node, ...args) => {
         const value = this.getValByProp('value', node);

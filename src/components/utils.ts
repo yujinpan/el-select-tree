@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue, { reactive } from 'vue';
 
 export const ElSelectMixinOptions = {
   model: {
@@ -282,3 +282,9 @@ export function getCompoundVal(
     return data[prop];
   }
 }
+
+const empty = reactive({});
+export const banReactive = (obj: Obj) => {
+  obj.__ob__ = empty['__ob__'];
+  return obj;
+};

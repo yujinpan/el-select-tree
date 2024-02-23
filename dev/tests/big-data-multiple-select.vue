@@ -7,6 +7,13 @@
       multiple
       show-checkbox
     ></ElSelectTree>
+    <ElSelectTreeVirtual
+      collapse-tags
+      v-model="value"
+      :data="data"
+      multiple
+      show-checkbox
+    ></ElSelectTreeVirtual>
   </div>
 </template>
 
