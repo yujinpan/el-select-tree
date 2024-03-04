@@ -30,6 +30,22 @@ export default function getElTreeVirtual() {
       },
     },
     methods: {
+      setCheckedNodes(nodes, leafOnly) {
+        if (!this.nodeKey)
+          throw new Error('[Tree] nodeKey is required in setCheckedNodes');
+        this.store.setCheckedNodes(nodes, leafOnly);
+        this.storeVirtual.setCheckedNodes(nodes, leafOnly);
+      },
+      setCheckedKeys(keys, leafOnly) {
+        if (!this.nodeKey)
+          throw new Error('[Tree] nodeKey is required in setCheckedKeys');
+        this.store.setCheckedKeys(keys, leafOnly);
+        this.storeVirtual.setCheckedKeys(keys, leafOnly);
+      },
+      setChecked(data, checked, deep) {
+        this.store.setChecked(data, checked, deep);
+        this.storeVirtual.setChecked(data, checked, deep);
+      },
       getCheckedNodes(leafOnly, includeHalfChecked) {
         return this.storeVirtual.getCheckedNodes(leafOnly, includeHalfChecked);
       },

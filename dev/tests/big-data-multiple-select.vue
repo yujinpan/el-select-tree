@@ -13,6 +13,7 @@
       :data="data"
       multiple
       show-checkbox
+      clearable
     ></ElSelectTreeVirtual>
   </div>
 </template>
