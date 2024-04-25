@@ -332,6 +332,13 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
 
     const dataValue = this.getValByProp('value', data);
 
+    // fix: checkedKeys sort with selection order
+    const index = params.checkedKeys.indexOf(dataValue);
+    if (index !== -1) {
+      params.checkedKeys.splice(index, 1);
+      params.checkedKeys.push(dataValue);
+    }
+
     // fix: checkedKeys has not cached keys
     const uncachedCheckedKeys = params.checkedKeys;
     const cachedKeys = this.multiple
@@ -355,7 +362,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     // only can select leaf node
     else {
       if (this.multiple) {
-        this.privateValue = this.tree.getCheckedKeys(true);
+        this.privateValue = params.checkedKeys;
       } else {
         // select first leaf node when check parent
         const firstLeaf = treeFind(
