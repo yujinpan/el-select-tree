@@ -1,3 +1,9 @@
+## [2.1.1-beta.10](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.9...v2.1.1-beta.10) (2024-04-25)
+
+### Bug Fixes
+
+- checkedKeys sort with selection order ([277dab4](https://github.com/yujinpan/el-select-tree/commit/277dab40d76c05fc712cb658f0e2921ae5e0f133))
+
 # 2.0.3 2021-11-24
 
 ## Feature
