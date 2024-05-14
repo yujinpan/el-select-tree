@@ -1,6 +1,6 @@
 {
   "name": "el-select-tree",
-  "version": "2.1.1-beta.10",
+  "version": "2.1.1-beta.11",
   "author": "yujinpan",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"

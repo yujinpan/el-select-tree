@@ -1,3 +1,9 @@
+## [2.1.1-beta.11](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.10...v2.1.1-beta.11) (2024-05-14)
+
+### Bug Fixes
+
+- use `Vue.observable` instead of `reactive` (vue2.6) ([7c82ecb](https://github.com/yujinpan/el-select-tree/commit/7c82ecb8f8bc76c81a7801d1cfa4f42c73ad8f66))
+
 ## [2.1.1-beta.10](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.9...v2.1.1-beta.10) (2024-04-25)
 
 ### Bug Fixes
