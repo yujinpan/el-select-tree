@@ -108,8 +108,8 @@ export function getParentKeys(
   data: Obj[],
   getValByProp: (prop: 'value' | 'children', data: Obj) => any,
 ) {
-  const result = new Set<string | number>();
   const getKeys = (tree) => {
+    const result = [];
     tree.forEach((node) => {
       const children = getValByProp('children', node);
       if (children && children.length) {
@@ -118,14 +118,20 @@ export function getParentKeys(
             currentKeys.includes(getValByProp('value', item)),
           )
         ) {
-          result.add(getValByProp('value', node));
+          result.push(getValByProp('value', node));
         }
-        getKeys(children);
+        const childrenKeys = getKeys(children);
+        if (childrenKeys.length) {
+          result.push(getValByProp('value', node), ...childrenKeys);
+        }
       }
     });
+    return result;
   };
-  getKeys(data);
-  return Array.from(result);
+
+  const result = getKeys(data);
+
+  return Array.from(new Set(result));
 }
 
 type Value = string | number | (string | number)[];
