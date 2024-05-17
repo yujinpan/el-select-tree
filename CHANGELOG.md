@@ -1,3 +1,9 @@
+## [2.1.1-beta.12](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.11...v2.1.1-beta.12) (2024-05-17)
+
+### Bug Fixes
+
+- `getParentKeys` does not include multi-level nodes ([c88e722](https://github.com/yujinpan/el-select-tree/commit/c88e72236c0caf236bc2c9b58a80e09f4972a250))
+
 ## [2.1.1-beta.11](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.10...v2.1.1-beta.11) (2024-05-14)
 
 ### Bug Fixes
