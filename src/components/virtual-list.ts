@@ -16,6 +16,8 @@ export const virtualList: ObjectDirective<
     const { target, virtualStore } = bindings.value;
     const targetElem = el.querySelector(target) as HTMLElement;
 
+    virtualStore.mount(targetElem);
+
     targetElem.prepend(virtualStore.sketchTopElem);
     targetElem.append(virtualStore.sketchBottomElem);
 
@@ -53,20 +55,26 @@ export class VirtualStore {
   }
 
   setOptions(options: Partial<VirtualStoreOptions>) {
-    Object.assign(this.options, options);
-
     this.setScrollTop(
       options.sourceData && this.options.sourceData !== options.sourceData
         ? 0
         : undefined,
     );
 
+    Object.assign(this.options, options);
+
     this.updateScroll();
   }
 
   setScrollTop(scrollTop: number = this.scrollTop) {
     this.scrollTop = scrollTop;
+    if (this.scrollElem) this.scrollElem.scrollTop = scrollTop;
     this.updateScroll();
+  }
+
+  scrollElem: HTMLElement;
+  mount(el: HTMLElement) {
+    this.scrollElem = el;
   }
 
   readonly sketchTopElem = document.createElement('div');
@@ -74,7 +82,7 @@ export class VirtualStore {
 
   private scrollTop = 0;
   private clientHeight = 0;
-  private updateScroll(
+  public updateScroll(
     scrollTop: number = this.scrollTop,
     clientHeight: number = this.clientHeight,
     callback?: () => any,
