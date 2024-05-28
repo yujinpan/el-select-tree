@@ -1,3 +1,9 @@
+## [2.1.1-beta.13](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.12...v2.1.1-beta.13) (2024-05-28)
+
+### Bug Fixes
+
+- filter data empty when scroll to bottom ([d52a4b6](https://github.com/yujinpan/el-select-tree/commit/d52a4b6622a8bbd86fe670fa7d01e547ed9e4138))
+
 ## [2.1.1-beta.12](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.11...v2.1.1-beta.12) (2024-05-17)
 
 ### Bug Fixes
