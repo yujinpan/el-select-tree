@@ -2,6 +2,7 @@
 node_modules
 stat
 lib
+types
 dist
 docs/.vuepress/.cache
 docs/.vuepress/.temp

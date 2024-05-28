@@ -5,7 +5,9 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
-  "main": "lib/index.js",
+  "main": "lib/cjs/index.js",
+  "module": "lib/es/index.js",
+  "types": "types/index.d.ts",
   "keywords": [
     "el-select",
     "el-tree",
@@ -58,7 +60,7 @@
     "prettier": "^2.5.1",
     "release-ops": "^1.0.1",
     "rollup-plugin-vue": "^5.1.9",
-    "rollupx": "^3.1.1",
+    "rollupx": "^3.1.12",
     "sass": "^1.54.9",
     "typescript": "~4.7.4",
     "vite": "^3.2.5",
