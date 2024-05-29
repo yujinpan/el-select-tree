@@ -1,0 +1,40 @@
+@import "element-ui/packages/theme-chalk/src/common/var";
+
+.el-select-tree {
+  &__popper {
+    .el-tree {
+      // fix: checkbox 在展示下拉框时跳动问题
+      .el-checkbox__input {
+        display: flex;
+      }
+    }
+
+    .el-select-dropdown__item {
+      flex: 1;
+      padding: 0 30px 0 0;
+      background: transparent !important;
+
+      // fix: 节点展开时 popper 底部抖动问题
+      // https://github.com/yujinpan/el-select-tree/pull/33
+      height: 20px;
+      line-height: 20px;
+
+      &.selected:after {
+        right: 10px;
+      }
+    }
+
+    .el-select-dropdown {
+      &__header,
+      &__footer {
+        padding: 10px;
+      }
+      &__header {
+        border-bottom: 1px solid $--border-color-light;
+      }
+      &__footer {
+        border-top: 1px solid $--border-color-light;
+      }
+    }
+  }
+}

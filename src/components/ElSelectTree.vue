@@ -272,8 +272,8 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
       this.renderContent
         ? [this.renderContent(h, { node, data, store })]
         : this.$scopedSlots.default
-        ? this.$scopedSlots.default({ node, data, store })
-        : undefined,
+          ? this.$scopedSlots.default({ node, data, store })
+          : undefined,
     );
   }
 
@@ -356,8 +356,8 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
       this.privateValue = this.multiple
         ? checkedKeys
         : checkedKeys.includes(dataValue)
-        ? dataValue
-        : undefined;
+          ? dataValue
+          : undefined;
     }
     // only can select leaf node
     else {
@@ -409,42 +409,5 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
 </script>
 
 <style lang="scss">
-.el-select-tree {
-  &__popper {
-    .el-tree {
-      // fix: checkbox 在展示下拉框时跳动问题
-      .el-checkbox__input {
-        display: flex;
-      }
-    }
-
-    .el-select-dropdown__item {
-      flex: 1;
-      padding: 0 30px 0 0;
-      background: transparent !important;
-
-      // fix: 节点展开时 popper 底部抖动问题
-      // https://github.com/yujinpan/el-select-tree/pull/33
-      height: 20px;
-      line-height: 20px;
-
-      &.selected:after {
-        right: 10px;
-      }
-    }
-
-    .el-select-dropdown {
-      &__header,
-      &__footer {
-        padding: 10px;
-      }
-      &__header {
-        border-bottom: 1px solid #e4e7ed;
-      }
-      &__footer {
-        border-top: 1px solid #e4e7ed;
-      }
-    }
-  }
-}
+@import './style.scss';
 </style>
