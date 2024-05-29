@@ -1,0 +1,34 @@
+@use "sass:meta";
+
+$font-color: #e8eaed !default;
+$bg-color: #202123 !default;
+$bg-color-regular: #282a2d !default;
+$hover-bg-color: rgba($bg-color, 0.8) !default;
+
+$--color-text-primary: $font-color !default;
+$--color-text-regular: rgba(255, 255, 255, 0.75) !default;
+$--color-text-secondary: rgba(255, 255, 255, 0.65) !default;
+$--color-text-placeholder: rgba(255, 255, 255, 0.55) !default;
+
+$--border-color-base: #434343 !default;
+$--border-color-light: rgba(255, 255, 255, 0.3) !default;
+$--border-color-lighter: rgba(255, 255, 255, 0.2) !default;
+$--border-color-extra-light: rgba(255, 255, 255, 0.1) !default;
+
+$--color-white: $bg-color-regular !default;
+$--color-black: $--color-text-placeholder !default;
+
+$--background-color-base: $bg-color-regular !default;
+
+$--select-option-hover-background: $hover-bg-color !default;
+
+$--box-shadow-light: 0 2px 12px 0 rgba(255, 255, 255, 0.1);
+
+/* required */
+$--font-path: "element-ui/lib/theme-chalk/fonts";
+
+@import "element-ui/packages/theme-chalk/src/base";
+@import "element-ui/packages/theme-chalk/src/tree";
+@import "element-ui/packages/theme-chalk/src/select";
+@import "element-ui/packages/theme-chalk/src/option";
+@import "./components/style";

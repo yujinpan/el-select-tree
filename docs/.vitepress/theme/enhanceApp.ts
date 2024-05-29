@@ -14,7 +14,9 @@ import {
 import type { EnhanceAppContext } from 'vitepress';
 
 import ElSelectTree, { ElSelectTreeVirtual } from '@/index';
-import 'element-ui/lib/theme-chalk/index.css';
+import '@/style.scss';
+import 'element-ui/packages/theme-chalk/src/button.scss';
+import 'element-ui/packages/theme-chalk/src/divider.scss';
 
 export default (ctx: EnhanceAppContext) => {
   const { app: Vue } = ctx;

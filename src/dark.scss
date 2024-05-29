@@ -1,0 +1,5 @@
+@use "sass:meta";
+
+.dark {
+  @include meta.load-css("./dark-base.scss");
+}
