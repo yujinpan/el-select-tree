@@ -14,7 +14,8 @@
     "el-select-tree"
   ],
   "files": [
-    "lib"
+    "lib",
+    "types"
   ],
   "scripts": {
     "publish:beta": "release-ops beta",
