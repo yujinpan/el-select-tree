@@ -17,6 +17,8 @@ import ElSelectTree, { ElSelectTreeVirtual } from '@/index';
 import '@/style.scss';
 import 'element-ui/packages/theme-chalk/src/button.scss';
 import 'element-ui/packages/theme-chalk/src/divider.scss';
+import 'element-ui/packages/theme-chalk/src/form.scss';
+import 'element-ui/packages/theme-chalk/src/form-item.scss';
 
 export default (ctx: EnhanceAppContext) => {
   const { app: Vue } = ctx;
