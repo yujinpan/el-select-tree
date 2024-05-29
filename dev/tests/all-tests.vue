@@ -55,15 +55,15 @@ import CheckOrExpand from './check-or-expand.vue';
 import SetValueInMounted from './set-value-in-mounted.vue';
 import ShowUnrenderLabel from './show-unrender-label.vue';
 import Slots from './slots.vue';
-import CheckStrictly from '../../docs/.vuepress/components/check-strictly.vue';
-import CustomProps from '../../docs/.vuepress/components/custom-props.vue';
-import CustomRender from '../../docs/.vuepress/components/custom-render.vue';
-import Filterable from '../../docs/.vuepress/components/filterable.vue';
-import LazyLoadCacheData from '../../docs/.vuepress/components/lazy-load-cache-data.vue';
-import LazyLoad from '../../docs/.vuepress/components/lazy-load.vue';
-import Multiple from '../../docs/.vuepress/components/multiple.vue';
-import Virtual from '../../docs/.vuepress/components/virtual.vue';
-import WithForm from '../../docs/.vuepress/components/with-form.vue';
+import CheckStrictly from '../../docs/.vitepress/components/check-strictly.vue';
+import CustomProps from '../../docs/.vitepress/components/custom-props.vue';
+import CustomRender from '../../docs/.vitepress/components/custom-render.vue';
+import Filterable from '../../docs/.vitepress/components/filterable.vue';
+import LazyLoadCacheData from '../../docs/.vitepress/components/lazy-load-cache-data.vue';
+import LazyLoad from '../../docs/.vitepress/components/lazy-load.vue';
+import Multiple from '../../docs/.vitepress/components/multiple.vue';
+import Virtual from '../../docs/.vitepress/components/virtual.vue';
+import WithForm from '../../docs/.vitepress/components/with-form.vue';
 
 export default {
   components: {

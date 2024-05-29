@@ -1,4 +1,4 @@
-import '../../lib/element-ui';
+import '@/element-ui';
 import {
   Form,
   FormItem,
@@ -11,11 +11,13 @@ import {
   Checkbox,
 } from 'element-ui';
 
-import ElSelectTree, { ElSelectTreeVirtual } from '../../lib/index';
+import type { EnhanceAppContext } from 'vitepress';
+
+import ElSelectTree, { ElSelectTreeVirtual } from '@/index';
 import 'element-ui/lib/theme-chalk/index.css';
 
-export default (ctx) => {
-  const { Vue } = ctx;
+export default (ctx: EnhanceAppContext) => {
+  const { app: Vue } = ctx;
 
   Vue.use(Form);
   Vue.use(FormItem);

@@ -1,6 +1,9 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
   "files": [],
+  "compilerOptions": {
+    "experimentalDecorators": true,
+  },
   "references": [
     {
       "path": "./tsconfig.config.json"

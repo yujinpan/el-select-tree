@@ -33,7 +33,6 @@ module.exports = {
     'vue/no-reserved-component-names': 'off',
 
     // typescript https://typescript-eslint.io/rules/
-    '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/ban-types': [
       'error',
