@@ -1,3 +1,9 @@
+## [2.1.1-beta.14](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.13...v2.1.1-beta.14) (2024-05-29)
+
+### Features
+
+- add component optional styles, support dark mode ([1dc1ea6](https://github.com/yujinpan/el-select-tree/commit/1dc1ea675db2e742e55f8b260d834c2cc77951cf))
+
 ## [2.1.1-beta.13](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.12...v2.1.1-beta.13) (2024-05-28)
 
 ### Bug Fixes
