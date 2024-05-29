@@ -33,6 +33,9 @@ export default defineConfig({
     ],
     resolve: viteConfig.resolve,
     css: viteConfig.css,
+    ssr: {
+      noExternal: ["element-ui"],
+    },
   },
   async transformHtml(code) {
     return code.replace(
