@@ -115,6 +115,13 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
         'node-click': this._nodeClick,
         check: this._check,
       },
+      nativeOn: {
+        transitionend: (e: TransitionEvent) => {
+          if (e.propertyName === 'height') {
+            this.updatePopper();
+          }
+        },
+      },
     };
   }
 
@@ -285,6 +292,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     // https://github.com/yujinpan/el-select-tree/issues/35
     this.$nextTick(() => {
       this.tree && this.tree.filter(val);
+      this.updatePopper();
     });
   }
   protected _filterNodeMethod(value, data, node) {
@@ -323,6 +331,12 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     if (this.filterable && val) {
       this._filterMethod();
     }
+  }
+
+  protected updatePopper() {
+    this.$nextTick(() => {
+      this.select?.broadcast('ElSelectDropdown', 'updatePopper');
+    });
   }
 
   // set selected when check change
