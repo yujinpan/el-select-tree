@@ -30,7 +30,7 @@
     "docs:build": "vitepress build docs"
   },
   "dependencies": {
-    "@babel/runtime": "7.x",
+    "@babel/runtime": "^7.24.7",
     "core-js": "^3.28.0",
     "style-inject": "^0.3.0",
     "vue-class-component": "^7.x",
