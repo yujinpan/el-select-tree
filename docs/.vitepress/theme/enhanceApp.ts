@@ -7,7 +7,6 @@ import {
   TableColumn,
   Loading,
   Link,
-  Divider,
   Checkbox,
 } from 'element-ui';
 
