@@ -1,3 +1,14 @@
+## [2.1.1-beta.15](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.14...v2.1.1-beta.15) (2024-06-18)
+
+### Bug Fixes
+
+- always focus when use filter ([af87fe0](https://github.com/yujinpan/el-select-tree/commit/af87fe028581b7a91138ef0c80ce38df0caea6eb))
+- popper position incorrect when menu display or use filter ([405b457](https://github.com/yujinpan/el-select-tree/commit/405b457984eb5aab000fc16a32219282f20a6417))
+
+### Features
+
+- add uppercase/lowercase matching ([c78b64d](https://github.com/yujinpan/el-select-tree/commit/c78b64d6961758e7e0a4a3baa9e61ac8a098b746))
+
 ## [2.1.1-beta.14](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.13...v2.1.1-beta.14) (2024-05-29)
 
 ### Features
