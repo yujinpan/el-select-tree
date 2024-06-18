@@ -325,6 +325,8 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     } else if (this.expandOnClickNode) {
       component.handleExpandIconClick();
     }
+
+    this.focusInput();
   }
 
   // clear filter text when visible change
@@ -417,10 +419,18 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
       halfCheckedKeys: this.tree.getHalfCheckedKeys(),
       halfCheckedNodes: this.tree.getHalfCheckedNodes(),
     });
+
+    this.focusInput();
   }
 
   private canSelect(data) {
     return this.checkStrictly || this.getValByProp('isLeaf', data);
+  }
+
+  protected focusInput() {
+    if (this.filterable) {
+      setTimeout(() => this.select?.$refs.input?.focus());
+    }
   }
 }
 </script>
