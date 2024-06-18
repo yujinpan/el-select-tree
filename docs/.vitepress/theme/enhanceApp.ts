@@ -16,7 +16,6 @@ import type { EnhanceAppContext } from 'vitepress';
 import ElSelectTree, { ElSelectTreeVirtual } from '@/index';
 import '@/style.scss';
 import 'element-ui/packages/theme-chalk/src/button.scss';
-import 'element-ui/packages/theme-chalk/src/divider.scss';
 import 'element-ui/packages/theme-chalk/src/form.scss';
 import 'element-ui/packages/theme-chalk/src/form-item.scss';
 
@@ -32,6 +31,5 @@ export default (ctx: EnhanceAppContext) => {
   Vue.use(Link);
   Vue.use(ElSelectTree);
   Vue.use(ElSelectTreeVirtual);
-  Vue.use(Divider);
   Vue.use(Checkbox);
 };

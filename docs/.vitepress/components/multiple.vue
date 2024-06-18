@@ -1,7 +1,7 @@
 <template>
   <div>
     <ElSelectTree v-model="values" :data="data" multiple></ElSelectTree>
-    <el-divider direction="vertical"></el-divider>
+    <hr />
     use checkbox and filterable:
     <ElSelectTree
       v-model="values"
