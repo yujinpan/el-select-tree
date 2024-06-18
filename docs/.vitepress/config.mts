@@ -15,6 +15,7 @@ export default defineConfig({
       { icon: "github", link: "https://github.com/yujinpan/el-select-tree/" },
     ],
     nav: [{ text: "Guide", link: "/" }],
+    outline: 'deep',
     footer: {
       message: "Released under the MIT License.",
       copyright: "Copyright © 2024 yujinpan",
