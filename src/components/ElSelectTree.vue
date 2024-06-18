@@ -300,7 +300,10 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     if (this.filterMethod) return this.filterMethod(value, data, node);
     if (this.filterNodeMethod) return this.filterNodeMethod(value, data, node);
     if (!value) return true;
-    return this.getValByProp('label', data)?.includes(value);
+    return this.getValByProp('label', data)
+      ?.toString()
+      .toLowerCase()
+      .includes(value.toLowerCase());
   }
 
   // can not select
