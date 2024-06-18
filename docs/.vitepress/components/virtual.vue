@@ -1,6 +1,8 @@
 <template>
   <div>
-    <p>Data volume: 500 * 20 * 10 = {{ 500 * 20 * 10 }}</p>
+    <p style="margin-bottom: 10px">
+      Data volume: 500 * 20 * 10 = {{ 500 * 20 * 10 }}
+    </p>
     <label>Normal:</label>
     <ElSelectTreeVirtual v-model="value" :data="data"></ElSelectTreeVirtual>
     &nbsp;&nbsp;
@@ -9,6 +11,18 @@
       v-model="value"
       :data="data"
       filterable
+    ></ElSelectTreeVirtual>
+
+    <hr />
+
+    <label>Multiple:</label>
+    <ElSelectTreeVirtual
+      v-model="values"
+      :data="data"
+      filterable
+      multiple
+      show-checkbox
+      clearable
     ></ElSelectTreeVirtual>
   </div>
 </template>
@@ -26,6 +40,7 @@ export default {
   data() {
     return {
       value: '',
+      values: [],
       data: banReactive(
         Array(500)
           .fill('')
