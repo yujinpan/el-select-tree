@@ -1,8 +1,6 @@
-import throttle from 'lodash/throttle';
-
 import type { ObjectDirective } from 'vue';
 
-import { getCompoundVal, isValidArr } from '@/components/utils';
+import { getCompoundVal, isValidArr, throttle } from '@/components/utils';
 import type { Obj } from '@/components/utils';
 
 export const virtualList: ObjectDirective<
@@ -51,7 +49,7 @@ export class VirtualStore {
   public data: Obj[] = [];
 
   constructor(private readonly options: VirtualStoreOptions) {
-    this.updateScroll = throttle(this.updateScroll, 15);
+    this.updateScroll = throttle(this.updateScroll.bind(this), 15);
   }
 
   setOptions(options: Partial<VirtualStoreOptions>) {

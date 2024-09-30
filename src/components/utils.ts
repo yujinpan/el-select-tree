@@ -294,3 +294,25 @@ export const banReactive = (obj: Obj) => {
   obj.__ob__ = empty['__ob__'];
   return obj;
 };
+
+export function throttle<T extends (...args: any[]) => any>(
+  cb: T,
+  duration: number,
+): T {
+  let timeId: any;
+  let stop = true;
+  return ((...args) => {
+    if (timeId) {
+      stop = false;
+    } else {
+      cb(...args);
+      timeId = setTimeout(() => {
+        timeId = null;
+        if (!stop) {
+          cb(...args);
+          stop = true;
+        }
+      }, duration);
+    }
+  }) as T;
+}
