@@ -1,3 +1,9 @@
+## [2.1.1-beta.16](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.15...v2.1.1-beta.16) (2024-09-30)
+
+### Bug Fixes
+
+- slowly when many items checked ([d8516e7](https://github.com/yujinpan/el-select-tree/commit/d8516e7c6506acb5849f175cf0707a6e30012016))
+
 ## [2.1.1-beta.15](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.14...v2.1.1-beta.15) (2024-06-18)
 
 ### Bug Fixes
