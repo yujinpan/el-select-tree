@@ -295,6 +295,19 @@ export const banReactive = (obj: Obj) => {
   return obj;
 };
 
+export function debounce<T extends (...args: any[]) => any>(
+  cb: T,
+  duration: number,
+): T {
+  let timeId: any;
+  return ((...args) => {
+    if (timeId) clearTimeout(timeId);
+    timeId = setTimeout(() => {
+      cb(...args);
+    }, duration);
+  }) as T;
+}
+
 export function throttle<T extends (...args: any[]) => any>(
   cb: T,
   duration: number,

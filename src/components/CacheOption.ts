@@ -2,6 +2,8 @@ import Vue from 'vue';
 
 import type { PropType } from 'vue';
 
+import { debounce } from '@/components/utils';
+
 export type CacheOption = {
   value: string | number | boolean | object;
   currentLabel: string | number;
@@ -22,9 +24,6 @@ const CacheOptions = Vue.extend({
   },
   watch: {
     data() {
-      this.update();
-    },
-    values() {
       this.update();
     },
   },
@@ -58,6 +57,8 @@ const CacheOptions = Vue.extend({
     return undefined;
   },
   mounted() {
+    this.update = debounce(this.update, 100);
+
     this.update();
   },
 });
