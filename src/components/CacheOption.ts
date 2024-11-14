@@ -2,8 +2,6 @@ import Vue from 'vue';
 
 import type { PropType } from 'vue';
 
-import { debounce } from '@/components/utils';
-
 export type CacheOption = {
   value: string | number | boolean | object;
   currentLabel: string | number;
@@ -12,13 +10,14 @@ export type CacheOption = {
 
 const CacheOptions = Vue.extend({
   inject: ['select'],
+  data() {
+    return {
+      oldValues: [],
+    };
+  },
   props: {
     data: {
       type: Array as PropType<CacheOption[]>,
-      default: () => [],
-    },
-    values: {
-      type: Array,
       default: () => [],
     },
   },
@@ -35,20 +34,18 @@ const CacheOptions = Vue.extend({
         setSelected: () => any;
       };
 
+      let changed = false;
+
       this.data.forEach((item) => {
         if (
-          this.values.includes(item.value) &&
           !select.cachedOptions.some((cached) => cached.value === item.value)
         ) {
           select.cachedOptions.push(item);
+          changed = true;
         }
       });
 
-      // fork from element-ui/packages/select/src/select.vue#435
-      const inputs: Element[] = Array.from(
-        select.$el?.querySelectorAll('input') || [],
-      );
-      if (!inputs.includes(document.activeElement)) {
+      if (changed) {
         select.setSelected();
       }
     },
@@ -57,8 +54,6 @@ const CacheOptions = Vue.extend({
     return undefined;
   },
   mounted() {
-    this.update = debounce(this.update, 100);
-
     this.update();
   },
 });

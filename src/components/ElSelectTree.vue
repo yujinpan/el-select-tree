@@ -5,24 +5,22 @@ import { Component, Mixins, Prop, Ref, Watch } from 'vue-property-decorator';
 import type { Select as ElSelectType, Tree as ElTreeType } from 'element-ui';
 import type { CreateElement, VNodeData } from 'vue';
 
-import type { CacheOption } from '@/components/CacheOption';
 import CacheOptions from '@/components/CacheOption';
 import getElSelect from '@/components/ElSelect';
 import getElSelectTreeOption from '@/components/ElSelectTreeOption';
 import type { Obj } from '@/components/utils';
 import {
-  ElSelectMixin,
-  ElTreeMixin,
-  propsPick,
-  ElSelectMixinOptions,
-  ElTreeMixinOptions,
-  toArr,
-  isValidArr,
-  getParentKeys,
-  treeEach,
   compareArrayChanges,
+  ElSelectMixin,
+  ElSelectMixinOptions,
+  ElTreeMixin,
+  ElTreeMixinOptions,
   getCompoundVal,
+  getParentKeys,
+  isValidArr,
   isValidValue,
+  propsPick,
+  toArr,
   treeFind,
 } from '@/components/utils';
 
@@ -127,7 +125,7 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
 
   protected renderCacheOptions(h: CreateElement) {
     return h(CacheOptions, {
-      props: { data: this.cacheOptions, values: this.values },
+      props: { data: this.cacheOptions },
     });
   }
 
@@ -154,22 +152,22 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
   private get cacheOptions() {
     if (!this.renderAfterExpand && !this.lazy) return [];
 
-    const options: CacheOption[] = [];
+    // only cache the top 100
+    const maxValues = this.values.slice(0, this.collapseTags ? 1 : 100);
 
-    treeEach(
-      this.data.concat(this.cacheData),
-      (node) => {
-        const value = this.getValByProp('value', node);
-        options.push({
-          value,
-          currentLabel: this.getValByProp('label', node),
-          isDisabled: this.getValByProp('disabled', node),
-        });
-      },
-      (data) => this.getValByProp('children', data),
-    );
-
-    return options;
+    const data = this.data.concat(this.cacheData);
+    return maxValues.map((item) => {
+      const find = treeFind(
+        data,
+        (node) => this.getValByProp('value', node) === item,
+        (data) => this.getValByProp('children', data),
+      );
+      return {
+        value: item,
+        currentLabel: this.getValByProp('label', find),
+        isDisabled: this.getValByProp('disabled', find),
+      };
+    });
   }
 
   private get cacheOptionsMap() {
