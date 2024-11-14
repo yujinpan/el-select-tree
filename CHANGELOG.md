@@ -1,3 +1,13 @@
+## [2.1.1-beta.17](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.16...v2.1.1-beta.17) (2024-11-14)
+
+### Bug Fixes
+
+- cache option does not work and makes the check very slow ([77b7eb2](https://github.com/yujinpan/el-select-tree/commit/77b7eb236ff4c7c456c50dfb1f01a95b5922b439))
+
+### Performance Improvements
+
+- optimizing array comparison efficiency ([faa870b](https://github.com/yujinpan/el-select-tree/commit/faa870b388f7dc781b7585a89b8957b0f81b4ee6))
+
 ## [2.1.1-beta.16](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.15...v2.1.1-beta.16) (2024-09-30)
 
 ### Bug Fixes
