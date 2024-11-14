@@ -260,13 +260,23 @@ export async function treeFilter(
   return handleData(data);
 }
 
-export function compareArrayChanges(source: any[], target: any[]) {
-  const add = target.filter((item) => !source.includes(item));
-  const remove = source.filter((item) => !target.includes(item));
+export function compareArrayChangesAdd(source: any[], target: any[]) {
+  source = source.concat([]);
+  return target.filter((item) => {
+    const index = source.indexOf(item);
+    if (index !== -1) {
+      source.splice(index, 1);
+      return false;
+    } else {
+      return true;
+    }
+  });
+}
 
+export function compareArrayChanges(source: any[], target: any[]) {
   return {
-    add,
-    remove,
+    add: compareArrayChangesAdd(source, target),
+    remove: compareArrayChangesAdd(target, source),
   };
 }
 

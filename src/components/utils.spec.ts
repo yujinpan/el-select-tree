@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getParentKeys } from './utils';
+import { compareArrayChanges, getParentKeys } from './utils';
 
 describe('utils', () => {
   it('should getParentKeys', () => {
@@ -42,5 +42,35 @@ describe('utils', () => {
         (prop, data) => data[prop],
       ),
     ).toEqual(['1', '2']);
+  });
+  it('should compareArrayChanges', () => {
+    expect(compareArrayChanges([], [])).toEqual({
+      add: [],
+      remove: [],
+    });
+    expect(compareArrayChanges([], [1])).toEqual({
+      add: [1],
+      remove: [],
+    });
+    expect(compareArrayChanges([], [1, 2])).toEqual({
+      add: [1, 2],
+      remove: [],
+    });
+    expect(compareArrayChanges([1], [1, 2])).toEqual({
+      add: [2],
+      remove: [],
+    });
+    expect(compareArrayChanges([1, 2], [1, 2])).toEqual({
+      add: [],
+      remove: [],
+    });
+    expect(compareArrayChanges([1, 2], [1])).toEqual({
+      add: [],
+      remove: [2],
+    });
+    expect(compareArrayChanges([1, 2], [1])).toEqual({
+      add: [],
+      remove: [2],
+    });
   });
 });
