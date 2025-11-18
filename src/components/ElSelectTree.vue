@@ -156,18 +156,22 @@ export default class ElSelectTree extends Mixins(ElSelectMixin, ElTreeMixin) {
     const maxValues = this.values.slice(0, this.collapseTags ? 1 : 100);
 
     const data = this.data.concat(this.cacheData);
-    return maxValues.map((item) => {
-      const find = treeFind(
-        data,
-        (node) => this.getValByProp('value', node) === item,
-        (data) => this.getValByProp('children', data),
-      );
-      return {
-        value: item,
-        currentLabel: this.getValByProp('label', find),
-        isDisabled: this.getValByProp('disabled', find),
-      };
-    });
+    return maxValues
+      .map((item) => {
+        const find = treeFind(
+          data,
+          (node) => this.getValByProp('value', node) === item,
+          (data) => this.getValByProp('children', data),
+        );
+        return (
+          find && {
+            value: item,
+            currentLabel: this.getValByProp('label', find),
+            isDisabled: this.getValByProp('disabled', find),
+          }
+        );
+      })
+      .filter((item) => !!item);
   }
 
   private get cacheOptionsMap() {
