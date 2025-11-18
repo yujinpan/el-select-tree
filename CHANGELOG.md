@@ -1,3 +1,9 @@
+## [2.1.1](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.17...v2.1.1) (2025-11-18)
+
+### Bug Fixes
+
+- When using lazy loading, the caching option may be calculated incorrectly ([61bfcaa](https://github.com/yujinpan/el-select-tree/commit/61bfcaa2b959e3906548d02aa32ab13d0ab4a0a0))
+
 ## [2.1.1-beta.17](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.16...v2.1.1-beta.17) (2024-11-14)
 
 ### Bug Fixes
