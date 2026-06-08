@@ -1,3 +1,9 @@
+## [2.1.2](https://github.com/yujinpan/el-select-tree/compare/v2.1.1...v2.1.2) (2026-06-08)
+
+### Bug Fixes
+
+- The "allow-create" option has incorrect interaction and style ([a2cc754](https://github.com/yujinpan/el-select-tree/commit/a2cc754b2b47e19c4bef6dfcb27dbbd492c99544))
+
 ## [2.1.1](https://github.com/yujinpan/el-select-tree/compare/v2.1.1-beta.17...v2.1.1) (2025-11-18)
 
 ### Bug Fixes
