@@ -1,12 +1,18 @@
 <template>
-  <ElSelectTree v-model="value" :data="data" filterable></ElSelectTree>
+  <ElSelectTree
+    v-model="value"
+    :data="data"
+    filterable
+    allow-create
+    multiple
+  ></ElSelectTree>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      value: '',
+      value: [],
       data: [
         {
           label: '乌鲁木齐市',
